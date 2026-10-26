@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="SkrinshoterApp.GeneralTabView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding" xmlns:props="clr-namespace:SkrinshoterApp.Properties" xmlns:local="clr-namespace:SkrinshoterApp" UseLayoutRounding="True">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <Style x:Key="{x:Type TextBlock}" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource SettingsTextBlockStyle}" />
+      <Style x:Key="{x:Type ComboBox}" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource SettingsComboBoxStyle}" />
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <Grid>
+    <GroupBox Header="{Binding Path=(props:Resources.Settings_General_GroupHeader)}">
+      <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+          <CheckBox Content="{Binding Path=(props:Resources.Settings_General_SilentMode)}" IsChecked="{Binding Settings.SilentMode}" />
+          <ContentControl Style="{StaticResource ToolTipIconStyle}" Margin="10,0,0,0" Content="{Binding Path=(props:Resources.Settings_General_SilentModeToolTip)}" />
+        </StackPanel>
+        <CheckBox Margin="0,12,0,0" Content="{Binding Path=(props:Resources.Settings_General_UploadWindowTitleToCloud)}" IsChecked="{Binding Settings.UploadWindowTitle}">
+          <UIElement.Visibility>
+            <c:Binding>
+              <c:Binding.Path>IsSkrinshoter</c:Binding.Path>
+            </c:Binding>
+          </UIElement.Visibility>
+        </CheckBox>
+        <CheckBox Margin="0,12,0,0" Content="{Binding Path=(props:Resources.Settings_General_Autostart)}" IsChecked="{Binding Settings.Autostart}" />
+        <CheckBox Margin="0,12,0,0" Content="{Binding Path=(props:Resources.Settings_General_CheckForUpdates)}" IsChecked="{Binding Settings.CheckForUpdates}" />
+        <Grid Margin="0,19,0,0">
+          <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="10" />
+            <RowDefinition />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <TextBlock Text="{Binding Path=(props:Resources.Settings_General_Tray_Action)}" />
+          <ComboBox Grid.Column="2" DisplayMemberPath="Name" SelectedValuePath="Id" ItemsSource="{Binding TrayClickActions}" SelectedValue="{Binding Settings.TrayLeftClickAction}" />
+          <TextBlock Grid.Row="2" Visibility="Collapsed" Text="{Binding Path=(props:Resources.Settings_General_Language)}" />
+          <ComboBox Grid.Row="2" Grid.Column="2" DisplayMemberPath="Name" SelectedValuePath="Id" Visibility="Collapsed" ItemsSource="{Binding Languages}" SelectedValue="{Binding Settings.Language}" />
+        </Grid>
+      </StackPanel>
+    </GroupBox>
+  </Grid>
+</UserControl>

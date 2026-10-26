@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application x:Class="SkrinshoterApp.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:SkrinshoterApp" ShutdownMode="OnExplicitShutdown" Startup="Application_Startup">
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Wpf\Resources\Default.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\FramelessWindow.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\PanelWindow.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\Panel.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\PanelButton.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\PanelToggleButton.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\PanelComboBox.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\PanelSeparator.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\Button.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\VideoPanelButton.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\SplitActionComboBox.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\ScreenshotEditingDrawingWindowImages.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\ScreenshotEditingActionWindowImages.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\ScreenshotEditingVisualObjects.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\VideoRecordingImages.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\ScrollingCaptureImages.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\CameraWindowCircle.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\CameraWindowTv.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\ContextMenu.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\Images.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\Slider.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\ProgressBar.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\CloudStorageProgressBar.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\ToolTip.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\ToolTipIcon.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\MessageWindowCloseButton.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\DialogWindowCloseButton.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\SettingsTabControl.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\GroupBox.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\CheckBox.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\RadioButton.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\TextBox.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\SettingsButton.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\SettingsBlueButton.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\SettingsBlueProgressButton.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\SettingsToolButton.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\SettingsTextBlock.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\SettingsComboBox.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\ScrollBar.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\Hyperlink.xaml" />
+        <ResourceDictionary Source="Wpf\Resources\ToggleSwitch.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+      <DataTemplate x:Key="{DataTemplateKey {x:Type local:SelectionHintObjectVM}}" DataType="{x:Type local:SelectionHintObjectVM}">
+        <local:SelectionHintObject />
+      </DataTemplate>
+      <PopupAnimation x:Key="{x:Static SystemParameters.MenuPopupAnimationKey}">None</PopupAnimation>
+      <local:IsLessThanConverter x:Key="IsLessThanConverter" />
+      <local:ColorToBrushConverter x:Key="ColorToBrushConverter" />
+      <local:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+      <local:NullToUnsetValueConverter x:Key="NullToUnsetValueConverter" />
+      <local:StringFormatConverter x:Key="StringFormatConverter" />
+      <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </ResourceDictionary>
+  </Application.Resources>
+</Application>

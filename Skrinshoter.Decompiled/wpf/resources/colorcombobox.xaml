@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:SkrinshoterApp">
+  <Style x:Key="CustomColorButtonStyle" TargetType="{x:Type Button}">
+    <Setter Property="Focusable" Value="False" />
+    <Setter Property="Width" Value="116" />
+    <Setter Property="Height" Value="22" />
+    <Setter Property="FontFamily" Value="Segoe UI" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Button}">
+          <Grid>
+            <Border Background="{StaticResource Panel.Background}">
+              <Border Name="highlight" CornerRadius="4" />
+            </Border>
+            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,1" />
+          </Grid>
+          <ControlTemplate.Triggers>
+            <Trigger Property="UIElement.IsMouseOver" Value="true">
+              <Setter TargetName="highlight" Property="Border.Background" Value="{StaticResource PanelButton.MouseOver.Background}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+              <Setter TargetName="highlight" Property="Border.Background" Value="{StaticResource PanelButton.Pressed.Background}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <DataTemplate x:Key="ColorComboBoxSelectedItemTemplate">
+    <Path Width="24" Height="24" StrokeThickness="2" Stroke="{StaticResource PanelButton.Normal.Color}" Data="{StaticResource ScreenshotEditingDrawingWindowColorGeometry}" Fill="{Binding Converter={StaticResource ColorToBrushConverter}}" />
+  </DataTemplate>
+  <ControlTemplate x:Key="ColorComboBoxTemplate" TargetType="{x:Type ComboBox}">
+    <Grid>
+      <Popup Name="PART_Popup" AllowsTransparency="true" Placement="Bottom" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+        <local:Panel Style="{StaticResource PanelStyle}">
+          <StackPanel Margin="6" RenderOptions.ClearTypeHint="Enabled">
+            <ItemsPresenter />
+            <Button Margin="0,4,0,0" Style="{StaticResource CustomColorButtonStyle}" Content="{Binding CustomColorButton}" Command="{Binding SelectCustomColorCommand}" />
+          </StackPanel>
+        </local:Panel>
+      </Popup>
+      <ToggleButton Style="{StaticResource PanelComboBoxToggleButtonStyle}" ContentTemplate="{StaticResource ColorComboBoxSelectedItemTemplate}" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" Content="{Binding DataContext.SelectedColor, RelativeSource={RelativeSource TemplatedParent}}" />
+    </Grid>
+  </ControlTemplate>
+  <ItemsPanelTemplate x:Key="ColorComboBoxItemsPanelTemplate">
+    <UniformGrid Columns="3" />
+  </ItemsPanelTemplate>
+  <DataTemplate x:Key="ColorComboBoxDropDownItemTemplate">
+    <Path Width="32" Height="32" Margin="4" StrokeThickness="2" Data="{StaticResource ScreenshotEditingDrawingWindowDropDownColorGeometry}" Fill="{Binding Converter={StaticResource ColorToBrushConverter}}">
+      <FrameworkElement.Style>
+        <Style TargetType="{x:Type Path}">
+          <Setter Property="Stroke" Value="{StaticResource PanelButton.Normal.Color}" />
+          <Style.Triggers>
+            <DataTrigger Value="True" Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType=ComboBoxItem}}">
+              <Setter Property="Stroke" Value="{StaticResource PanelButton.Checked.Color}" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </FrameworkElement.Style>
+    </Path>
+  </DataTemplate>
+  <local:ComboBoxTemplateSelectorExtension x:Key="ColorComboBoxItemTemplateSelector" SelectedItemTemplate="{StaticResource ColorComboBoxSelectedItemTemplate}" DropDownItemTemplate="{StaticResource ColorComboBoxDropDownItemTemplate}" />
+  <Style x:Key="ColorComboBoxStyle" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource PanelComboBoxStyle}">
+    <Setter Property="Template" Value="{StaticResource ColorComboBoxTemplate}" />
+    <Setter Property="ItemsPanel" Value="{StaticResource ColorComboBoxItemsPanelTemplate}" />
+    <Setter Property="ItemTemplateSelector" Value="{StaticResource ColorComboBoxItemTemplateSelector}" />
+  </Style>
+</ResourceDictionary>

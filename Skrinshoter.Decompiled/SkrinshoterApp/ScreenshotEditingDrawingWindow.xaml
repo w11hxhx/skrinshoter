@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="SkrinshoterApp.ScreenshotEditingDrawingWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding" xmlns:local="clr-namespace:SkrinshoterApp" WindowStyle="None" AllowsTransparency="True" Background="#00FFFFFF" ShowInTaskbar="False" ShowActivated="False" Topmost="True" ResizeMode="NoResize" SizeToContent="WidthAndHeight" Closing="Window_Closing">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="..\Resources\LineThicknessComboBox.xaml" />
+        <ResourceDictionary Source="..\Resources\ColorComboBox.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+      <Style x:Key="{x:Type Button}" TargetType="{x:Type Button}" BasedOn="{StaticResource PanelButtonStyle}" />
+      <Style x:Key="{x:Type ToggleButton}" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource PanelToggleButtonStyle}" />
+      <Style x:Key="{x:Type Separator}" TargetType="{x:Type Separator}" BasedOn="{StaticResource VerticalPanelSeparatorStyle}" />
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <local:Panel Style="{StaticResource PanelStyle}">
+    <StackPanel Orientation="Horizontal">
+      <ToggleButton CommandParameter="{x:Static local:DrawingTool.Arrow}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding ArrowToolTip}">
+        <ToggleButton.IsChecked>
+          <c:Binding>
+            <c:Binding.Path>SelectedTool == local:DrawingTool.Arrow</c:Binding.Path>
+          </c:Binding>
+        </ToggleButton.IsChecked>
+        <Image Source="{StaticResource ScreenshotEditingDrawingWindowArrowNormalImage}" />
+        <FrameworkElement.Tag>
+          <Image Source="{StaticResource ScreenshotEditingDrawingWindowArrowCheckedImage}" />
+        </FrameworkElement.Tag>
+      </ToggleButton>
+      <ToggleButton CommandParameter="{x:Static local:DrawingTool.Line}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding LineToolTip}">
+        <ToggleButton.IsChecked>
+          <c:Binding>
+            <c:Binding.Path>SelectedTool == local:DrawingTool.Line</c:Binding.Path>
+          </c:Binding>
+        </ToggleButton.IsChecked>
+        <Image Source="{StaticResource ScreenshotEditingDrawingWindowLineNormalImage}" />
+        <FrameworkElement.Tag>
+          <Image Source="{StaticResource ScreenshotEditingDrawingWindowLineCheckedImage}" />
+        </FrameworkElement.Tag>
+      </ToggleButton>
+      <ToggleButton CommandParameter="{x:Static local:DrawingTool.Pencil}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding PencilToolTip}">
+        <ToggleButton.IsChecked>
+          <c:Binding>
+            <c:Binding.Path>SelectedTool == local:DrawingTool.Pencil</c:Binding.Path>
+          </c:Binding>
+        </ToggleButton.IsChecked>
+        <Image Source="{StaticResource ScreenshotEditingDrawingWindowPencilNormalImage}" />
+        <FrameworkElement.Tag>
+          <Image Source="{StaticResource ScreenshotEditingDrawingWindowPencilCheckedImage}" />
+        </FrameworkElement.Tag>
+      </ToggleButton>
+      <ToggleButton CommandParameter="{x:Static local:DrawingTool.Marker}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding MarkerToolTip}">
+        <ToggleButton.IsChecked>
+          <c:Binding>
+            <c:Binding.Path>SelectedTool == local:DrawingTool.Marker</c:Binding.Path>
+          </c:Binding>
+        </ToggleButton.IsChecked>
+        <Image Source="{StaticResource ScreenshotEditingDrawingWindowMarkerNormalImage}" />
+        <FrameworkElement.Tag>
+          <Image Source="{StaticResource ScreenshotEditingDrawingWindowMarkerCheckedImage}" />
+        </FrameworkElement.Tag>
+      </ToggleButton>
+      <ToggleButton CommandParameter="{x:Static local:DrawingTool.Rectangle}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding RectangleToolTip}">
+        <ToggleButton.IsChecked>
+          <c:Binding>
+            <c:Binding.Path>SelectedTool == local:DrawingTool.Rectangle</c:Binding.Path>
+          </c:Binding>
+        </ToggleButton.IsChecked>
+        <Image Source="{StaticResource ScreenshotEditingDrawingWindowRectangleNormalImage}" />
+        <FrameworkElement.Tag>
+          <Image Source="{StaticResource ScreenshotEditingDrawingWindowRectangleCheckedImage}" />
+        </FrameworkElement.Tag>
+      </ToggleButton>
+      <ToggleButton CommandParameter="{x:Static local:DrawingTool.Oval}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding OvalToolTip}">
+        <ToggleButton.IsChecked>
+          <c:Binding>
+            <c:Binding.Path>SelectedTool == local:DrawingTool.Oval</c:Binding.Path>
+          </c:Binding>
+        </ToggleButton.IsChecked>
+        <Image Source="{StaticResource ScreenshotEditingDrawingWindowOvalNormalImage}" />
+        <FrameworkElement.Tag>
+          <Image Source="{StaticResource ScreenshotEditingDrawingWindowOvalCheckedImage}" />
+        </FrameworkElement.Tag>
+      </ToggleButton>
+      <ToggleButton CommandParameter="{x:Static local:DrawingTool.Text}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding TextToolTip}">
+        <ToggleButton.IsChecked>
+          <c:Binding>
+            <c:Binding.Path>SelectedTool == local:DrawingTool.Text</c:Binding.Path>
+          </c:Binding>
+        </ToggleButton.IsChecked>
+        <Image Source="{StaticResource ScreenshotEditingDrawingWindowTextNormalImage}" />
+        <FrameworkElement.Tag>
+          <Image Source="{StaticResource ScreenshotEditingDrawingWindowTextCheckedImage}" />
+        </FrameworkElement.Tag>
+      </ToggleButton>
+      <ToggleButton CommandParameter="{x:Static local:DrawingTool.Number}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding NumberToolTip}">
+        <ToggleButton.IsChecked>
+          <c:Binding>
+            <c:Binding.Path>SelectedTool == local:DrawingTool.Number</c:Binding.Path>
+          </c:Binding>
+        </ToggleButton.IsChecked>
+        <Image Source="{StaticResource ScreenshotEditingDrawingWindowNumberNormalImage}" />
+        <FrameworkElement.Tag>
+          <Image Source="{StaticResource ScreenshotEditingDrawingWindowNumberCheckedImage}" />
+        </FrameworkElement.Tag>
+      </ToggleButton>
+      <ToggleButton CommandParameter="{x:Static local:DrawingTool.Blur}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding BlurToolTip}">
+        <ToggleButton.IsChecked>
+          <c:Binding>
+            <c:Binding.Path>SelectedTool == local:DrawingTool.Blur</c:Binding.Path>
+          </c:Binding>
+        </ToggleButton.IsChecked>
+        <Image Source="{StaticResource ScreenshotEditingDrawingWindowBlurNormalImage}" />
+        <FrameworkElement.Tag>
+          <Image Source="{StaticResource ScreenshotEditingDrawingWindowBlurCheckedImage}" />
+        </FrameworkElement.Tag>
+      </ToggleButton>
+      <Separator />
+      <local:FocusablePopupComboBox Style="{StaticResource LineThicknessComboBoxStyle}" ToolTip="{Binding LineThicknessToolTip}" />
+      <ComboBox Style="{StaticResource ColorComboBoxStyle}" ItemsSource="{Binding AvailableColors}" SelectedValue="{Binding SelectedColor}" ToolTip="{Binding ColorToolTip}" />
+      <Separator />
+      <Button Command="{Binding UndoManager.UndoCommand}" ToolTip="{Binding UndoToolTip}">
+        <FrameworkElement.Style>
+          <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
+            <Setter Property="Content">
+              <Setter.Value>
+                <Image Source="{StaticResource ScreenshotEditingDrawingWindowUndoNormalImage}" />
+              </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+              <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Content">
+                  <Setter.Value>
+                    <Image Source="{StaticResource ScreenshotEditingDrawingWindowUndoDisabledImage}" />
+                  </Setter.Value>
+                </Setter>
+              </Trigger>
+            </Style.Triggers>
+          </Style>
+        </FrameworkElement.Style>
+      </Button>
+    </StackPanel>
+  </local:Panel>
+</Window>

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="SkrinshoterApp.OverlayWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors" xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding" xmlns:local="clr-namespace:SkrinshoterApp" Height="100" Width="200" WindowStyle="None" ShowInTaskbar="False" ShowActivated="False" Topmost="True" ResizeMode="NoResize" UseLayoutRounding="True" Background="#00FFFFFF" local:SizeObserver.Observe="True" local:SizeObserver.ObservedWidth="{Binding WindowObservedWidth, Mode=OneWayToSource}" local:SizeObserver.ObservedHeight="{Binding WindowObservedHeight, Mode=OneWayToSource}" Cursor="{Binding Cursor}" Closing="Window_Closing" MouseEnter="Window_MouseEnter" MouseLeave="Window_MouseLeave">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <local:RectConverter x:Key="RectConverter" />
+      <Storyboard x:Key="DarkAreaFadeIn">
+        <DoubleAnimation Storyboard.TargetName="DarkArea" Storyboard.TargetProperty="Fill.(SolidColorBrush.Opacity)" From="0" To="0.6" Duration="0:0:0.12" />
+      </Storyboard>
+      <Storyboard x:Key="DarkAreaFadeOut">
+        <DoubleAnimation Storyboard.TargetName="DarkArea" Storyboard.TargetProperty="Fill.(SolidColorBrush.Opacity)" From="0.6" To="0" Duration="0:0:0.12" />
+      </Storyboard>
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <UIElement.InputBindings>
+    <KeyBinding Key="Escape" Command="{Binding CancelSelectionCommand}" />
+  </UIElement.InputBindings>
+  <Behaviors:Interaction.Triggers>
+    <Behaviors:EventTrigger EventName="MouseLeftButtonDown">
+      <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding StartDrawCommand}" />
+    </Behaviors:EventTrigger>
+    <Behaviors:EventTrigger EventName="MouseMove">
+      <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding DrawCommand}" />
+    </Behaviors:EventTrigger>
+    <Behaviors:EventTrigger EventName="MouseLeftButtonUp">
+      <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding EndDrawCommand}" />
+    </Behaviors:EventTrigger>
+    <Behaviors:EventTrigger EventName="MouseRightButtonDown">
+      <Behaviors:InvokeCommandAction Command="{Binding StartCancelSelectionCommand}" />
+    </Behaviors:EventTrigger>
+    <Behaviors:EventTrigger EventName="MouseRightButtonUp">
+      <Behaviors:InvokeCommandAction Command="{Binding EndCancelSelectionCommand}" />
+    </Behaviors:EventTrigger>
+  </Behaviors:Interaction.Triggers>
+  <Grid>
+    <Canvas Name="DrawingCanvas" Focusable="True" MouseDown="DrawingCanvas_MouseDown">
+      <Behaviors:Interaction.Triggers>
+        <Behaviors:EventTrigger EventName="MouseMove">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding UpdateFloatingObjectOnMouseMoveCommand}" />
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="MouseLeave">
+          <Behaviors:InvokeCommandAction Command="{Binding UpdateFloatingObjectOnMouseLeaveCommand}" />
+        </Behaviors:EventTrigger>
+      </Behaviors:Interaction.Triggers>
+      <Panel.Background>
+        <ImageBrush ImageSource="{Binding BackgroundImage}" />
+      </Panel.Background>
+      <Path Name="DarkArea" StrokeThickness="0">
+        <Shape.Fill>
+          <SolidColorBrush Color="Black" Opacity="0" />
+        </Shape.Fill>
+        <Path.Data>
+          <CombinedGeometry GeometryCombineMode="Exclude">
+            <CombinedGeometry.Geometry1>
+              <RectangleGeometry>
+                <RectangleGeometry.Rect>
+                  <MultiBinding Converter="{StaticResource RectConverter}">
+                    <Binding ElementName="DrawingCanvas" Path="ActualWidth" />
+                    <Binding ElementName="DrawingCanvas" Path="ActualHeight" />
+                  </MultiBinding>
+                </RectangleGeometry.Rect>
+              </RectangleGeometry>
+            </CombinedGeometry.Geometry1>
+            <CombinedGeometry.Geometry2>
+              <RectangleGeometry Rect="{Binding FrameBorderRect}" />
+            </CombinedGeometry.Geometry2>
+          </CombinedGeometry>
+        </Path.Data>
+      </Path>
+      <ItemsControl ItemsSource="{Binding VisualObjects}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <Canvas />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+      </ItemsControl>
+      <ContentPresenter IsHitTestVisible="False" Content="{Binding FloatingObject}">
+        <UIElement.Visibility>
+          <c:Binding RelativeSource="{RelativeSource AncestorType=Window}">
+            <c:Binding.Path>DataContext.FloatingObjectVisible</c:Binding.Path>
+          </c:Binding>
+        </UIElement.Visibility>
+      </ContentPresenter>
+    </Canvas>
+    <Canvas>
+      <Path StrokeThickness="0" Fill="#01000000" Cursor="SizeAll">
+        <UIElement.Visibility>
+          <c:Binding>
+            <c:Binding.Path>AreaInsideFrameVisible</c:Binding.Path>
+          </c:Binding>
+        </UIElement.Visibility>
+        <Path.Data>
+          <RectangleGeometry Rect="{Binding FrameBorderRect}" />
+        </Path.Data>
+        <Behaviors:Interaction.Triggers>
+          <Behaviors:EventTrigger EventName="MouseLeftButtonDown">
+            <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding StartMoveCommand}" />
+          </Behaviors:EventTrigger>
+          <Behaviors:EventTrigger EventName="MouseMove">
+            <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding MoveCommand}" />
+          </Behaviors:EventTrigger>
+          <Behaviors:EventTrigger EventName="MouseLeftButtonUp">
+            <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding EndMoveCommand}" />
+          </Behaviors:EventTrigger>
+        </Behaviors:Interaction.Triggers>
+      </Path>
+      <Border BorderThickness="1" BorderBrush="{StaticResource SelectionFrameBrush}" Height="1" Canvas.Left="{Binding FrameBorderRect.Left}" Canvas.Top="{Binding FrameBorderRect.Top}">
+        <FrameworkElement.Width>
+          <c:Binding>
+            <c:Binding.Path>FrameBorderRect.Width + 1</c:Binding.Path>
+          </c:Binding>
+        </FrameworkElement.Width>
+        <UIElement.Visibility>
+          <c:Binding>
+            <c:Binding.Path>FrameBorderVisible</c:Binding.Path>
+          </c:Binding>
+        </UIElement.Visibility>
+      </Border>
+      <Border BorderThickness="1" BorderBrush="{StaticResource SelectionFrameBrush}" Width="1" Canvas.Left="{Binding FrameBorderRect.Left}" Canvas.Top="{Binding FrameBorderRect.Top}">
+        <FrameworkElement.Height>
+          <c:Binding>
+            <c:Binding.Path>FrameBorderRect.Height + 1</c:Binding.Path>
+          </c:Binding>
+        </FrameworkElement.Height>
+        <UIElement.Visibility>
+          <c:Binding>
+            <c:Binding.Path>FrameBorderVisible</c:Binding.Path>
+          </c:Binding>
+        </UIElement.Visibility>
+      </Border>
+      <Border BorderThickness="1" BorderBrush="{StaticResource SelectionFrameBrush}" Width="1" Canvas.Left="{Binding FrameBorderRect.Right}" Canvas.Top="{Binding FrameBorderRect.Top}">
+        <FrameworkElement.Height>
+          <c:Binding>
+            <c:Binding.Path>FrameBorderRect.Height + 1</c:Binding.Path>
+          </c:Binding>
+        </FrameworkElement.Height>
+        <UIElement.Visibility>
+          <c:Binding>
+            <c:Binding.Path>FrameBorderVisible</c:Binding.Path>
+          </c:Binding>
+        </UIElement.Visibility>
+      </Border>
+      <Border BorderThickness="1" BorderBrush="{StaticResource SelectionFrameBrush}" Height="1" Canvas.Left="{Binding FrameBorderRect.Left}" Canvas.Top="{Binding FrameBorderRect.Bottom}">
+        <FrameworkElement.Width>
+          <c:Binding>
+            <c:Binding.Path>FrameBorderRect.Width + 1</c:Binding.Path>
+          </c:Binding>
+        </FrameworkElement.Width>
+        <UIElement.Visibility>
+          <c:Binding>
+            <c:Binding.Path>FrameBorderVisible</c:Binding.Path>
+          </c:Binding>
+        </UIElement.Visibility>
+      </Border>
+      <Grid>
+        <Canvas.Left>
+          <c:Binding>
+            <c:Binding.Path>FrameBorderRect.Left - 3</c:Binding.Path>
+          </c:Binding>
+        </Canvas.Left>
+        <Canvas.Top>
+          <c:Binding>
+            <c:Binding.Path>FrameBorderRect.Top - 3</c:Binding.Path>
+          </c:Binding>
+        </Canvas.Top>
+        <FrameworkElement.Width>
+          <c:Binding>
+            <c:Binding.Path>FrameBorderRect.Width + 7</c:Binding.Path>
+          </c:Binding>
+        </FrameworkElement.Width>
+        <FrameworkElement.Height>
+          <c:Binding>
+            <c:Binding.Path>FrameBorderRect.Height + 7</c:Binding.Path>
+          </c:Binding>
+        </FrameworkElement.Height>
+        <UIElement.Visibility>
+          <c:Binding>
+            <c:Binding.Path>ResizeHandlesVisible</c:Binding.Path>
+          </c:Binding>
+        </UIElement.Visibility>
+        <Rectangle Stroke="#FFFFFFFF" Fill="#FF000000" Width="7" Height="7" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <Rectangle Stroke="#FFFFFFFF" Fill="#FF000000" Width="7" Height="7" VerticalAlignment="Top" HorizontalAlignment="Center" />
+        <Rectangle Stroke="#FFFFFFFF" Fill="#FF000000" Width="7" Height="7" VerticalAlignment="Top" HorizontalAlignment="Right" />
+        <Rectangle Stroke="#FFFFFFFF" Fill="#FF000000" Width="7" Height="7" VerticalAlignment="Center" HorizontalAlignment="Right" />
+        <Rectangle Stroke="#FFFFFFFF" Fill="#FF000000" Width="7" Height="7" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
+        <Rectangle Stroke="#FFFFFFFF" Fill="#FF000000" Width="7" Height="7" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+        <Rectangle Stroke="#FFFFFFFF" Fill="#FF000000" Width="7" Height="7" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+        <Rectangle Stroke="#FFFFFFFF" Fill="#FF000000" Width="7" Height="7" VerticalAlignment="Center" HorizontalAlignment="Left" />
+      </Grid>
+      <Grid>
+        <Canvas.Left>
+          <c:Binding>
+            <c:Binding.Path>FrameBorderRect.Left - 3</c:Binding.Path>
+          </c:Binding>
+        </Canvas.Left>
+        <Canvas.Top>
+          <c:Binding>
+            <c:Binding.Path>FrameBorderRect.Top - 3</c:Binding.Path>
+          </c:Binding>
+        </Canvas.Top>
+        <FrameworkElement.Width>
+          <c:Binding>
+            <c:Binding.Path>FrameBorderRect.Width + 7</c:Binding.Path>
+          </c:Binding>
+        </FrameworkElement.Width>
+        <FrameworkElement.Height>
+          <c:Binding>
+            <c:Binding.Path>FrameBorderRect.Height + 7</c:Binding.Path>
+          </c:Binding>
+        </FrameworkElement.Height>
+        <UIElement.Visibility>
+          <c:Binding>
+            <c:Binding.Path>CanResize</c:Binding.Path>
+          </c:Binding>
+        </UIElement.Visibility>
+        <UIElement.Opacity>
+          <c:Binding>
+            <c:Binding.Path>ResizeHandlesVisible ? 1 : 0</c:Binding.Path>
+          </c:Binding>
+        </UIElement.Opacity>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="7" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="7" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="7" />
+          <RowDefinition Height="*" />
+          <RowDefinition Height="7" />
+        </Grid.RowDefinitions>
+        <Rectangle Grid.Row="0" Grid.Column="0" Fill="#01000000" Cursor="SizeNWSE">
+          <Behaviors:Interaction.Triggers>
+            <Behaviors:EventTrigger EventName="MouseLeftButtonDown">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding StartResizeTopLeftCommand}" />
+            </Behaviors:EventTrigger>
+            <Behaviors:EventTrigger EventName="MouseMove">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding ResizeCommand}" />
+            </Behaviors:EventTrigger>
+            <Behaviors:EventTrigger EventName="MouseLeftButtonUp">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding EndResizeCommand}" />
+            </Behaviors:EventTrigger>
+          </Behaviors:Interaction.Triggers>
+        </Rectangle>
+        <Rectangle Grid.Row="0" Grid.Column="1" Fill="#01000000" Cursor="SizeNS">
+          <Behaviors:Interaction.Triggers>
+            <Behaviors:EventTrigger EventName="MouseLeftButtonDown">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding StartResizeTopCommand}" />
+            </Behaviors:EventTrigger>
+            <Behaviors:EventTrigger EventName="MouseMove">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding ResizeCommand}" />
+            </Behaviors:EventTrigger>
+            <Behaviors:EventTrigger EventName="MouseLeftButtonUp">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding EndResizeCommand}" />
+            </Behaviors:EventTrigger>
+          </Behaviors:Interaction.Triggers>
+        </Rectangle>
+        <Rectangle Grid.Row="0" Grid.Column="2" Fill="#01000000" Cursor="SizeNESW">
+          <Behaviors:Interaction.Triggers>
+            <Behaviors:EventTrigger EventName="MouseLeftButtonDown">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding StartResizeTopRightCommand}" />
+            </Behaviors:EventTrigger>
+            <Behaviors:EventTrigger EventName="MouseMove">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding ResizeCommand}" />
+            </Behaviors:EventTrigger>
+            <Behaviors:EventTrigger EventName="MouseLeftButtonUp">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding EndResizeCommand}" />
+            </Behaviors:EventTrigger>
+          </Behaviors:Interaction.Triggers>
+        </Rectangle>
+        <Rectangle Grid.Row="1" Grid.Column="2" Fill="#01000000" Cursor="SizeWE">
+          <Behaviors:Interaction.Triggers>
+            <Behaviors:EventTrigger EventName="MouseLeftButtonDown">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding StartResizeRightCommand}" />
+            </Behaviors:EventTrigger>
+            <Behaviors:EventTrigger EventName="MouseMove">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding ResizeCommand}" />
+            </Behaviors:EventTrigger>
+            <Behaviors:EventTrigger EventName="MouseLeftButtonUp">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding EndResizeCommand}" />
+            </Behaviors:EventTrigger>
+          </Behaviors:Interaction.Triggers>
+        </Rectangle>
+        <Rectangle Grid.Row="2" Grid.Column="2" Fill="#01000000" Cursor="SizeNWSE">
+          <Behaviors:Interaction.Triggers>
+            <Behaviors:EventTrigger EventName="MouseLeftButtonDown">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding StartResizeBottomRightCommand}" />
+            </Behaviors:EventTrigger>
+            <Behaviors:EventTrigger EventName="MouseMove">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding ResizeCommand}" />
+            </Behaviors:EventTrigger>
+            <Behaviors:EventTrigger EventName="MouseLeftButtonUp">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding EndResizeCommand}" />
+            </Behaviors:EventTrigger>
+          </Behaviors:Interaction.Triggers>
+        </Rectangle>
+        <Rectangle Grid.Row="2" Grid.Column="1" Fill="#01000000" Cursor="SizeNS">
+          <Behaviors:Interaction.Triggers>
+            <Behaviors:EventTrigger EventName="MouseLeftButtonDown">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding StartResizeBottomCommand}" />
+            </Behaviors:EventTrigger>
+            <Behaviors:EventTrigger EventName="MouseMove">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding ResizeCommand}" />
+            </Behaviors:EventTrigger>
+            <Behaviors:EventTrigger EventName="MouseLeftButtonUp">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding EndResizeCommand}" />
+            </Behaviors:EventTrigger>
+          </Behaviors:Interaction.Triggers>
+        </Rectangle>
+        <Rectangle Grid.Row="2" Grid.Column="0" Fill="#01000000" Cursor="SizeNESW">
+          <Behaviors:Interaction.Triggers>
+            <Behaviors:EventTrigger EventName="MouseLeftButtonDown">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding StartResizeBottomLeftCommand}" />
+            </Behaviors:EventTrigger>
+            <Behaviors:EventTrigger EventName="MouseMove">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding ResizeCommand}" />
+            </Behaviors:EventTrigger>
+            <Behaviors:EventTrigger EventName="MouseLeftButtonUp">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding EndResizeCommand}" />
+            </Behaviors:EventTrigger>
+          </Behaviors:Interaction.Triggers>
+        </Rectangle>
+        <Rectangle Grid.Row="1" Grid.Column="0" Fill="#01000000" Cursor="SizeWE">
+          <Behaviors:Interaction.Triggers>
+            <Behaviors:EventTrigger EventName="MouseLeftButtonDown">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding StartResizeLeftCommand}" />
+            </Behaviors:EventTrigger>
+            <Behaviors:EventTrigger EventName="MouseMove">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding ResizeCommand}" />
+            </Behaviors:EventTrigger>
+            <Behaviors:EventTrigger EventName="MouseLeftButtonUp">
+              <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding EndResizeCommand}" />
+            </Behaviors:EventTrigger>
+          </Behaviors:Interaction.Triggers>
+        </Rectangle>
+      </Grid>
+      <Border Background="#FF000000" CornerRadius="6" local:SizeObserver.Observe="True" IsHitTestVisible="False" Canvas.Left="{Binding FrameSizeBoxLeft}" Canvas.Top="{Binding FrameSizeBoxTop}" local:SizeObserver.ObservedWidth="{Binding FrameSizeBoxObservedWidth, Mode=OneWayToSource}" local:SizeObserver.ObservedHeight="{Binding FrameSizeBoxObservedHeight, Mode=OneWayToSource}">
+        <UIElement.Visibility>
+          <c:Binding>
+            <c:Binding.Path>FrameSizeBoxVisible</c:Binding.Path>
+          </c:Binding>
+        </UIElement.Visibility>
+        <TextBlock FontFamily="Verdana" FontSize="11" Foreground="#FFFFFFFF" Padding="7 3" Text="{Binding FrameSizeBoxText}" />
+      </Border>
+    </Canvas>
+  </Grid>
+</Window>

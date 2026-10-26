@@ -1,0 +1,197 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Skrinshoter</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>SkrinshoterApp.Program</StartupObject>
+    <UseWPF>True</UseWPF>
+    <UseWindowsForms>True</UseWindowsForms>
+    <GenerateResourceUsePreserializedResources>True</GenerateResourceUsePreserializedResources>
+    <TargetFramework>net48</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>14.0</LangVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <RootNamespace />
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationConfig Remove="Skrinshoter.exe.config" />
+    <ApplicationConfig Include="Skrinshoter.exe.config" />
+    <ApplicationDefinition Remove="SkrinshoterApp\App.xaml" />
+    <ApplicationDefinition Include="SkrinshoterApp\App.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="app.xaml" />
+    <Page Remove="SkrinshoterApp\AboutTabView.xaml" />
+    <Page Remove="SkrinshoterApp\AppUpdateCheckWindow.xaml" />
+    <Page Remove="SkrinshoterApp\ArrowObject.xaml" />
+    <Page Remove="SkrinshoterApp\BlurObject.xaml" />
+    <Page Remove="SkrinshoterApp\FileNameTemplateWindow.xaml" />
+    <Page Remove="SkrinshoterApp\GeneralTabView.xaml" />
+    <Page Remove="SkrinshoterApp\HotkeyBox.xaml" />
+    <Page Remove="SkrinshoterApp\HotkeysTabView.xaml" />
+    <Page Remove="SkrinshoterApp\LineObject.xaml" />
+    <Page Remove="SkrinshoterApp\LineThicknessUserControl.xaml" />
+    <Page Remove="SkrinshoterApp\MarkerObject.xaml" />
+    <Page Remove="SkrinshoterApp\NotifyIcon.xaml" />
+    <Page Remove="SkrinshoterApp\NotifyIconContextMenu.xaml" />
+    <Page Remove="SkrinshoterApp\NotifyIconPopup.xaml" />
+    <Page Remove="SkrinshoterApp\NumberObject.xaml" />
+    <Page Remove="SkrinshoterApp\OvalObject.xaml" />
+    <Page Remove="SkrinshoterApp\OverlayWindow.xaml" />
+    <Page Remove="SkrinshoterApp\PencilObject.xaml" />
+    <Page Remove="SkrinshoterApp\ProgressWindow.xaml" />
+    <Page Remove="SkrinshoterApp\RectangleObject.xaml" />
+    <Page Remove="SkrinshoterApp\ScreenshotEditingActionWindow.xaml" />
+    <Page Remove="SkrinshoterApp\ScreenshotEditingDrawingWindow.xaml" />
+    <Page Remove="SkrinshoterApp\ScreenshotsTabView.xaml" />
+    <Page Remove="SkrinshoterApp\ScrollingCaptureActionWindow.xaml" />
+    <Page Remove="SkrinshoterApp\ScrollingCaptureMessageWindow.xaml" />
+    <Page Remove="SkrinshoterApp\ScrollingCapturePreviewWindow.xaml" />
+    <Page Remove="SkrinshoterApp\ScrollingCaptureStartWindow.xaml" />
+    <Page Remove="SkrinshoterApp\SelectionHintObject.xaml" />
+    <Page Remove="SkrinshoterApp\SettingsWindow.xaml" />
+    <Page Remove="SkrinshoterApp\TextObject.xaml" />
+    <Page Remove="SkrinshoterApp\VideoRecordingCameraWindow.xaml" />
+    <Page Remove="SkrinshoterApp\VideoRecordingCancelConfirmationWindow.xaml" />
+    <Page Remove="SkrinshoterApp\VideoRecordingControlWindow.xaml" />
+    <Page Remove="SkrinshoterApp\VideoRecordingLowDiskSpaceWindow.xaml" />
+    <Page Remove="SkrinshoterApp\VideoRecordingMutedMicrophoneWindow.xaml" />
+    <Page Remove="SkrinshoterApp\VideoTabView.xaml" />
+    <Page Remove="wpf\resources\button.xaml" />
+    <Page Remove="wpf\resources\camerawindowcircle.xaml" />
+    <Page Remove="wpf\resources\camerawindowtv.xaml" />
+    <Page Remove="wpf\resources\checkbox.xaml" />
+    <Page Remove="wpf\resources\cloudstorageprogressbar.xaml" />
+    <Page Remove="wpf\resources\colorcombobox.xaml" />
+    <Page Remove="wpf\resources\contextmenu.xaml" />
+    <Page Remove="wpf\resources\default.xaml" />
+    <Page Remove="wpf\resources\dialogwindowclosebutton.xaml" />
+    <Page Remove="wpf\resources\framelesswindow.xaml" />
+    <Page Remove="wpf\resources\groupbox.xaml" />
+    <Page Remove="wpf\resources\hyperlink.xaml" />
+    <Page Remove="wpf\resources\images.xaml" />
+    <Page Remove="wpf\resources\linethicknesscombobox.xaml" />
+    <Page Remove="wpf\resources\messagewindowclosebutton.xaml" />
+    <Page Remove="wpf\resources\panel.xaml" />
+    <Page Remove="wpf\resources\panelbutton.xaml" />
+    <Page Remove="wpf\resources\panelcombobox.xaml" />
+    <Page Remove="wpf\resources\panelseparator.xaml" />
+    <Page Remove="wpf\resources\paneltogglebutton.xaml" />
+    <Page Remove="wpf\resources\panelwindow.xaml" />
+    <Page Remove="wpf\resources\progressbar.xaml" />
+    <Page Remove="wpf\resources\radiobutton.xaml" />
+    <Page Remove="wpf\resources\screenshoteditingactionwindowimages.xaml" />
+    <Page Remove="wpf\resources\screenshoteditingdrawingwindowimages.xaml" />
+    <Page Remove="wpf\resources\screenshoteditingvisualobjects.xaml" />
+    <Page Remove="wpf\resources\scrollbar.xaml" />
+    <Page Remove="wpf\resources\scrollingcaptureimages.xaml" />
+    <Page Remove="wpf\resources\settingsbluebutton.xaml" />
+    <Page Remove="wpf\resources\settingsblueprogressbutton.xaml" />
+    <Page Remove="wpf\resources\settingsbutton.xaml" />
+    <Page Remove="wpf\resources\settingscombobox.xaml" />
+    <Page Remove="wpf\resources\settingstabcontrol.xaml" />
+    <Page Remove="wpf\resources\settingstextblock.xaml" />
+    <Page Remove="wpf\resources\settingstoolbutton.xaml" />
+    <Page Remove="wpf\resources\slider.xaml" />
+    <Page Remove="wpf\resources\splitactioncombobox.xaml" />
+    <Page Remove="wpf\resources\textbox.xaml" />
+    <Page Remove="wpf\resources\toggleswitch.xaml" />
+    <Page Remove="wpf\resources\tooltip.xaml" />
+    <Page Remove="wpf\resources\tooltipicon.xaml" />
+    <Page Remove="wpf\resources\videopanelbutton.xaml" />
+    <Page Remove="wpf\resources\videorecordingimages.xaml" />
+    <Page Include="SkrinshoterApp\AboutTabView.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/settings/tabs/abouttabview.xaml" />
+    <Page Include="SkrinshoterApp\AppUpdateCheckWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/appupdatecheckwindow.xaml" />
+    <Page Include="SkrinshoterApp\ArrowObject.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/screenshotediting/visualobjects/arrowobject.xaml" />
+    <Page Include="SkrinshoterApp\BlurObject.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/screenshotediting/visualobjects/blurobject.xaml" />
+    <Page Include="SkrinshoterApp\FileNameTemplateWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/settings/filenametemplatewindow.xaml" />
+    <Page Include="SkrinshoterApp\GeneralTabView.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/settings/tabs/generaltabview.xaml" />
+    <Page Include="SkrinshoterApp\HotkeyBox.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/settings/controls/hotkeybox.xaml" />
+    <Page Include="SkrinshoterApp\HotkeysTabView.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/settings/tabs/hotkeystabview.xaml" />
+    <Page Include="SkrinshoterApp\LineObject.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/screenshotediting/visualobjects/lineobject.xaml" />
+    <Page Include="SkrinshoterApp\LineThicknessUserControl.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/linethicknessusercontrol.xaml" />
+    <Page Include="SkrinshoterApp\MarkerObject.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/screenshotediting/visualobjects/markerobject.xaml" />
+    <Page Include="SkrinshoterApp\NotifyIcon.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/notifyicon/notifyicon.xaml" />
+    <Page Include="SkrinshoterApp\NotifyIconContextMenu.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/notifyicon/notifyiconcontextmenu.xaml" />
+    <Page Include="SkrinshoterApp\NotifyIconPopup.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/notifyicon/notifyiconpopup.xaml" />
+    <Page Include="SkrinshoterApp\NumberObject.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/screenshotediting/visualobjects/numberobject.xaml" />
+    <Page Include="SkrinshoterApp\OvalObject.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/screenshotediting/visualobjects/ovalobject.xaml" />
+    <Page Include="SkrinshoterApp\OverlayWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/overlaywindows/overlaywindow.xaml" />
+    <Page Include="SkrinshoterApp\PencilObject.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/screenshotediting/visualobjects/pencilobject.xaml" />
+    <Page Include="SkrinshoterApp\ProgressWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/progresswindow.xaml" />
+    <Page Include="SkrinshoterApp\RectangleObject.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/screenshotediting/visualobjects/rectangleobject.xaml" />
+    <Page Include="SkrinshoterApp\ScreenshotEditingActionWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/screenshotediting/screenshoteditingactionwindow.xaml" />
+    <Page Include="SkrinshoterApp\ScreenshotEditingDrawingWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/screenshotediting/screenshoteditingdrawingwindow.xaml" />
+    <Page Include="SkrinshoterApp\ScreenshotsTabView.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/settings/tabs/screenshotstabview.xaml" />
+    <Page Include="SkrinshoterApp\ScrollingCaptureActionWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/scrollingcapture/scrollingcaptureactionwindow.xaml" />
+    <Page Include="SkrinshoterApp\ScrollingCaptureMessageWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/scrollingcapture/scrollingcapturemessagewindow.xaml" />
+    <Page Include="SkrinshoterApp\ScrollingCapturePreviewWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/scrollingcapture/scrollingcapturepreviewwindow.xaml" />
+    <Page Include="SkrinshoterApp\ScrollingCaptureStartWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/scrollingcapture/scrollingcapturestartwindow.xaml" />
+    <Page Include="SkrinshoterApp\SelectionHintObject.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/screenshotediting/visualobjects/selectionhintobject.xaml" />
+    <Page Include="SkrinshoterApp\SettingsWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/settings/settingswindow.xaml" />
+    <Page Include="SkrinshoterApp\TextObject.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/screenshotediting/visualobjects/textobject.xaml" />
+    <Page Include="SkrinshoterApp\VideoRecordingCameraWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/videorecording/videorecordingcamerawindow.xaml" />
+    <Page Include="SkrinshoterApp\VideoRecordingCancelConfirmationWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/videorecording/videorecordingcancelconfirmationwindow.xaml" />
+    <Page Include="SkrinshoterApp\VideoRecordingControlWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/videorecording/videorecordingcontrolwindow.xaml" />
+    <Page Include="SkrinshoterApp\VideoRecordingLowDiskSpaceWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/videorecording/videorecordinglowdiskspacewindow.xaml" />
+    <Page Include="SkrinshoterApp\VideoRecordingMutedMicrophoneWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/videorecording/videorecordingmutedmicrophonewindow.xaml" />
+    <Page Include="SkrinshoterApp\VideoTabView.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/settings/tabs/videotabview.xaml" />
+    <Page Include="wpf\resources\button.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/button.xaml" />
+    <Page Include="wpf\resources\camerawindowcircle.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/camerawindowcircle.xaml" />
+    <Page Include="wpf\resources\camerawindowtv.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/camerawindowtv.xaml" />
+    <Page Include="wpf\resources\checkbox.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/checkbox.xaml" />
+    <Page Include="wpf\resources\cloudstorageprogressbar.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/cloudstorageprogressbar.xaml" />
+    <Page Include="wpf\resources\colorcombobox.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/colorcombobox.xaml" />
+    <Page Include="wpf\resources\contextmenu.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/contextmenu.xaml" />
+    <Page Include="wpf\resources\default.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/default.xaml" />
+    <Page Include="wpf\resources\dialogwindowclosebutton.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/dialogwindowclosebutton.xaml" />
+    <Page Include="wpf\resources\framelesswindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/framelesswindow.xaml" />
+    <Page Include="wpf\resources\groupbox.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/groupbox.xaml" />
+    <Page Include="wpf\resources\hyperlink.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/hyperlink.xaml" />
+    <Page Include="wpf\resources\images.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/images.xaml" />
+    <Page Include="wpf\resources\linethicknesscombobox.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/linethicknesscombobox.xaml" />
+    <Page Include="wpf\resources\messagewindowclosebutton.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/messagewindowclosebutton.xaml" />
+    <Page Include="wpf\resources\panel.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/panel.xaml" />
+    <Page Include="wpf\resources\panelbutton.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/panelbutton.xaml" />
+    <Page Include="wpf\resources\panelcombobox.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/panelcombobox.xaml" />
+    <Page Include="wpf\resources\panelseparator.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/panelseparator.xaml" />
+    <Page Include="wpf\resources\paneltogglebutton.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/paneltogglebutton.xaml" />
+    <Page Include="wpf\resources\panelwindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/panelwindow.xaml" />
+    <Page Include="wpf\resources\progressbar.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/progressbar.xaml" />
+    <Page Include="wpf\resources\radiobutton.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/radiobutton.xaml" />
+    <Page Include="wpf\resources\screenshoteditingactionwindowimages.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/screenshoteditingactionwindowimages.xaml" />
+    <Page Include="wpf\resources\screenshoteditingdrawingwindowimages.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/screenshoteditingdrawingwindowimages.xaml" />
+    <Page Include="wpf\resources\screenshoteditingvisualobjects.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/screenshoteditingvisualobjects.xaml" />
+    <Page Include="wpf\resources\scrollbar.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/scrollbar.xaml" />
+    <Page Include="wpf\resources\scrollingcaptureimages.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/scrollingcaptureimages.xaml" />
+    <Page Include="wpf\resources\settingsbluebutton.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/settingsbluebutton.xaml" />
+    <Page Include="wpf\resources\settingsblueprogressbutton.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/settingsblueprogressbutton.xaml" />
+    <Page Include="wpf\resources\settingsbutton.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/settingsbutton.xaml" />
+    <Page Include="wpf\resources\settingscombobox.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/settingscombobox.xaml" />
+    <Page Include="wpf\resources\settingstabcontrol.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/settingstabcontrol.xaml" />
+    <Page Include="wpf\resources\settingstextblock.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/settingstextblock.xaml" />
+    <Page Include="wpf\resources\settingstoolbutton.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/settingstoolbutton.xaml" />
+    <Page Include="wpf\resources\slider.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/slider.xaml" />
+    <Page Include="wpf\resources\splitactioncombobox.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/splitactioncombobox.xaml" />
+    <Page Include="wpf\resources\textbox.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/textbox.xaml" />
+    <Page Include="wpf\resources\toggleswitch.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/toggleswitch.xaml" />
+    <Page Include="wpf\resources\tooltip.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/tooltip.xaml" />
+    <Page Include="wpf\resources\tooltipicon.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/tooltipicon.xaml" />
+    <Page Include="wpf\resources\videopanelbutton.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/videopanelbutton.xaml" />
+    <Page Include="wpf\resources\videorecordingimages.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/resources/videorecordingimages.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ReachFramework" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+  </ItemGroup>
+</Project>

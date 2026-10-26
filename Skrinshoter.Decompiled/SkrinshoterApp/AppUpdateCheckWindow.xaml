@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<win:Window x:Class="SkrinshoterApp.AppUpdateCheckWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding" xmlns:win="clr-namespace:System.Windows;assembly=PresentationCore" xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf" xmlns:props="clr-namespace:SkrinshoterApp.Properties" xmlns:local="clr-namespace:SkrinshoterApp" Width="650" SizeToContent="Height" Background="#EFEEEF" FontFamily="Verdana" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Title="{Binding Path=(props:Resources.AppUpdate_WindowTitle)}" Closed="Window_Closed">
+  <Grid>
+    <Grid Name="LoaderParent" Height="220">
+      <win:UIElement.Visibility>
+        <c:Binding>
+          <c:Binding.Path>State == local:AppUpdateCheckWindowState.Loading ? win:Visibility.Visible : win:Visibility.Collapsed</c:Binding.Path>
+        </c:Binding>
+      </win:UIElement.Visibility>
+      <Viewbox Height="40" Width="40" Stretch="Fill">
+        <Image Source="{win:StaticResource LoaderImage}" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+          <win:UIElement.RenderTransform>
+            <RotateTransform />
+          </win:UIElement.RenderTransform>
+          <win:FrameworkElement.Style>
+            <win:Style>
+              <win:Style.Triggers>
+                <win:DataTrigger Value="Visible" Binding="{Binding ElementName=LoaderParent, Path=Visibility}">
+                  <win:TriggerBase.EnterActions>
+                    <BeginStoryboard>
+                      <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="360" Duration="0:0:1" RepeatBehavior="Forever" />
+                      </Storyboard>
+                    </BeginStoryboard>
+                  </win:TriggerBase.EnterActions>
+                </win:DataTrigger>
+              </win:Style.Triggers>
+            </win:Style>
+          </win:FrameworkElement.Style>
+        </Image>
+      </Viewbox>
+    </Grid>
+    <Grid Height="220">
+      <win:UIElement.Visibility>
+        <c:Binding>
+          <c:Binding.Path>State == local:AppUpdateCheckWindowState.Error ? win:Visibility.Visible : win:Visibility.Collapsed</c:Binding.Path>
+        </c:Binding>
+      </win:UIElement.Visibility>
+      <TextBlock TextWrapping="WrapWithOverflow" Foreground="#75140C" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Text="{Binding ErrorMessage}" />
+    </Grid>
+    <Grid Margin="10">
+      <win:UIElement.Visibility>
+        <c:Binding>
+          <c:Binding.Path>State == local:AppUpdateCheckWindowState.Loaded ? win:Visibility.Visible : win:Visibility.Collapsed</c:Binding.Path>
+        </c:Binding>
+      </win:UIElement.Visibility>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+      <emoji:RichTextBox TextBoxBase.IsReadOnly="True" RichTextBox.IsDocumentEnabled="True" TextBoxBase.VerticalScrollBarVisibility="Auto" Control.Padding="20,10" win:FrameworkElement.MinHeight="200" win:FrameworkElement.MaxHeight="550" local:RichTextBoxHelper.DocumentXaml="{Binding FlowDocument}">
+        <win:UIElement.Visibility>
+          <c:Binding>
+            <c:Binding.Path>UpdatesAvailable</c:Binding.Path>
+          </c:Binding>
+        </win:UIElement.Visibility>
+      </emoji:RichTextBox>
+      <Grid Height="200">
+        <win:UIElement.Visibility>
+          <c:Binding FallbackValue="Collapsed">
+            <c:Binding.Path>!UpdatesAvailable</c:Binding.Path>
+          </c:Binding>
+        </win:UIElement.Visibility>
+        <TextBox IsReadOnly="True" />
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+          <Image Width="60" Source="{win:StaticResource AppUpdateCheckNoUpdatesImage}" Margin="0,0,0,20" />
+          <TextBlock>
+            <TextBlock.Text>
+              <MultiBinding Converter="{win:StaticResource StringFormatConverter}">
+                <Binding Path="(props:Resources.AppUpdate_LatestVersionInstalled)" />
+                <Binding Path="(props:ProductResources.AppNameGenitive)" />
+              </MultiBinding>
+            </TextBlock.Text>
+          </TextBlock>
+        </StackPanel>
+      </Grid>
+      <Button Grid.Row="1" Style="{win:StaticResource Button}" HorizontalAlignment="Center" Height="40" Margin="0,10,0,0" Padding="25,0" IsDefault="True" FontWeight="Bold" FontSize="14" Command="{Binding DownloadNewVersionCommand}" Content="{Binding Path=(props:Resources.AppUpdate_DownloadButtonText)}">
+        <win:UIElement.Visibility>
+          <c:Binding>
+            <c:Binding.Path>UpdatesAvailable</c:Binding.Path>
+          </c:Binding>
+        </win:UIElement.Visibility>
+      </Button>
+    </Grid>
+  </Grid>
+</win:Window>

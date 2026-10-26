@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="SkrinshoterApp.TextObject" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors" xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:SkrinshoterApp" Loaded="UserControl_Loaded">
+  <Canvas>
+    <Grid Name="MainElement" Background="#00FFFFFF" Canvas.Left="{Binding Point.X}" Canvas.Top="{Binding Point.Y}" Cursor="{Binding Cursor}">
+      <Behaviors:Interaction.Triggers>
+        <Behaviors:EventTrigger EventName="MouseMove">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding DrawCommand}" />
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="MouseLeftButtonUp">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding EndDrawCommand}" />
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="MouseLeftButtonDown">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding StartMoveCommand}" />
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="MouseMove">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding MoveCommand}" />
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="MouseLeftButtonUp">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding EndMoveCommand}" />
+        </Behaviors:EventTrigger>
+      </Behaviors:Interaction.Triggers>
+      <Rectangle Stroke="{StaticResource ScreenshotEditingVisualObjectsSelectionFrameBrush}" Margin="3" IsHitTestVisible="False">
+        <UIElement.Visibility>
+          <c:Binding>
+            <c:Binding.Path>SelectionVisible</c:Binding.Path>
+          </c:Binding>
+        </UIElement.Visibility>
+      </Rectangle>
+      <TextBox BorderThickness="0" Background="#00FFFFFF" Margin="7" AcceptsReturn="True" FontFamily="Arial" Effect="{DynamicResource ScreenshotEditingTextDropShadowEffect}" UseLayoutRounding="False" SnapsToDevicePixels="False" TextOptions.TextHintingMode="Fixed" TextOptions.TextRenderingMode="ClearType" RenderOptions.ClearTypeHint="Enabled" Text="{Binding Text}" CaretBrush="{Binding Color, Converter={StaticResource ColorToBrushConverter}}" local:FocusBinder.IsFocused="{Binding Focused}" Focusable="{Binding SelectionVisible}" FontSize="{Binding FontSize}" Foreground="{Binding Color, Converter={StaticResource ColorToBrushConverter}}" ContextMenu="{x:Null}" LostKeyboardFocus="TextBox_LostKeyboardFocus">
+        <UIElement.IsHitTestVisible>
+          <c:Binding>
+            <c:Binding.Path>SelectionVisible</c:Binding.Path>
+          </c:Binding>
+        </UIElement.IsHitTestVisible>
+        <Behaviors:Interaction.Triggers>
+          <Behaviors:EventTrigger EventName="GotKeyboardFocus">
+            <Behaviors:InvokeCommandAction Command="{Binding StartEditCommand}" />
+          </Behaviors:EventTrigger>
+          <Behaviors:EventTrigger EventName="LostKeyboardFocus">
+            <Behaviors:InvokeCommandAction Command="{Binding EndEditCommand}" />
+          </Behaviors:EventTrigger>
+        </Behaviors:Interaction.Triggers>
+      </TextBox>
+    </Grid>
+  </Canvas>
+</UserControl>

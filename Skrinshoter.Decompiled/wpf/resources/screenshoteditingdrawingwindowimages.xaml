@@ -1,0 +1,500 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowArrowNormalImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 4.5 19.5 L 19.5 4.5" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 15 3 H 21 V 9" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowArrowCheckedImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Checked.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 4.5 19.5 L 19.5 4.5" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Checked.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 15 3 H 21 V 9" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowLineNormalImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 4.5 19.5 L 19.5 4.5" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowLineCheckedImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Checked.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 4.5 19.5 L 19.5 4.5" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowPencilNormalImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 4 20 H 8 L 18.5 9.5 C 18.7626 9.23735 18.971 8.92555 19.1131 8.58239 C 19.2553 8.23923 19.3284 7.87143 19.3284 7.5 C 19.3284 7.12856 19.2553 6.76077 19.1131 6.4176 C 18.971 6.07444 18.7626 5.76264 18.5 5.5 C 18.2374 5.23735 17.9256 5.02901 17.5824 4.88687 C 17.2392 4.74473 16.8714 4.67157 16.5 4.67157 C 16.1286 4.67157 15.7608 4.74473 15.4176 4.88687 C 15.0744 5.02901 14.7626 5.23735 14.5 5.5 L 4 16 V 20 Z" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 13.5 6.5 L 17.5 10.5" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowPencilCheckedImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Checked.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 4 20 H 8 L 18.5 9.5 C 18.7626 9.23735 18.971 8.92555 19.1131 8.58239 C 19.2553 8.23923 19.3284 7.87143 19.3284 7.5 C 19.3284 7.12856 19.2553 6.76077 19.1131 6.4176 C 18.971 6.07444 18.7626 5.76264 18.5 5.5 C 18.2374 5.23735 17.9256 5.02901 17.5824 4.88687 C 17.2392 4.74473 16.8714 4.67157 16.5 4.67157 C 16.1286 4.67157 15.7608 4.74473 15.4176 4.88687 C 15.0744 5.02901 14.7626 5.23735 14.5 5.5 L 4 16 V 20 Z" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Checked.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 13.5 6.5 L 17.5 10.5" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowMarkerNormalImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 15 6 L 18 9" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen Thickness="2.0" DashCap="Flat" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 15.8891 4.36828 C 16.6701 3.58724 17.9365 3.58724 18.7175 4.36828 L 20.1317 5.7825 C 20.9128 6.56355 20.9128 7.82988 20.1317 8.61093 L 9.52514 19.2175 L 5.2825 14.9749 L 15.8891 4.36828 Z" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen Thickness="2.0" DashCap="Flat" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 8.80762 18.5 L 6.33274 20.2678 L 3 19.5 L 5.87176 16.0355" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowMarkerCheckedImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Checked.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 15 6 L 18 9" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen Thickness="2.0" DashCap="Flat" Brush="{StaticResource PanelButton.Checked.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 15.8891 4.36828 C 16.6701 3.58724 17.9365 3.58724 18.7175 4.36828 L 20.1317 5.7825 C 20.9128 6.56355 20.9128 7.82988 20.1317 8.61093 L 9.52514 19.2175 L 5.2825 14.9749 L 15.8891 4.36828 Z" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen Thickness="2.0" DashCap="Flat" Brush="{StaticResource PanelButton.Checked.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 8.80762 18.5 L 6.33274 20.2678 L 3 19.5 L 5.87176 16.0355" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowRectangleNormalImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 3 7 C 3 6.46957 3.21071 5.96086 3.58579 5.58579 C 3.96086 5.21071 4.46957 5 5 5 H 19 C 19.5304 5 20.0391 5.21071 20.4142 5.58579 C 20.7893 5.96086 21 6.46957 21 7 V 17 C 21 17.5304 20.7893 18.0391 20.4142 18.4142 C 20.0391 18.7893 19.5304 19 19 19 H 5 C 4.46957 19 3.96086 18.7893 3.58579 18.4142 C 3.21071 18.0391 3 17.5304 3 17 V 7 Z" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowRectangleCheckedImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Checked.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 3 7 C 3 6.46957 3.21071 5.96086 3.58579 5.58579 C 3.96086 5.21071 4.46957 5 5 5 H 19 C 19.5304 5 20.0391 5.21071 20.4142 5.58579 C 20.7893 5.96086 21 6.46957 21 7 V 17 C 21 17.5304 20.7893 18.0391 20.4142 18.4142 C 20.0391 18.7893 19.5304 19 19 19 H 5 C 4.46957 19 3.96086 18.7893 3.58579 18.4142 C 3.21071 18.0391 3 17.5304 3 17 V 7 Z" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowOvalNormalImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen Thickness="2.0" DashCap="Flat" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 12 5 C 17.1903 5 21 8.33071 21 12 C 21 15.6693 17.1903 19 12 19 C 6.80967 19 3 15.6693 3 12 C 3 8.33071 6.80967 5 12 5 Z" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowOvalCheckedImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen Thickness="2.0" DashCap="Flat" Brush="{StaticResource PanelButton.Checked.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 12 5 C 17.1903 5 21 8.33071 21 12 C 21 15.6693 17.1903 19 12 19 C 6.80967 19 3 15.6693 3 12 C 3 8.33071 6.80967 5 12 5 Z" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowTextNormalImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 5 7 V 5 H 19 V 7" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 12 5 V 19" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 14 19 H 10" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowTextCheckedImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Checked.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 5 7 V 5 H 19 V 7" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Checked.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 12 5 V 19" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Checked.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 14 19 H 10" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowNumberNormalImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 3 12 C 3 13.1819 3.23279 14.3522 3.68508 15.4442 C 4.13738 16.5361 4.80031 17.5282 5.63604 18.364 C 6.47177 19.1997 7.46392 19.8626 8.55585 20.3149 C 9.64778 20.7672 10.8181 21 12 21 C 13.1819 21 14.3522 20.7672 15.4442 20.3149 C 16.5361 19.8626 17.5282 19.1997 18.364 18.364 C 19.1997 17.5282 19.8626 16.5361 20.3149 15.4442 C 20.7672 14.3522 21 13.1819 21 12 C 21 10.8181 20.7672 9.64778 20.3149 8.55585 C 19.8626 7.46392 19.1997 6.47177 18.364 5.63604 C 17.5282 4.80031 16.5361 4.13738 15.4442 3.68508 C 14.3522 3.23279 13.1819 3 12 3 C 10.8181 3 9.64778 3.23279 8.55585 3.68508 C 7.46392 4.13738 6.47177 4.80031 5.63604 5.63604 C 4.80031 6.47177 4.13738 7.46392 3.68508 8.55585 C 3.23279 9.64778 3 10.8181 3 12 Z" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 10 10 L 12 8 V 16" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowNumberCheckedImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Checked.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 3 12 C 3 13.1819 3.23279 14.3522 3.68508 15.4442 C 4.13738 16.5361 4.80031 17.5282 5.63604 18.364 C 6.47177 19.1997 7.46392 19.8626 8.55585 20.3149 C 9.64778 20.7672 10.8181 21 12 21 C 13.1819 21 14.3522 20.7672 15.4442 20.3149 C 16.5361 19.8626 17.5282 19.1997 18.364 18.364 C 19.1997 17.5282 19.8626 16.5361 20.3149 15.4442 C 20.7672 14.3522 21 13.1819 21 12 C 21 10.8181 20.7672 9.64778 20.3149 8.55585 C 19.8626 7.46392 19.1997 6.47177 18.364 5.63604 C 17.5282 4.80031 16.5361 4.13738 15.4442 3.68508 C 14.3522 3.23279 13.1819 3 12 3 C 10.8181 3 9.64778 3.23279 8.55585 3.68508 C 7.46392 4.13738 6.47177 4.80031 5.63604 5.63604 C 4.80031 6.47177 4.13738 7.46392 3.68508 8.55585 C 3.23279 9.64778 3 10.8181 3 12 Z" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Checked.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 10 10 L 12 8 V 16" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowBlurNormalImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing Brush="{StaticResource PanelButton.Normal.Color}">
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 11.3793 2.31585 C 11.6598 1.91036 12.2763 1.89062 12.5688 2.30804 C 15.3083 6.21848 20.477 9.65711 20.477 14.7142 C 20.4768 19.2927 16.6709 23.0033 11.977 23.0033 C 7.28216 23.0033 3.47717 19.2917 3.47699 14.7142 C 3.47699 11.182 5.99191 8.44706 8.48187 5.74064 C 9.52312 4.60852 10.5606 3.48083 11.3793 2.31585 Z M 11.976 4.81682 C 11.3154 5.61516 10.6125 6.37979 9.95453 7.09513 H 9.95355 C 8.68373 8.47534 7.55835 9.70731 6.72894 10.9984 C 5.91972 12.2582 5.47699 13.4516 5.47699 14.7142 C 5.47717 18.1403 8.33928 21.0033 11.977 21.0033 C 15.614 21.0033 18.4768 18.141 18.477 14.7142 C 18.477 12.9018 17.5605 11.2358 16.0073 9.35391 C 15.2325 8.41525 14.3856 7.52077 13.4838 6.53459 C 12.9821 5.98592 12.4682 5.41213 11.976 4.81682 Z M 7.80609 13.7142 C 8.35838 13.7142 8.80609 14.162 8.80609 14.7142 C 8.80621 15.9561 9.58102 17.0749 10.7475 17.5463 L 10.9858 17.6312 L 11.0825 17.6674 C 11.5478 17.8676 11.7953 18.3914 11.6401 18.8851 C 11.4847 19.3791 10.9813 19.6674 10.4848 19.5648 L 10.3862 19.5394 L 10.1909 19.473 C 8.19154 18.7557 6.80621 16.8711 6.80609 14.7142 C 6.80609 14.162 7.25391 13.7144 7.80609 13.7142 Z" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowBlurCheckedImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing Brush="{StaticResource PanelButton.Checked.Color}">
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 11.3793 2.31585 C 11.6598 1.91036 12.2763 1.89062 12.5688 2.30804 C 15.3083 6.21848 20.477 9.65711 20.477 14.7142 C 20.4768 19.2927 16.6709 23.0033 11.977 23.0033 C 7.28216 23.0033 3.47717 19.2917 3.47699 14.7142 C 3.47699 11.182 5.99191 8.44706 8.48187 5.74064 C 9.52312 4.60852 10.5606 3.48083 11.3793 2.31585 Z M 11.976 4.81682 C 11.3154 5.61516 10.6125 6.37979 9.95453 7.09513 H 9.95355 C 8.68373 8.47534 7.55835 9.70731 6.72894 10.9984 C 5.91972 12.2582 5.47699 13.4516 5.47699 14.7142 C 5.47717 18.1403 8.33928 21.0033 11.977 21.0033 C 15.614 21.0033 18.4768 18.141 18.477 14.7142 C 18.477 12.9018 17.5605 11.2358 16.0073 9.35391 C 15.2325 8.41525 14.3856 7.52077 13.4838 6.53459 C 12.9821 5.98592 12.4682 5.41213 11.976 4.81682 Z M 7.80609 13.7142 C 8.35838 13.7142 8.80609 14.162 8.80609 14.7142 C 8.80621 15.9561 9.58102 17.0749 10.7475 17.5463 L 10.9858 17.6312 L 11.0825 17.6674 C 11.5478 17.8676 11.7953 18.3914 11.6401 18.8851 C 11.4847 19.3791 10.9813 19.6674 10.4848 19.5648 L 10.3862 19.5394 L 10.1909 19.473 C 8.19154 18.7557 6.80621 16.8711 6.80609 14.7142 C 6.80609 14.162 7.25391 13.7144 7.80609 13.7142 Z" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowLineThicknessImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="3.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 4 19 H 20" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 4 11 H 20" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="1.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 4 4 H 20" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <EllipseGeometry x:Key="ScreenshotEditingDrawingWindowColorGeometry" Center="12,12" RadiusX="9" RadiusY="9" />
+  <EllipseGeometry x:Key="ScreenshotEditingDrawingWindowDropDownColorGeometry" Center="16,16" RadiusX="15" RadiusY="15" />
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowUndoNormalImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 9 14 L 5 10 L 9 6" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Normal.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 5 10 H 16 C 17.0609 10 18.0783 10.4214 18.8284 11.1716 C 19.5786 11.9217 20 12.9391 20 14 C 20 15.0609 19.5786 16.0783 18.8284 16.8284 C 18.0783 17.5786 17.0609 18 16 18 H 15" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <DrawingImage x:Key="ScreenshotEditingDrawingWindowUndoDisabledImage">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.ClipGeometry>
+          <RectangleGeometry Rect="0.0,0.0,24.0,24.0" />
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Disabled.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 9 14 L 5 10 L 9 6" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Pen>
+            <Pen LineJoin="Round" Thickness="2.0" DashCap="Round" EndLineCap="Round" StartLineCap="Round" Brush="{StaticResource PanelButton.Disabled.Color}" />
+          </GeometryDrawing.Pen>
+          <GeometryDrawing.Geometry>
+            <PathGeometry Figures="M 5 10 H 16 C 17.0609 10 18.0783 10.4214 18.8284 11.1716 C 19.5786 11.9217 20 12.9391 20 14 C 20 15.0609 19.5786 16.0783 18.8284 16.8284 C 18.0783 17.5786 17.0609 18 16 18 H 15" FillRule="Nonzero" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+</ResourceDictionary>

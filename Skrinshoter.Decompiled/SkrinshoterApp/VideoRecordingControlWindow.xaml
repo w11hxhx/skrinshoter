@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<local:PanelWindow x:Class="SkrinshoterApp.VideoRecordingControlWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding" xmlns:props="clr-namespace:SkrinshoterApp.Properties" xmlns:local="clr-namespace:SkrinshoterApp" xmlns:CameraCapture="clr-namespace:CameraCapture;assembly=CameraCapture" MouseDown="Window_MouseDown" Style="{StaticResource PanelWindowStyle}" UseLayoutRounding="True">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <Style x:Key="{x:Type ToolTip}" TargetType="{x:Type ToolTip}" BasedOn="{StaticResource ToolTipStyle}">
+        <Setter Property="local:PopupHelper.ExcludeFromCapture" Value="True" />
+      </Style>
+      <Style x:Key="{x:Type Button}" TargetType="{x:Type Button}" BasedOn="{StaticResource EmphasizedVideoPanelButtonStyle}" />
+      <Style x:Key="TogglePauseButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource EmphasizedVideoPanelButtonStyle}">
+        <Setter Property="FrameworkElement.ToolTip" Value="{Binding PauseToolTip}" />
+        <Setter Property="local:IconProperties.Icon" Value="{StaticResource VideoRecordingPauseButtonImage}" />
+        <Style.Triggers>
+          <DataTrigger Value="True" Binding="{Binding Paused}">
+            <Setter Property="FrameworkElement.ToolTip" Value="{Binding ResumeToolTip}" />
+            <Setter Property="local:IconProperties.Icon" Value="{StaticResource VideoRecordingResumeButtonImage}" />
+          </DataTrigger>
+        </Style.Triggers>
+      </Style>
+      <DataTemplate x:Key="MicrophoneLevelButtonContentTemplate" DataType="{x:Type local:VideoRecordingControlWindowVM}">
+        <Grid Width="32" Height="32">
+          <Canvas Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" Clip="{StaticResource VideoRecordingMicrophoneLevelClipGeometry}">
+            <UIElement.Visibility>
+              <c:Binding>
+                <c:Binding.Path>!SelectAudioDevicesVM.IsInputAudioDeviceMuted and SelectAudioDevicesVM.IsActualInputAudioDeviceWorking</c:Binding.Path>
+              </c:Binding>
+            </UIElement.Visibility>
+            <Rectangle Canvas.Left="9" Canvas.Bottom="11" Width="6" Fill="{StaticResource PanelButton.Checked.Color}">
+              <FrameworkElement.Height>
+                <c:Binding>
+                  <c:Binding.Path>InputAudioLevelMeter.Level * 11</c:Binding.Path>
+                </c:Binding>
+              </FrameworkElement.Height>
+            </Rectangle>
+          </Canvas>
+          <Image Width="32" Height="32" Stretch="None" Source="{Binding ButtonIcon, RelativeSource={RelativeSource AncestorType={x:Type local:SplitActionComboBox}}}" />
+        </Grid>
+      </DataTemplate>
+      <DataTemplate x:Key="SystemSoundLevelButtonContentTemplate" DataType="{x:Type local:VideoRecordingControlWindowVM}">
+        <Grid Width="32" Height="32">
+          <Canvas Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center" Clip="{StaticResource VideoRecordingSystemSoundLevelClipGeometry}">
+            <UIElement.Visibility>
+              <c:Binding>
+                <c:Binding.Path>!SelectAudioDevicesVM.IsOutputAudioDeviceMuted and SelectAudioDevicesVM.IsActualOutputAudioDeviceWorking</c:Binding.Path>
+              </c:Binding>
+            </UIElement.Visibility>
+            <Rectangle Canvas.Left="3" Canvas.Top="4" Height="16" Fill="{StaticResource PanelButton.Checked.Color}">
+              <FrameworkElement.Width>
+                <c:Binding>
+                  <c:Binding.Path>OutputAudioLevelMeter.Level * 8</c:Binding.Path>
+                </c:Binding>
+              </FrameworkElement.Width>
+            </Rectangle>
+          </Canvas>
+          <Image Width="32" Height="32" Stretch="None" Source="{Binding ButtonIcon, RelativeSource={RelativeSource AncestorType={x:Type local:SplitActionComboBox}}}" />
+        </Grid>
+      </DataTemplate>
+      <Style x:Key="CameraComboBoxStyle" TargetType="{x:Type local:SplitActionComboBox}" BasedOn="{StaticResource SplitActionComboBoxStyle}">
+        <Setter Property="local:SplitActionComboBox.ButtonIcon" Value="{StaticResource VideoRecordingCameraButtonImage}" />
+        <Setter Property="local:SplitActionComboBox.ButtonToolTip" Value="{Binding TurnOffCameraToolTip}" />
+        <Setter Property="local:SplitActionComboBox.ArrowToolTip" Value="{Binding SelectCameraToolTip}" />
+        <Style.Triggers>
+          <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>
+              <Condition Value="False" Binding="{Binding SelectCameraDevicesVM.IsCameraDeviceOff}" />
+              <Condition Value="False" Binding="{Binding SelectCameraDevicesVM.IsActualCameraDeviceWorking}" />
+            </MultiDataTrigger.Conditions>
+            <MultiDataTrigger.Setters>
+              <Setter Property="local:SplitActionComboBox.ButtonIcon" Value="{StaticResource VideoRecordingCameraFailedButtonImage}" />
+              <Setter Property="local:SplitActionComboBox.ButtonToolTip" Value="{Binding SelectCameraDevicesVM.CameraProblemToolTip}" />
+            </MultiDataTrigger.Setters>
+          </MultiDataTrigger>
+          <DataTrigger Value="True" Binding="{Binding SelectCameraDevicesVM.IsCameraDeviceOff}">
+            <Setter Property="local:SplitActionComboBox.ButtonIcon" Value="{StaticResource VideoRecordingCameraOffButtonImage}" />
+            <Setter Property="local:SplitActionComboBox.ButtonToolTip" Value="{Binding TurnOnCameraToolTip}" />
+          </DataTrigger>
+          <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>
+              <Condition Value="True" Binding="{Binding SelectCameraDevicesVM.IsCameraDeviceOff}" />
+              <Condition Binding="{Binding SelectCameraDevicesVM.ActualCameraDeviceId}" Value="{x:Null}" />
+            </MultiDataTrigger.Conditions>
+            <MultiDataTrigger.Setters>
+              <Setter Property="local:SplitActionComboBox.ButtonToolTip" Value="{Binding SelectCameraDevicesVM.CameraProblemToolTip}" />
+            </MultiDataTrigger.Setters>
+          </MultiDataTrigger>
+          <Trigger Property="ItemsControl.HasItems" Value="False">
+            <Setter Property="local:SplitActionComboBox.ArrowToolTip" Value="{Binding SelectCameraDevicesVM.CameraProblemToolTip}" />
+          </Trigger>
+        </Style.Triggers>
+      </Style>
+      <DataTemplate x:Key="CameraComboBoxDropDownItemTemplate" DataType="{x:Type CameraCapture:CameraDeviceDescription}">
+        <TextBlock Name="item" FontWeight="SemiBold" Padding="12,10,12,11" FontFamily="{StaticResource App.FontFamily}" FontSize="{StaticResource App.FontSize.PanelButton}" Foreground="{StaticResource PanelButton.Normal.Color}" Text="{Binding Name}" />
+        <DataTemplate.Triggers>
+          <DataTrigger Value="True" Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBoxItem}}}">
+            <Setter TargetName="item" Property="TextBlock.Foreground" Value="{StaticResource PanelButton.Checked.Color}" />
+          </DataTrigger>
+        </DataTemplate.Triggers>
+      </DataTemplate>
+      <Style x:Key="MicrophoneComboBoxStyle" TargetType="{x:Type local:SplitActionComboBox}" BasedOn="{StaticResource SplitActionComboBoxStyle}">
+        <Setter Property="local:SplitActionComboBox.ButtonIcon" Value="{StaticResource VideoRecordingMicrophoneButtonImage}" />
+        <Setter Property="local:SplitActionComboBox.ButtonContent" Value="{Binding}" />
+        <Setter Property="local:SplitActionComboBox.ButtonContentTemplate" Value="{StaticResource MicrophoneLevelButtonContentTemplate}" />
+        <Setter Property="local:SplitActionComboBox.ButtonToolTip" Value="{Binding MuteMicrophoneToolTip}" />
+        <Setter Property="local:SplitActionComboBox.ArrowToolTip" Value="{Binding SelectMicrophoneToolTip}" />
+        <Style.Triggers>
+          <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>
+              <Condition Value="False" Binding="{Binding SelectAudioDevicesVM.IsInputAudioDeviceMuted}" />
+              <Condition Value="False" Binding="{Binding SelectAudioDevicesVM.IsActualInputAudioDeviceWorking}" />
+            </MultiDataTrigger.Conditions>
+            <MultiDataTrigger.Setters>
+              <Setter Property="local:SplitActionComboBox.ButtonIcon" Value="{StaticResource VideoRecordingMicrophoneFailedButtonImage}" />
+              <Setter Property="local:SplitActionComboBox.ButtonToolTip" Value="{Binding SelectAudioDevicesVM.InputAudioProblemToolTip}" />
+            </MultiDataTrigger.Setters>
+          </MultiDataTrigger>
+          <DataTrigger Value="True" Binding="{Binding SelectAudioDevicesVM.IsInputAudioDeviceMuted}">
+            <Setter Property="local:SplitActionComboBox.ButtonIcon" Value="{StaticResource VideoRecordingMicrophoneOffButtonImage}" />
+            <Setter Property="local:SplitActionComboBox.ButtonToolTip" Value="{Binding UnmuteMicrophoneToolTip}" />
+          </DataTrigger>
+          <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>
+              <Condition Value="True" Binding="{Binding SelectAudioDevicesVM.IsInputAudioDeviceMuted}" />
+              <Condition Binding="{Binding SelectAudioDevicesVM.ActualInputAudioDeviceId}" Value="{x:Null}" />
+            </MultiDataTrigger.Conditions>
+            <MultiDataTrigger.Setters>
+              <Setter Property="local:SplitActionComboBox.ButtonToolTip" Value="{Binding SelectAudioDevicesVM.InputAudioProblemToolTip}" />
+            </MultiDataTrigger.Setters>
+          </MultiDataTrigger>
+          <Trigger Property="ItemsControl.HasItems" Value="False">
+            <Setter Property="local:SplitActionComboBox.ArrowToolTip" Value="{Binding SelectAudioDevicesVM.InputAudioProblemToolTip}" />
+          </Trigger>
+        </Style.Triggers>
+      </Style>
+      <Style x:Key="SystemSoundComboBoxStyle" TargetType="{x:Type local:SplitActionComboBox}" BasedOn="{StaticResource SplitActionComboBoxStyle}">
+        <Setter Property="local:SplitActionComboBox.ButtonIcon" Value="{StaticResource VideoRecordingSystemSoundButtonImage}" />
+        <Setter Property="local:SplitActionComboBox.ButtonContent" Value="{Binding}" />
+        <Setter Property="local:SplitActionComboBox.ButtonContentTemplate" Value="{StaticResource SystemSoundLevelButtonContentTemplate}" />
+        <Setter Property="local:SplitActionComboBox.ButtonToolTip" Value="{Binding MuteSystemSoundToolTip}" />
+        <Setter Property="local:SplitActionComboBox.ArrowToolTip" Value="{Binding SelectSystemSoundToolTip}" />
+        <Style.Triggers>
+          <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>
+              <Condition Value="False" Binding="{Binding SelectAudioDevicesVM.IsOutputAudioDeviceMuted}" />
+              <Condition Value="False" Binding="{Binding SelectAudioDevicesVM.IsActualOutputAudioDeviceWorking}" />
+            </MultiDataTrigger.Conditions>
+            <MultiDataTrigger.Setters>
+              <Setter Property="local:SplitActionComboBox.ButtonIcon" Value="{StaticResource VideoRecordingSystemSoundFailedButtonImage}" />
+              <Setter Property="local:SplitActionComboBox.ButtonToolTip" Value="{Binding SelectAudioDevicesVM.OutputAudioProblemToolTip}" />
+            </MultiDataTrigger.Setters>
+          </MultiDataTrigger>
+          <DataTrigger Value="True" Binding="{Binding SelectAudioDevicesVM.IsOutputAudioDeviceMuted}">
+            <Setter Property="local:SplitActionComboBox.ButtonIcon" Value="{StaticResource VideoRecordingSystemSoundOffButtonImage}" />
+            <Setter Property="local:SplitActionComboBox.ButtonToolTip" Value="{Binding UnmuteSystemSoundToolTip}" />
+          </DataTrigger>
+          <MultiDataTrigger>
+            <MultiDataTrigger.Conditions>
+              <Condition Value="True" Binding="{Binding SelectAudioDevicesVM.IsOutputAudioDeviceMuted}" />
+              <Condition Binding="{Binding SelectAudioDevicesVM.ActualOutputAudioDeviceId}" Value="{x:Null}" />
+            </MultiDataTrigger.Conditions>
+            <MultiDataTrigger.Setters>
+              <Setter Property="local:SplitActionComboBox.ButtonToolTip" Value="{Binding SelectAudioDevicesVM.OutputAudioProblemToolTip}" />
+            </MultiDataTrigger.Setters>
+          </MultiDataTrigger>
+          <Trigger Property="ItemsControl.HasItems" Value="False">
+            <Setter Property="local:SplitActionComboBox.ArrowToolTip" Value="{Binding SelectAudioDevicesVM.OutputAudioProblemToolTip}" />
+          </Trigger>
+        </Style.Triggers>
+      </Style>
+      <DataTemplate x:Key="AudioDeviceComboBoxDropDownItemTemplate" DataType="{x:Type local:AudioDeviceInfo}">
+        <StackPanel Margin="12,10,12,11" TextElement.FontFamily="{StaticResource App.FontFamily}">
+          <TextBlock Name="item" FontWeight="SemiBold" Foreground="{StaticResource PanelButton.Normal.Color}" FontSize="{StaticResource App.FontSize.PanelButton}" Text="{Binding Name}" />
+          <TextBlock Name="realDeviceName" Foreground="{StaticResource PanelButton.Normal.Color}" FontSize="{StaticResource App.FontSize.RealDeviceName}" Text="{Binding RealDeviceName}" />
+        </StackPanel>
+        <DataTemplate.Triggers>
+          <DataTrigger Value="true" Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBoxItem}}}">
+            <Setter TargetName="item" Property="TextBlock.Foreground" Value="{StaticResource PanelButton.Checked.Color}" />
+            <Setter TargetName="realDeviceName" Property="TextBlock.Foreground" Value="{StaticResource PanelButton.Checked.Color}" />
+          </DataTrigger>
+          <DataTrigger Binding="{Binding RealDeviceName}" Value="{x:Null}">
+            <Setter TargetName="realDeviceName" Property="UIElement.Visibility" Value="Collapsed" />
+          </DataTrigger>
+        </DataTemplate.Triggers>
+      </DataTemplate>
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <UIElement.InputBindings>
+    <KeyBinding Key="Enter" Command="{Binding StartCommand}" />
+    <KeyBinding Key="Escape" Command="{Binding CancelSelectionCommand}" />
+  </UIElement.InputBindings>
+  <Canvas>
+    <Grid Name="panelContainer" Canvas.Left="0" Canvas.Top="0" local:SizeObserver.Observe="True" local:SizeObserver.ObservedWidth="{Binding PanelObservedWidth, Mode=OneWayToSource}" local:SizeObserver.ObservedHeight="{Binding PanelObservedHeight, Mode=OneWayToSource}" SizeChanged="PanelContainer_SizeChanged">
+      <local:Panel Style="{StaticResource PanelStyle}">
+        <StackPanel Orientation="Horizontal" Margin="0,0,4,0">
+          <Border Background="#00FFFFFF" Cursor="SizeAll" Padding="6,0,4,0">
+            <Image Width="12" Height="24" Stretch="None" VerticalAlignment="Center" Source="{StaticResource VideoRecordingDragAreaImage}" />
+          </Border>
+          <TextBlock VerticalAlignment="Center" TextAlignment="Left" FontFamily="{StaticResource App.FontFamily}" FontSize="{StaticResource App.FontSize.PanelButton}" FontWeight="SemiBold" Typography.NumeralAlignment="Tabular" Foreground="{StaticResource PanelButton.Normal.Color}" Margin="8,-1,8,0" Text="{Binding DurationText}" Width="{Binding DurationWidth}">
+            <UIElement.Visibility>
+              <c:Binding>
+                <c:Binding.Path>State == local:VideoRecordingControlWindowState.Recording</c:Binding.Path>
+              </c:Binding>
+            </UIElement.Visibility>
+          </TextBlock>
+          <Button local:IconProperties.Icon="{StaticResource VideoRecordingStartButtonImage}" Padding="12,0" Command="{Binding StartCommand}" ToolTip="{Binding StartToolTip}" Content="{Binding Path=(props:Resources.VideoRecording_StartButtonText)}">
+            <UIElement.Visibility>
+              <c:Binding>
+                <c:Binding.Path>State == local:VideoRecordingControlWindowState.Selecting</c:Binding.Path>
+              </c:Binding>
+            </UIElement.Visibility>
+          </Button>
+          <Button local:IconProperties.Icon="{StaticResource VideoRecordingStopButtonImage}" Padding="12,0" Command="{Binding StopCommand}" ToolTip="{Binding StopToolTip}" Content="{Binding Path=(props:Resources.VideoRecording_StopButtonText)}">
+            <UIElement.Visibility>
+              <c:Binding>
+                <c:Binding.Path>State == local:VideoRecordingControlWindowState.Recording</c:Binding.Path>
+              </c:Binding>
+            </UIElement.Visibility>
+          </Button>
+          <Button Style="{StaticResource TogglePauseButtonStyle}" Command="{Binding TogglePauseCommand}">
+            <UIElement.Visibility>
+              <c:Binding>
+                <c:Binding.Path>State == local:VideoRecordingControlWindowState.Recording</c:Binding.Path>
+              </c:Binding>
+            </UIElement.Visibility>
+          </Button>
+          <local:SplitActionComboBox Height="{StaticResource VideoPanelSize}" Style="{StaticResource CameraComboBoxStyle}" SelectedValuePath="Id" ItemTemplate="{StaticResource CameraComboBoxDropDownItemTemplate}" local:PopupHelper.ExcludeFromCapture="True" ItemsSource="{Binding SelectCameraDevicesVM.CameraDevices}" SelectedValue="{Binding SelectCameraDevicesVM.SelectedCameraDevice}" ButtonCommand="{Binding SelectCameraDevicesVM.ToggleCameraDeviceOffCommand}" />
+          <local:SplitActionComboBox Height="{StaticResource VideoPanelSize}" Style="{StaticResource MicrophoneComboBoxStyle}" SelectedValuePath="Id" ItemTemplate="{StaticResource AudioDeviceComboBoxDropDownItemTemplate}" local:PopupHelper.ExcludeFromCapture="True" ItemsSource="{Binding SelectAudioDevicesVM.InputAudioDevices}" SelectedValue="{Binding SelectAudioDevicesVM.SelectedInputAudioDevice}" ButtonCommand="{Binding SelectAudioDevicesVM.ToggleInputAudioDeviceMutedCommand}" />
+          <local:SplitActionComboBox Height="{StaticResource VideoPanelSize}" Style="{StaticResource SystemSoundComboBoxStyle}" SelectedValuePath="Id" ItemTemplate="{StaticResource AudioDeviceComboBoxDropDownItemTemplate}" local:PopupHelper.ExcludeFromCapture="True" ItemsSource="{Binding SelectAudioDevicesVM.OutputAudioDevices}" SelectedValue="{Binding SelectAudioDevicesVM.SelectedOutputAudioDevice}" ButtonCommand="{Binding SelectAudioDevicesVM.ToggleOutputAudioDeviceMutedCommand}" />
+          <Button Style="{StaticResource VideoPanelButtonStyle}" local:IconProperties.Icon="{StaticResource VideoRecordingCancelButtonImage}" Command="{Binding CancelSelectionCommand}" ToolTip="{Binding CloseToolTip}">
+            <UIElement.Visibility>
+              <c:Binding>
+                <c:Binding.Path>State == local:VideoRecordingControlWindowState.Selecting</c:Binding.Path>
+              </c:Binding>
+            </UIElement.Visibility>
+          </Button>
+          <Button Style="{StaticResource VideoPanelButtonStyle}" local:IconProperties.Icon="{StaticResource VideoRecordingCancelButtonImage}" Command="{Binding CancelCommand}" ToolTip="{Binding CancelToolTip}">
+            <UIElement.Visibility>
+              <c:Binding>
+                <c:Binding.Path>State == local:VideoRecordingControlWindowState.Recording</c:Binding.Path>
+              </c:Binding>
+            </UIElement.Visibility>
+          </Button>
+        </StackPanel>
+      </local:Panel>
+    </Grid>
+  </Canvas>
+</local:PanelWindow>

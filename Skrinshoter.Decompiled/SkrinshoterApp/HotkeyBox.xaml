@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="SkrinshoterApp.HotkeyBox" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:props="clr-namespace:SkrinshoterApp.Properties" xmlns:local="clr-namespace:SkrinshoterApp">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <GeometryGroup x:Key="ClearButton.Geometry" FillRule="EvenOdd">
+        <PathGeometry Figures="M8 0L8.2592 0.000799942L8.5136 0.00400009L9.0064 0.0176001L9.2456 0.0280001L9.7088 0.0552L10.1512 0.092C13.9792 0.4632 15.5368 2.0208 15.908 5.8488L15.9448 6.2912L15.972 6.7544C15.976 6.8328 15.98 6.9128 15.9824 6.9936L15.996 7.4864L16 8L15.996 8.5136L15.9824 9.0064L15.972 9.2456L15.9448 9.7088L15.908 10.1512C15.5368 13.9792 13.9792 15.5368 10.1512 15.908L9.7088 15.9448L9.2456 15.972C9.1672 15.976 9.0872 15.98 9.0064 15.9824L8.5136 15.996L8 16L7.4864 15.996L6.9936 15.9824L6.7544 15.972L6.2912 15.9448L5.8488 15.908C2.0208 15.5368 0.4632 13.9792 0.092 10.1512L0.0552 9.7088L0.0280001 9.2456C0.0241082 9.16589 0.0206415 9.08615 0.0176001 9.0064L0.00400009 8.5136C0.00160009 8.3456 0 8.1744 0 8L0.000799942 7.7408L0.00400009 7.4864L0.0176001 6.9936L0.0280001 6.7544L0.0552 6.2912L0.092 5.8488C0.4632 2.0208 2.0208 0.4632 5.8488 0.092L6.2912 0.0552L6.7544 0.0280001C6.8328 0.0240001 6.9128 0.0200001 6.9936 0.0176001L7.4864 0.00400009C7.6544 0.00160009 7.8256 0 8 0Z" />
+        <PathGeometry Figures="M6.01554 4.18764C5.73616 4.02134 5.40563 3.96284 5.08613 4.02314C4.76663 4.08345 4.48018 4.2584 4.28064 4.51511C4.0811 4.77181 3.98223 5.09257 4.00263 5.41706C4.02302 5.74155 4.16128 6.0474 4.39139 6.27711L6.11422 8.00121L4.39139 9.72532L4.28071 9.85066C4.07347 10.1187 3.97602 10.4555 4.00815 10.7927C4.04028 11.13 4.19957 11.4424 4.45369 11.6664C4.7078 11.8905 5.03767 12.0094 5.3763 11.9991C5.71493 11.9888 6.03693 11.8499 6.2769 11.6108L8.00107 9.88799L9.72523 11.6108L9.85058 11.7214C10.1186 11.9287 10.4554 12.0261 10.7927 11.994C11.13 11.9619 11.4424 11.8026 11.6664 11.5485C11.8905 11.2944 12.0094 10.9645 11.9991 10.6259C11.9888 10.2873 11.8499 9.96527 11.6108 9.72532L9.88792 8.00121L11.6108 6.27711L11.7214 6.15176C11.9287 5.88376 12.0261 5.54692 11.994 5.20967C11.9619 4.87242 11.8026 4.56004 11.5484 4.33598C11.2943 4.11193 10.9645 3.99299 10.6258 4.00333C10.2872 4.01367 9.9652 4.15251 9.72523 4.39166L8.00107 6.11443L6.2769 4.39166L6.15156 4.28098L6.01554 4.18764Z" />
+      </GeometryGroup>
+      <SolidColorBrush x:Key="ClearButton.Static.Background" Color="#66000000" />
+      <SolidColorBrush x:Key="ClearButton.MouseOver.Background" Color="#CC000000" />
+      <SolidColorBrush x:Key="ClearButton.Disabled.Background" Color="#26000000" />
+      <SolidColorBrush x:Key="Watermark.Foreground" Color="#66000000" />
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <Grid>
+    <TextBox Name="PART_TextBox" Style="{StaticResource TextBoxStyle}" Padding="17,4,34,6" IsTabStop="False" InputMethod.IsInputMethodEnabled="False" ContextMenu="{x:Null}" Text="{Binding DisplayText, Mode=OneWay, RelativeSource={RelativeSource AncestorType=UserControl}}" local:MouseOverProxy.ExternalMouseOver="{Binding ElementName=PART_Clear, Path=IsMouseOver}" PreviewGotKeyboardFocus="OnPreviewGotKeyboardFocus" GotKeyboardFocus="OnGotKeyboardFocus" LostKeyboardFocus="OnLostKeyboardFocus" PreviewMouseLeftButtonDown="OnPreviewMouseLeftButtonDown" PreviewKeyDown="OnPreviewKeyDown" PreviewTextInput="OnPreviewTextInput" />
+    <TextBlock IsHitTestVisible="False" Margin="21,4,35,6" Foreground="{StaticResource Watermark.Foreground}" Text="{Binding Path=(props:Resources.HotkeyBox_HotkeyNotSet)}">
+      <FrameworkElement.Style>
+        <Style BasedOn="{StaticResource SettingsTextBlockStyle}" TargetType="{x:Type TextBlock}">
+          <Setter Property="Visibility" Value="Collapsed" />
+          <Style.Triggers>
+            <MultiDataTrigger>
+              <MultiDataTrigger.Conditions>
+                <Condition Value="" Binding="{Binding Text, ElementName=PART_TextBox}" />
+                <Condition Value="False" Binding="{Binding IsKeyboardFocused, ElementName=PART_TextBox}" />
+              </MultiDataTrigger.Conditions>
+              <Setter Property="Visibility" Value="Visible" />
+            </MultiDataTrigger>
+          </Style.Triggers>
+        </Style>
+      </FrameworkElement.Style>
+    </TextBlock>
+    <TextBlock IsHitTestVisible="False" Margin="21,4,35,6" Foreground="{StaticResource Watermark.Foreground}" Text="{Binding Path=(props:Resources.HotkeyBox_InputHotkey)}">
+      <FrameworkElement.Style>
+        <Style BasedOn="{StaticResource SettingsTextBlockStyle}" TargetType="{x:Type TextBlock}">
+          <Setter Property="Visibility" Value="Collapsed" />
+          <Style.Triggers>
+            <MultiDataTrigger>
+              <MultiDataTrigger.Conditions>
+                <Condition Value="" Binding="{Binding Text, ElementName=PART_TextBox}" />
+                <Condition Value="True" Binding="{Binding IsKeyboardFocused, ElementName=PART_TextBox}" />
+              </MultiDataTrigger.Conditions>
+              <Setter Property="Visibility" Value="Visible" />
+            </MultiDataTrigger>
+          </Style.Triggers>
+        </Style>
+      </FrameworkElement.Style>
+    </TextBlock>
+    <Button Name="PART_Clear" Width="29" Height="29" HorizontalAlignment="Right" VerticalAlignment="Center" Background="#00FFFFFF" BorderThickness="0" Margin="3,0" Padding="0" Focusable="False" Cursor="Hand" Click="OnClearClick">
+      <Control.Template>
+        <ControlTemplate TargetType="{x:Type Button}">
+          <Border CornerRadius="8" Background="#00FFFFFF">
+            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+          </Border>
+        </ControlTemplate>
+      </Control.Template>
+      <Path Data="{StaticResource ClearButton.Geometry}" Width="16" Height="16">
+        <FrameworkElement.Style>
+          <Style TargetType="{x:Type Path}">
+            <Setter Property="Fill" Value="{StaticResource ClearButton.Static.Background}" />
+            <Style.Triggers>
+              <DataTrigger Value="True" Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}">
+                <Setter Property="Fill" Value="{StaticResource ClearButton.MouseOver.Background}" />
+              </DataTrigger>
+              <DataTrigger Value="False" Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=Button}}">
+                <Setter Property="Fill" Value="{StaticResource ClearButton.Disabled.Background}" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </FrameworkElement.Style>
+      </Path>
+    </Button>
+  </Grid>
+</UserControl>

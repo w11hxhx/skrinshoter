@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="SkrinshoterApp.PencilObject" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors" xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:SkrinshoterApp" Loaded="UserControl_Loaded">
+  <Canvas>
+    <Path Name="MainElement" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Effect="{DynamicResource ScreenshotEditingVisualObjectsDropShadowEffect}" Stroke="{Binding Color, Converter={StaticResource ColorToBrushConverter}}" StrokeThickness="{Binding LineThickness}" Cursor="{Binding Cursor}" Data="{Binding Geometry}" RenderTransform="{Binding MoveTransform}">
+      <Behaviors:Interaction.Triggers>
+        <Behaviors:EventTrigger EventName="MouseMove">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding DrawCommand}" />
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="MouseLeftButtonUp">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding EndDrawCommand}" />
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="MouseLeftButtonDown">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding StartMoveCommand}" />
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="MouseMove">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding MoveCommand}" />
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="MouseLeftButtonUp">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding EndMoveCommand}" />
+        </Behaviors:EventTrigger>
+      </Behaviors:Interaction.Triggers>
+    </Path>
+    <Rectangle Stroke="{StaticResource ScreenshotEditingVisualObjectsSelectionFrameBrush}" IsHitTestVisible="False">
+      <Canvas.Left>
+        <c:Binding>
+          <c:Binding.Path>BoundingRectangle.Left</c:Binding.Path>
+        </c:Binding>
+      </Canvas.Left>
+      <Canvas.Top>
+        <c:Binding>
+          <c:Binding.Path>BoundingRectangle.Top</c:Binding.Path>
+        </c:Binding>
+      </Canvas.Top>
+      <FrameworkElement.Width>
+        <c:Binding>
+          <c:Binding.Path>BoundingRectangle.Width</c:Binding.Path>
+        </c:Binding>
+      </FrameworkElement.Width>
+      <FrameworkElement.Height>
+        <c:Binding>
+          <c:Binding.Path>BoundingRectangle.Height</c:Binding.Path>
+        </c:Binding>
+      </FrameworkElement.Height>
+      <UIElement.Visibility>
+        <c:Binding>
+          <c:Binding.Path>SelectionVisible</c:Binding.Path>
+        </c:Binding>
+      </UIElement.Visibility>
+    </Rectangle>
+  </Canvas>
+</UserControl>

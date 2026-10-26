@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<local:PanelWindow x:Class="SkrinshoterApp.ScrollingCaptureStartWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:props="clr-namespace:SkrinshoterApp.Properties" xmlns:local="clr-namespace:SkrinshoterApp" Style="{StaticResource PanelWindowStyle}">
+  <local:Panel Style="{StaticResource PanelStyle}">
+    <Button Style="{StaticResource PanelButtonExStyle}" local:IconProperties.Icon="{StaticResource ScrollingCaptureStartImage}" Command="{Binding StartCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" Content="{Binding Path=(props:Resources.ScrollingCapture_StartButtonText)}" ToolTip="{Binding StartToolTip}" />
+  </local:Panel>
+</local:PanelWindow>

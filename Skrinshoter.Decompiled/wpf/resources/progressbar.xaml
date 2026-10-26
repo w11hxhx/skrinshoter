@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <LinearGradientBrush x:Key="ProgressBar_TrackBrush" StartPoint="0,0" EndPoint="0,1">
+    <GradientStop Color="#FFF4F4F4" Offset="0" />
+    <GradientStop Color="#FFE9E9E9" Offset="1" />
+  </LinearGradientBrush>
+  <LinearGradientBrush x:Key="ProgressBar_IndicatorBrush" StartPoint="0,0" EndPoint="0,1">
+    <GradientStop Color="#FFBEE6A0" Offset="0" />
+    <GradientStop Color="#FF8FD36B" Offset="0.5" />
+    <GradientStop Color="#FF6DBE45" Offset="1" />
+  </LinearGradientBrush>
+  <Style x:Key="ProgressBarStyle" TargetType="{x:Type ProgressBar}">
+    <Setter Property="UIElement.SnapsToDevicePixels" Value="True" />
+    <Setter Property="FrameworkElement.UseLayoutRounding" Value="True" />
+    <Setter Property="Height" Value="20" />
+    <Setter Property="Background" Value="{StaticResource ProgressBar_TrackBrush}" />
+    <Setter Property="BorderBrush" Value="#FFBDBDBD" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Foreground" Value="{StaticResource ProgressBar_IndicatorBrush}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ProgressBar}">
+          <FrameworkTemplate.Resources>
+            <ResourceDictionary>
+              <Storyboard x:Key="SB_Det" RepeatBehavior="Forever">
+                <DoubleAnimation Storyboard.TargetName="DeterministicShimmerTT" Storyboard.TargetProperty="X" From="-1" To="1" Duration="0:0:2.0" RepeatBehavior="Forever" />
+              </Storyboard>
+            </ResourceDictionary>
+          </FrameworkTemplate.Resources>
+          <Grid Name="Sizer" MinWidth="{TemplateBinding FrameworkElement.MinWidth}" Width="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}">
+            <Grid SnapsToDevicePixels="True">
+              <Border CornerRadius="6" Background="{TemplateBinding Control.Background}" BorderBrush="#00FFFFFF" BorderThickness="{TemplateBinding Control.BorderThickness}" />
+              <Grid Name="PART_Track" Margin="{TemplateBinding Control.BorderThickness}" SnapsToDevicePixels="True" Clip="{Binding ElementName=ClipRect, Path=RenderedGeometry}">
+                <Rectangle Name="ClipRect" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RadiusX="5.5" RadiusY="5.5" Fill="#FF000000" Opacity="0" IsHitTestVisible="False" />
+                <Border Name="PART_Indicator" HorizontalAlignment="Left" CornerRadius="5.5" Background="{TemplateBinding Control.Foreground}" SnapsToDevicePixels="True">
+                  <Rectangle IsHitTestVisible="False" Opacity="0.35" RadiusX="5.5" RadiusY="5.5">
+                    <Shape.Fill>
+                      <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#00FFFFFF" Offset="0" />
+                        <GradientStop Color="#A0FFFFFF" Offset="0.5" />
+                        <GradientStop Color="#00FFFFFF" Offset="1" />
+                        <Brush.RelativeTransform>
+                          <TranslateTransform x:Name="DeterministicShimmerTT" X="-1" />
+                        </Brush.RelativeTransform>
+                      </LinearGradientBrush>
+                    </Shape.Fill>
+                  </Rectangle>
+                </Border>
+              </Grid>
+              <Border IsHitTestVisible="False" CornerRadius="6" Background="#00FFFFFF" BorderBrush="{TemplateBinding Control.BorderBrush}" BorderThickness="{TemplateBinding Control.BorderThickness}" />
+            </Grid>
+          </Grid>
+          <ControlTemplate.Triggers>
+            <Trigger Property="UIElement.IsVisible" Value="True">
+              <TriggerBase.EnterActions>
+                <BeginStoryboard Name="RunDet" Storyboard="{StaticResource SB_Det}" />
+              </TriggerBase.EnterActions>
+              <TriggerBase.ExitActions>
+                <StopStoryboard BeginStoryboardName="RunDet" />
+              </TriggerBase.ExitActions>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter TargetName="PART_Track" Property="UIElement.Opacity" Value="0.6" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+    <Style.Triggers>
+      <Trigger Property="ProgressBar.IsIndeterminate" Value="True">
+        <Setter Property="Template">
+          <Setter.Value>
+            <ControlTemplate TargetType="{x:Type ProgressBar}">
+              <Grid Name="Sizer" MinWidth="{TemplateBinding FrameworkElement.MinWidth}" Width="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}">
+                <Grid SnapsToDevicePixels="True">
+                  <Border CornerRadius="6" Background="{TemplateBinding Control.Background}" BorderBrush="#00FFFFFF" BorderThickness="{TemplateBinding Control.BorderThickness}" />
+                  <Grid Name="PART_Track" Margin="{TemplateBinding Control.BorderThickness}" SnapsToDevicePixels="True" Clip="{Binding ElementName=ClipRectInd, Path=RenderedGeometry}">
+                    <Rectangle Name="ClipRectInd" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RadiusX="5.5" RadiusY="5.5" Fill="#FF000000" Opacity="0" IsHitTestVisible="False" />
+                    <Border Name="Chunk" Width="120" CornerRadius="5.5" Background="{TemplateBinding Control.Foreground}" HorizontalAlignment="Left" Height="{Binding ElementName=PART_Track, Path=ActualHeight}">
+                      <UIElement.RenderTransform>
+                        <TranslateTransform x:Name="ChunkTT" X="-240" />
+                      </UIElement.RenderTransform>
+                      <Rectangle IsHitTestVisible="False" RadiusX="5.5" RadiusY="5.5" Opacity="0.35">
+                        <Shape.Fill>
+                          <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#00FFFFFF" Offset="0" />
+                            <GradientStop Color="#A0FFFFFF" Offset="0.5" />
+                            <GradientStop Color="#00FFFFFF" Offset="1" />
+                            <Brush.RelativeTransform>
+                              <TranslateTransform x:Name="IShimmerTT" X="-1" />
+                            </Brush.RelativeTransform>
+                          </LinearGradientBrush>
+                        </Shape.Fill>
+                      </Rectangle>
+                    </Border>
+                  </Grid>
+                  <Border IsHitTestVisible="False" CornerRadius="6" Background="#00FFFFFF" BorderBrush="{TemplateBinding Control.BorderBrush}" BorderThickness="{TemplateBinding Control.BorderThickness}" />
+                </Grid>
+              </Grid>
+              <ControlTemplate.Triggers>
+                <Trigger Property="UIElement.IsVisible" Value="True">
+                  <TriggerBase.EnterActions>
+                    <BeginStoryboard Name="RunInd">
+                      <Storyboard RepeatBehavior="Forever">
+                        <DoubleAnimation Storyboard.TargetName="ChunkTT" Storyboard.TargetProperty="X" From="-240" To="720" Duration="0:0:2.6" RepeatBehavior="Forever" />
+                        <DoubleAnimation Storyboard.TargetName="IShimmerTT" Storyboard.TargetProperty="X" From="-1" To="1" Duration="0:0:1.2" RepeatBehavior="Forever" />
+                      </Storyboard>
+                    </BeginStoryboard>
+                  </TriggerBase.EnterActions>
+                  <TriggerBase.ExitActions>
+                    <StopStoryboard BeginStoryboardName="RunInd" />
+                  </TriggerBase.ExitActions>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                  <Setter TargetName="PART_Track" Property="UIElement.Opacity" Value="0.6" />
+                </Trigger>
+              </ControlTemplate.Triggers>
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+  <Style x:Key="{x:Type ProgressBar}" TargetType="{x:Type ProgressBar}" BasedOn="{StaticResource ProgressBarStyle}" />
+</ResourceDictionary>

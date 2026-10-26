@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="SkrinshoterApp.VideoRecordingCameraWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:SkrinshoterApp" xmlns:system="clr-namespace:System;assembly=mscorlib" WindowStyle="None" AllowsTransparency="True" Background="#00FFFFFF" ShowInTaskbar="False" Topmost="True" ResizeMode="NoResize" local:SizeObserver.Observe="True" local:SizeObserver.ObservedWidth="{Binding WindowObservedWidth, Mode=OneWayToSource}" local:SizeObserver.ObservedHeight="{Binding WindowObservedHeight, Mode=OneWayToSource}" Closing="Window_Closing">
+  <UIElement.InputBindings>
+    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SwitchWindowShapeCommand}" />
+  </UIElement.InputBindings>
+  <Border Margin="12">
+    <UIElement.Effect>
+      <DropShadowEffect ShadowDepth="6" RenderingBias="Quality" Color="#000000" Opacity="0.5" BlurRadius="14" Direction="-90" />
+    </UIElement.Effect>
+    <Grid>
+      <Grid Background="#FF000000" Margin="3" local:SizeObserver.Observe="True" local:SizeObserver.ObservedWidth="{Binding VideoAreaObservedWidth, Mode=OneWayToSource}" local:SizeObserver.ObservedHeight="{Binding VideoAreaObservedHeight, Mode=OneWayToSource}">
+        <FrameworkElement.Style>
+          <Style TargetType="{x:Type Grid}">
+            <Style.Triggers>
+              <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowShape.Circle}" Binding="{Binding WindowShape}">
+                <Setter Property="UIElement.OpacityMask">
+                  <Setter.Value>
+                    <ImageBrush ImageSource="{StaticResource CameraWindowOutline_Circle}" />
+                  </Setter.Value>
+                </Setter>
+              </DataTrigger>
+              <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowShape.Tv}" Binding="{Binding WindowShape}">
+                <Setter Property="UIElement.OpacityMask">
+                  <Setter.Value>
+                    <ImageBrush ImageSource="{StaticResource CameraWindowOutline_Tv}" />
+                  </Setter.Value>
+                </Setter>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </FrameworkElement.Style>
+        <Grid Name="LoaderParent" Background="#FF000000" MouseDown="Window_MouseDown_Inside">
+          <FrameworkElement.Style>
+            <Style TargetType="{x:Type Grid}">
+              <Setter Property="Visibility" Value="Hidden" />
+              <Style.Triggers>
+                <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowState.Loading}" Binding="{Binding State}">
+                  <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </FrameworkElement.Style>
+          <Viewbox Height="40" Width="40" Stretch="Fill">
+            <Image Source="{StaticResource LoaderImage}" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+              <UIElement.RenderTransform>
+                <RotateTransform />
+              </UIElement.RenderTransform>
+              <FrameworkElement.Style>
+                <Style>
+                  <Style.Triggers>
+                    <DataTrigger Value="Visible" Binding="{Binding ElementName=LoaderParent, Path=Visibility}">
+                      <TriggerBase.EnterActions>
+                        <BeginStoryboard>
+                          <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="360" Duration="0:0:1" RepeatBehavior="Forever" />
+                          </Storyboard>
+                        </BeginStoryboard>
+                      </TriggerBase.EnterActions>
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </FrameworkElement.Style>
+            </Image>
+          </Viewbox>
+        </Grid>
+        <Image Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Source="{Binding WriteableBitmap}" MouseDown="Window_MouseDown_Inside">
+          <FrameworkElement.Style>
+            <Style TargetType="{x:Type Image}">
+              <Setter Property="Visibility" Value="Hidden" />
+              <Style.Triggers>
+                <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowState.Streaming}" Binding="{Binding State}">
+                  <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </FrameworkElement.Style>
+          <UIElement.RenderTransform>
+            <ScaleTransform ScaleX="-1" />
+          </UIElement.RenderTransform>
+        </Image>
+        <Grid Background="#75140C" MouseDown="Window_MouseDown_Inside">
+          <FrameworkElement.Style>
+            <Style TargetType="{x:Type Grid}">
+              <Setter Property="Visibility" Value="Hidden" />
+              <Style.Triggers>
+                <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowState.Error}" Binding="{Binding State}">
+                  <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </FrameworkElement.Style>
+          <Viewbox>
+            <TextBlock TextWrapping="WrapWithOverflow" Foreground="#FFFFFFFF" FontFamily="Verdana" TextAlignment="Center" Margin="10" Text="{Binding ErrorMessage}">
+              <FrameworkElement.Resources>
+                <ResourceDictionary>
+                  <system:Double x:Key="WidthThreshold">160</system:Double>
+                </ResourceDictionary>
+              </FrameworkElement.Resources>
+              <FrameworkElement.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                  <Setter Property="Width" Value="160" />
+                  <Style.Triggers>
+                    <DataTrigger Value="True" Binding="{Binding Path=ActualWidth, Converter={StaticResource IsLessThanConverter}, ConverterParameter={StaticResource WidthThreshold}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
+                      <Setter Property="Width" Value="100" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </FrameworkElement.Style>
+            </TextBlock>
+          </Viewbox>
+        </Grid>
+      </Grid>
+      <Path Stroke="#01000000" StrokeThickness="7" Stretch="Fill" Cursor="SizeNWSE" MouseDown="Window_MouseDown_BorderTopLeft">
+        <FrameworkElement.Style>
+          <Style TargetType="{x:Type Path}">
+            <Style.Triggers>
+              <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowShape.Circle}" Binding="{Binding WindowShape}">
+                <Setter Property="Data" Value="{StaticResource CameraWindowResizeBorderTopLeft_Circle}" />
+              </DataTrigger>
+              <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowShape.Tv}" Binding="{Binding WindowShape}">
+                <Setter Property="Data" Value="{StaticResource CameraWindowResizeBorderTopLeft_Tv}" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </FrameworkElement.Style>
+      </Path>
+      <Path Stroke="#01000000" StrokeThickness="7" Stretch="Fill" Cursor="SizeNS" MouseDown="Window_MouseDown_BorderTop">
+        <FrameworkElement.Style>
+          <Style TargetType="{x:Type Path}">
+            <Style.Triggers>
+              <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowShape.Circle}" Binding="{Binding WindowShape}">
+                <Setter Property="Data" Value="{StaticResource CameraWindowResizeBorderTop_Circle}" />
+              </DataTrigger>
+              <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowShape.Tv}" Binding="{Binding WindowShape}">
+                <Setter Property="Data" Value="{StaticResource CameraWindowResizeBorderTop_Tv}" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </FrameworkElement.Style>
+      </Path>
+      <Path Stroke="#01000000" StrokeThickness="7" Stretch="Fill" Cursor="SizeNESW" MouseDown="Window_MouseDown_BorderTopRight">
+        <FrameworkElement.Style>
+          <Style TargetType="{x:Type Path}">
+            <Style.Triggers>
+              <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowShape.Circle}" Binding="{Binding WindowShape}">
+                <Setter Property="Data" Value="{StaticResource CameraWindowResizeBorderTopRight_Circle}" />
+              </DataTrigger>
+              <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowShape.Tv}" Binding="{Binding WindowShape}">
+                <Setter Property="Data" Value="{StaticResource CameraWindowResizeBorderTopRight_Tv}" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </FrameworkElement.Style>
+      </Path>
+      <Path Stroke="#01000000" StrokeThickness="7" Stretch="Fill" Cursor="SizeWE" MouseDown="Window_MouseDown_BorderRight">
+        <FrameworkElement.Style>
+          <Style TargetType="{x:Type Path}">
+            <Style.Triggers>
+              <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowShape.Circle}" Binding="{Binding WindowShape}">
+                <Setter Property="Data" Value="{StaticResource CameraWindowResizeBorderRight_Circle}" />
+              </DataTrigger>
+              <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowShape.Tv}" Binding="{Binding WindowShape}">
+                <Setter Property="Data" Value="{StaticResource CameraWindowResizeBorderRight_Tv}" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </FrameworkElement.Style>
+      </Path>
+      <Path Stroke="#01000000" StrokeThickness="7" Stretch="Fill" Cursor="SizeNWSE" MouseDown="Window_MouseDown_BorderBottomRight">
+        <FrameworkElement.Style>
+          <Style TargetType="{x:Type Path}">
+            <Style.Triggers>
+              <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowShape.Circle}" Binding="{Binding WindowShape}">
+                <Setter Property="Data" Value="{StaticResource CameraWindowResizeBorderBottomRight_Circle}" />
+              </DataTrigger>
+              <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowShape.Tv}" Binding="{Binding WindowShape}">
+                <Setter Property="Data" Value="{StaticResource CameraWindowResizeBorderBottomRight_Tv}" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </FrameworkElement.Style>
+      </Path>
+      <Path Stroke="#01000000" StrokeThickness="7" Stretch="Fill" Cursor="SizeNS" MouseDown="Window_MouseDown_BorderBottom">
+        <FrameworkElement.Style>
+          <Style TargetType="{x:Type Path}">
+            <Style.Triggers>
+              <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowShape.Circle}" Binding="{Binding WindowShape}">
+                <Setter Property="Data" Value="{StaticResource CameraWindowResizeBorderBottom_Circle}" />
+              </DataTrigger>
+              <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowShape.Tv}" Binding="{Binding WindowShape}">
+                <Setter Property="Data" Value="{StaticResource CameraWindowResizeBorderBottom_Tv}" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </FrameworkElement.Style>
+      </Path>
+      <Path Stroke="#01000000" StrokeThickness="7" Stretch="Fill" Cursor="SizeNESW" MouseDown="Window_MouseDown_BorderBottomLeft">
+        <FrameworkElement.Style>
+          <Style TargetType="{x:Type Path}">
+            <Style.Triggers>
+              <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowShape.Circle}" Binding="{Binding WindowShape}">
+                <Setter Property="Data" Value="{StaticResource CameraWindowResizeBorderBottomLeft_Circle}" />
+              </DataTrigger>
+              <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowShape.Tv}" Binding="{Binding WindowShape}">
+                <Setter Property="Data" Value="{StaticResource CameraWindowResizeBorderBottomLeft_Tv}" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </FrameworkElement.Style>
+      </Path>
+      <Path Stroke="#01000000" StrokeThickness="7" Stretch="Fill" Cursor="SizeWE" MouseDown="Window_MouseDown_BorderLeft">
+        <FrameworkElement.Style>
+          <Style TargetType="{x:Type Path}">
+            <Style.Triggers>
+              <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowShape.Circle}" Binding="{Binding WindowShape}">
+                <Setter Property="Data" Value="{StaticResource CameraWindowResizeBorderLeft_Circle}" />
+              </DataTrigger>
+              <DataTrigger Value="{x:Static local:VideoRecordingCameraWindowShape.Tv}" Binding="{Binding WindowShape}">
+                <Setter Property="Data" Value="{StaticResource CameraWindowResizeBorderLeft_Tv}" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </FrameworkElement.Style>
+      </Path>
+    </Grid>
+  </Border>
+</Window>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="SkrinshoterApp.ArrowObject" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors" xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:SkrinshoterApp" Loaded="UserControl_Loaded">
+  <Canvas>
+    <Canvas Name="MainElement" Effect="{DynamicResource ScreenshotEditingVisualObjectsDropShadowEffect}" Cursor="{Binding Cursor}">
+      <Path StrokeThickness="0" Data="{Binding ArrowHeadGeometry}" Fill="{Binding Color, Converter={StaticResource ColorToBrushConverter}}">
+        <UIElement.Visibility>
+          <c:Binding>
+            <c:Binding.Path>StartPoint != EndPoint</c:Binding.Path>
+          </c:Binding>
+        </UIElement.Visibility>
+        <UIElement.RenderTransform>
+          <TransformGroup>
+            <ScaleTransform ScaleX="{Binding Scale}" ScaleY="{Binding Scale}" CenterX="{Binding ArrowHeadAnchorPoint.X}" CenterY="{Binding ArrowHeadAnchorPoint.Y}" />
+            <RotateTransform Angle="{Binding RotateAngle}" CenterX="{Binding ArrowHeadAnchorPoint.X}" CenterY="{Binding ArrowHeadAnchorPoint.Y}" />
+            <TranslateTransform>
+              <TranslateTransform.X>
+                <c:Binding>
+                  <c:Binding.Path>EndPoint.X - ArrowHeadAnchorPoint.X</c:Binding.Path>
+                </c:Binding>
+              </TranslateTransform.X>
+              <TranslateTransform.Y>
+                <c:Binding>
+                  <c:Binding.Path>EndPoint.Y - ArrowHeadAnchorPoint.Y</c:Binding.Path>
+                </c:Binding>
+              </TranslateTransform.Y>
+            </TranslateTransform>
+          </TransformGroup>
+        </UIElement.RenderTransform>
+      </Path>
+      <Path StrokeThickness="0" Data="{Binding ArrowShaftGeometry}" Fill="{Binding Color, Converter={StaticResource ColorToBrushConverter}}">
+        <UIElement.Visibility>
+          <c:Binding>
+            <c:Binding.Path>ArrowShaftVisible</c:Binding.Path>
+          </c:Binding>
+        </UIElement.Visibility>
+        <UIElement.RenderTransform>
+          <TransformGroup>
+            <RotateTransform Angle="{Binding RotateAngle}" />
+            <TranslateTransform X="{Binding StartPoint.X}" Y="{Binding StartPoint.Y}" />
+          </TransformGroup>
+        </UIElement.RenderTransform>
+      </Path>
+      <Path StrokeStartLineCap="Round" StrokeEndLineCap="Round" Stroke="{Binding Color, Converter={StaticResource ColorToBrushConverter}}" StrokeThickness="{Binding LineThickness}">
+        <UIElement.Visibility>
+          <c:Binding>
+            <c:Binding.Path>StartPoint == EndPoint</c:Binding.Path>
+          </c:Binding>
+        </UIElement.Visibility>
+        <Path.Data>
+          <LineGeometry StartPoint="{Binding StartPoint}" EndPoint="{Binding StartPoint}" />
+        </Path.Data>
+      </Path>
+      <Behaviors:Interaction.Triggers>
+        <Behaviors:EventTrigger EventName="MouseMove">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding DrawCommand}" />
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="MouseLeftButtonUp">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding EndDrawCommand}" />
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="MouseLeftButtonDown">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding StartMoveCommand}" />
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="MouseMove">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding MoveCommand}" />
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="MouseLeftButtonUp">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding EndMoveCommand}" />
+        </Behaviors:EventTrigger>
+      </Behaviors:Interaction.Triggers>
+    </Canvas>
+    <Rectangle Stroke="#FFFFFFFF" Fill="#FF000000" Width="7" Height="7" Cursor="SizeAll">
+      <Canvas.Left>
+        <c:Binding>
+          <c:Binding.Path>StartPoint.X - 4</c:Binding.Path>
+        </c:Binding>
+      </Canvas.Left>
+      <Canvas.Top>
+        <c:Binding>
+          <c:Binding.Path>StartPoint.Y - 4</c:Binding.Path>
+        </c:Binding>
+      </Canvas.Top>
+      <UIElement.Opacity>
+        <c:Binding>
+          <c:Binding.Path>SelectionVisible ? 1 : 0</c:Binding.Path>
+        </c:Binding>
+      </UIElement.Opacity>
+      <UIElement.IsHitTestVisible>
+        <c:Binding>
+          <c:Binding.Path>SelectionHitTestEnabled</c:Binding.Path>
+        </c:Binding>
+      </UIElement.IsHitTestVisible>
+      <Behaviors:Interaction.Triggers>
+        <Behaviors:EventTrigger EventName="MouseLeftButtonDown">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding StartResizeFromStartHandleCommand}" />
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="MouseMove">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding ResizeCommand}" />
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="MouseLeftButtonUp">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding EndResizeCommand}" />
+        </Behaviors:EventTrigger>
+      </Behaviors:Interaction.Triggers>
+    </Rectangle>
+    <Rectangle Stroke="#FFFFFFFF" Fill="#FF000000" Width="7" Height="7" Cursor="SizeAll">
+      <Canvas.Left>
+        <c:Binding>
+          <c:Binding.Path>EndPoint.X - 4</c:Binding.Path>
+        </c:Binding>
+      </Canvas.Left>
+      <Canvas.Top>
+        <c:Binding>
+          <c:Binding.Path>EndPoint.Y - 4</c:Binding.Path>
+        </c:Binding>
+      </Canvas.Top>
+      <UIElement.Opacity>
+        <c:Binding>
+          <c:Binding.Path>SelectionVisible ? 1 : 0</c:Binding.Path>
+        </c:Binding>
+      </UIElement.Opacity>
+      <UIElement.IsHitTestVisible>
+        <c:Binding>
+          <c:Binding.Path>SelectionHitTestEnabled</c:Binding.Path>
+        </c:Binding>
+      </UIElement.IsHitTestVisible>
+      <Behaviors:Interaction.Triggers>
+        <Behaviors:EventTrigger EventName="MouseLeftButtonDown">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding StartResizeFromEndHandleCommand}" />
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="MouseMove">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding ResizeCommand}" />
+        </Behaviors:EventTrigger>
+        <Behaviors:EventTrigger EventName="MouseLeftButtonUp">
+          <Behaviors:InvokeCommandAction PassEventArgsToCommand="True" Command="{Binding EndResizeCommand}" />
+        </Behaviors:EventTrigger>
+      </Behaviors:Interaction.Triggers>
+    </Rectangle>
+  </Canvas>
+</UserControl>

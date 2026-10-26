@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="SkrinshoterApp.ScreenshotsTabView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors" xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding" xmlns:props="clr-namespace:SkrinshoterApp.Properties" xmlns:local="clr-namespace:SkrinshoterApp" UseLayoutRounding="True">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <Style x:Key="{x:Type TextBlock}" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource SettingsTextBlockStyle}" />
+      <Style x:Key="{x:Type TextBox}" TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxStyle}" />
+      <Style x:Key="{x:Type Button}" TargetType="{x:Type Button}" BasedOn="{StaticResource SettingsButtonStyle}" />
+      <Style x:Key="{x:Type ComboBox}" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource SettingsComboBoxStyle}" />
+      <x:StaticExtension x:Key="ExclusiveMask" Member="local:ScreenshotSaveType.ExclusiveMask" />
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <Grid>
+    <StackPanel Orientation="Vertical">
+      <GroupBox Header="{Binding Path=(props:Resources.Settings_Screenshot_GroupHeader_WhereToSave)}">
+        <StackPanel Orientation="Vertical">
+          <RadioButton Name="SaveToCloud" Content="Загружать в выбранные сервисы" IsChecked="{Binding Settings.ScreenshotSaveType, Converter={local:EnumExclusiveFlagToBooleanConverter Mask={StaticResource ExclusiveMask}, Flag={x:Static local:ScreenshotSaveType.Cloud}}}" />
+          <Border Margin="33,12,0,0" Padding="14" CornerRadius="8" Background="#0D000000" IsEnabled="{Binding IsChecked, ElementName=SaveToCloud}">
+            <StackPanel>
+              <TextBlock Text="Сервисы загрузки" FontWeight="SemiBold" />
+              <UniformGrid Margin="0,10,0,0" Columns="2">
+                <CheckBox Content="Скриншотер" IsChecked="{Binding Settings.ScreenshotUploadDestinations, Converter={local:EnumFlagToBooleanConverter Flag={x:Static local:ScreenshotUploadDestination.Skrinshoter}}}" />
+                <CheckBox Content="kappa.lol" IsChecked="{Binding Settings.ScreenshotUploadDestinations, Converter={local:EnumFlagToBooleanConverter Flag={x:Static local:ScreenshotUploadDestination.KappaLol}}}" />
+                <CheckBox Margin="0,10,0,0" Content="Xyli" IsChecked="{Binding Settings.ScreenshotUploadDestinations, Converter={local:EnumFlagToBooleanConverter Flag={x:Static local:ScreenshotUploadDestination.Xyli}}}" />
+                <CheckBox Margin="0,10,0,0" Content="0xl1r.cfd" IsChecked="{Binding Settings.ScreenshotUploadDestinations, Converter={local:EnumFlagToBooleanConverter Flag={x:Static local:ScreenshotUploadDestination.ZeroXl1r}}}" />
+                <CheckBox Margin="0,10,0,0" Content="NoikCloud" IsChecked="{Binding Settings.ScreenshotUploadDestinations, Converter={local:EnumFlagToBooleanConverter Flag={x:Static local:ScreenshotUploadDestination.NoikCloud}}}" />
+              </UniformGrid>
+              <Button Margin="0,12,0,0" HorizontalAlignment="Left" Content="Выбрать все сервисы" Command="{Binding SelectAllScreenshotUploadServicesCommand}" />
+              <TextBlock Margin="0,12,0,0" Foreground="#8A000000">
+                <Run Text="Быстрая загрузка во все выбранные сервисы: " />
+                <Run Text="{Binding Settings.UploadScreenshotToAllHotkey}" FontWeight="SemiBold" />
+              </TextBlock>
+              <Separator Margin="0,12,0,10" />
+              <CheckBox Content="Копировать ссылки в буфер обмена" IsChecked="{Binding Settings.CopyScreenshotLinksToClipboard}" />
+              <CheckBox Margin="0,10,0,0" Content="Открывать ссылки в браузере" IsChecked="{Binding Settings.OpenScreenshotInBrowser}" />
+            </StackPanel>
+          </Border>
+          <RadioButton Margin="0,12,0,0" Content="{Binding Path=(props:Resources.Settings_Screenshot_SaveType_Clipboard)}" IsChecked="{Binding Settings.ScreenshotSaveType, Converter={local:EnumExclusiveFlagToBooleanConverter Mask={StaticResource ExclusiveMask}, Flag={x:Static local:ScreenshotSaveType.Clipboard}}}" />
+          <CheckBox Name="SaveToFile" Margin="0,12,0,0" Content="{Binding Path=(props:Resources.Settings_Screenshot_SaveType_File)}" IsChecked="{Binding Settings.ScreenshotSaveType, Converter={local:EnumFlagToBooleanConverter Flag={x:Static local:ScreenshotSaveType.File}}}" />
+          <Grid Margin="33,19,0,0" IsEnabled="{Binding IsChecked, ElementName=SaveToFile}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="20" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="10" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Text="{Binding Path=(props:Resources.Settings_Screenshot_SavePath)}" />
+            <TextBox Grid.Column="2" IsReadOnly="True" HorizontalAlignment="Stretch" Text="{Binding Settings.ScreenshotSavePath}">
+              <UIElement.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding SelectScreenshotSaveFolderCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" />
+              </UIElement.InputBindings>
+            </TextBox>
+            <TextBlock Grid.Row="2" Text="{Binding Path=(props:Resources.Settings_Screenshot_FileNameTemplate)}" />
+            <TextBox Grid.Row="2" Grid.Column="2" IsReadOnly="True" HorizontalAlignment="Stretch" Text="{Binding Settings.ScreenshotFileNameTemplate.Text, Mode=OneWay}">
+              <UIElement.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding EditScreenshotFileNameTemplateCommand}" />
+              </UIElement.InputBindings>
+            </TextBox>
+          </Grid>
+        </StackPanel>
+      </GroupBox>
+      <GroupBox Header="{Binding Path=(props:Resources.Settings_Screenshot_GroupHeader_FormatAndQuality)}">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="135" />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <TextBlock Grid.Row="0" Text="{Binding Path=(props:Resources.Settings_Screenshot_Format)}" />
+          <ComboBox Grid.Row="0" Grid.Column="1" DisplayMemberPath="Name" SelectedValuePath="Id" ItemsSource="{Binding ScreenshotFileFormats}" SelectedValue="{Binding Settings.ScreenshotFileFormat}" />
+          <TextBlock Grid.Row="2" Text="{Binding Path=(props:Resources.Settings_Screenshot_JpegQuality)}">
+            <UIElement.Visibility>
+              <c:Binding>
+                <c:Binding.Path>IsJpegSelected</c:Binding.Path>
+              </c:Binding>
+            </UIElement.Visibility>
+          </TextBlock>
+          <ComboBox Grid.Row="2" Grid.Column="1" DisplayMemberPath="Name" SelectedValuePath="Id" ItemsSource="{Binding JpegQualityLevels}" SelectedValue="{Binding Settings.JpegQualityLevel}">
+            <UIElement.Visibility>
+              <c:Binding>
+                <c:Binding.Path>IsJpegSelected</c:Binding.Path>
+              </c:Binding>
+            </UIElement.Visibility>
+          </ComboBox>
+        </Grid>
+      </GroupBox>
+      <GroupBox Header="{Binding Path=(props:Resources.Settings_Screenshot_GroupHeader_Editor)}">
+        <StackPanel Orientation="Vertical">
+          <CheckBox Content="{Binding Path=(props:Resources.Settings_Screenshot_AlwaysShowEditor)}" IsChecked="{Binding Settings.ShouldShowEditor}" />
+          <CheckBox Margin="0,12,0,0" Content="{Binding Path=(props:Resources.Settings_Screenshot_UseLastSelectionArea)}" IsChecked="{Binding Settings.UseLastSelectionArea}" />
+          <CheckBox Margin="0,12,0,0" Content="{Binding Path=(props:Resources.Settings_Screenshot_DrawObjectShadows)}" IsChecked="{Binding Settings.DrawObjectShadows}" />
+          <TextBlock Margin="0,19,0,0" Text="{Binding Path=(props:Resources.Settings_Screenshot_EditorDefaultTool_Header)}" />
+          <RadioButton Margin="0,12,0,0" Content="{Binding Path=(props:Resources.Settings_Screenshot_EditorDefaultTool_None)}" IsChecked="{Binding Settings.EditorDefaultTool, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static local:EditorDefaultTool.None}}" />
+          <RadioButton Margin="0,12,0,0" Content="{Binding Path=(props:Resources.Settings_Screenshot_EditorDefaultTool_Arrow)}" IsChecked="{Binding Settings.EditorDefaultTool, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static local:EditorDefaultTool.Arrow}}" />
+          <RadioButton Margin="0,12,0,0" Content="{Binding Path=(props:Resources.Settings_Screenshot_EditorDefaultTool_LastUsed)}" IsChecked="{Binding Settings.EditorDefaultTool, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static local:EditorDefaultTool.LastUsed}}" />
+        </StackPanel>
+      </GroupBox>
+      <GroupBox Header="{Binding Path=(props:Resources.Settings_Screenshot_GroupHeader_Misc)}">
+        <StackPanel Orientation="Vertical">
+          <CheckBox Content="{Binding Path=(props:Resources.Settings_Screenshot_ShowCursor)}" IsChecked="{Binding Settings.DrawCursorOnScreenshot}" />
+          <CheckBox Margin="0,12,0,0" Content="{Binding Path=(props:Resources.Settings_Screenshot_PlaySound)}" IsChecked="{Binding Settings.PlaySound}" />
+        </StackPanel>
+      </GroupBox>
+    </StackPanel>
+  </Grid>
+</UserControl>

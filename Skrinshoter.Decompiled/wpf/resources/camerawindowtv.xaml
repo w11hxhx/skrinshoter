@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <DrawingImage x:Key="CameraWindowOutline_Tv">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <DrawingGroup>
+          <GeometryDrawing Brush="#ffd9d9d9">
+            <GeometryDrawing.Geometry>
+              <PathGeometry Figures="M 30 15.0001 C 70 -5.00005 170 -5.00005 210 15.0001 C 250 35.0001 249.428 173.894 210 195 C 179 211.595 65.5 212.75 30 195 C -10 175 -10 35.0001 30 15.0001 Z" FillRule="Nonzero" />
+            </GeometryDrawing.Geometry>
+          </GeometryDrawing>
+        </DrawingGroup>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+  <PathGeometry x:Key="CameraWindowResizeBorderTopLeft_Tv">M 0 0 M 239.786 207.883 M 12.4887 35.4907 C 17.3022 25.5469 23.0853 18.4575 30 15.0001 C 35 12.5001 40.9375 10.3126 47.5781 8.43758</PathGeometry>
+  <PathGeometry x:Key="CameraWindowResizeBorderTop_Tv">M 0 0 M 239.786 207.883 M 47.5781 8.43758 C 83.6203 -1.73914 149.266 -3.74781 192.422 8.43758</PathGeometry>
+  <PathGeometry x:Key="CameraWindowResizeBorderTopRight_Tv">M 0 0 M 239.786 207.883 M 192.422 8.43758 C 199.062 10.3126 205 12.5001 210 15.0001 C 218.216 19.1081 223.599 27.6863 226.597 33.8723</PathGeometry>
+  <PathGeometry x:Key="CameraWindowResizeBorderRight_Tv">M 0 0 M 239.786 207.883 M 226.597 33.8723 C 246.592 78.0535 241.809 129.28 227.31 174.099</PathGeometry>
+  <PathGeometry x:Key="CameraWindowResizeBorderBottomRight_Tv">M 0 0 M 239.786 207.883 M 227.31 174.099 C 222.541 184.123 216.823 191.348 210 195 C 206.125 197.074 200.961 198.907 194.821 200.492</PathGeometry>
+  <PathGeometry x:Key="CameraWindowResizeBorderBottom_Tv">M 0 0 M 239.786 207.883 M 194.821 200.492 C 164.917 208.213 92.6917 212.246 46.6553 200.777</PathGeometry>
+  <PathGeometry x:Key="CameraWindowResizeBorderBottomLeft_Tv">M 0 0 M 239.786 207.883 M 46.6553 200.777 C 40.0938 199.142 34.4375 197.219 30 195 C 21.7784 190.889 16.3721 182.257 13.3614 176.047</PathGeometry>
+  <PathGeometry x:Key="CameraWindowResizeBorderLeft_Tv">M 0 0 M 239.786 207.883 M 13.3614 176.047 C 0.720976 149.972 -8.81724 79.5044 12.4887 35.4907</PathGeometry>
+</ResourceDictionary>

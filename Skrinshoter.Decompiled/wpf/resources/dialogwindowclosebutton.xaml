@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <GeometryGroup x:Key="DialogWindowCloseButton.Geometry">
+    <LineGeometry StartPoint="6,6" EndPoint="18,18" />
+    <LineGeometry StartPoint="18,6" EndPoint="6,18" />
+  </GeometryGroup>
+  <SolidColorBrush x:Key="DialogWindowCloseButton.Normal.Color" Color="#66000000" />
+  <SolidColorBrush x:Key="DialogWindowCloseButton.MouseOver.Color" Color="#FF000000" />
+  <Style x:Key="DialogWindowCloseButtonStyle" TargetType="{x:Type Button}">
+    <Setter Property="FrameworkElement.Cursor" Value="Hand" />
+    <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Button}">
+          <Border Background="#00FFFFFF" Width="24" Height="24">
+            <Path Name="CrossPath" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Stroke="{StaticResource DialogWindowCloseButton.Normal.Color}" Data="{StaticResource DialogWindowCloseButton.Geometry}" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="UIElement.IsMouseOver" Value="True">
+              <Setter TargetName="CrossPath" Property="Shape.Stroke" Value="{StaticResource DialogWindowCloseButton.MouseOver.Color}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+</ResourceDictionary>

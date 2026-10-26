@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl x:Class="SkrinshoterApp.AboutTabView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding" xmlns:props="clr-namespace:SkrinshoterApp.Properties" xmlns:local="clr-namespace:SkrinshoterApp" UseLayoutRounding="True">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <Style x:Key="{x:Type TextBlock}" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource SettingsTextBlockStyle}" />
+      <Style x:Key="{x:Type TextBox}" TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxStyle}" />
+      <Style x:Key="{x:Type Button}" TargetType="{x:Type Button}" BasedOn="{StaticResource SettingsButtonStyle}" />
+      <Style x:Key="{x:Type Hyperlink}" TargetType="{x:Type Hyperlink}" BasedOn="{StaticResource HyperlinkStyle}" />
+      <Style x:Key="{x:Type ToolTip}" TargetType="{x:Type ToolTip}" BasedOn="{StaticResource ToolTipStyle}">
+        <Setter Property="ToolTipService.Placement" Value="Mouse" />
+      </Style>
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <Grid>
+    <GroupBox Header="{Binding Path=(props:Resources.Settings_About_GroupHeader)}">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="33" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="35" />
+          <RowDefinition Height="10" />
+          <RowDefinition Height="35" />
+          <RowDefinition Height="*" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="{Binding Path=(props:Resources.Settings_About_Version)}" />
+        <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Version}" />
+        <Button Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" Content="{Binding Path=(props:Resources.Settings_About_CheckForUpdatesButtonText)}" Command="{Binding CheckForUpdatesCommand}" />
+        <TextBlock Grid.Row="2" Text="{Binding Path=(props:Resources.Settings_About_AppId)}" />
+        <TextBlock Name="AppId" Grid.Row="2" Grid.Column="2" FontFamily="{StaticResource App.FontFamily.Monospace}" ToolTipService.IsEnabled="False" Text="{Binding AppInfoProvider.AppId}">
+          <FrameworkElement.ToolTip>
+            <ToolTip Placement="Bottom" StaysOpen="True" Content="{Binding Path=(props:Resources.Settings_About_AppIdCopiedToolTip)}" />
+          </FrameworkElement.ToolTip>
+        </TextBlock>
+        <Button Grid.Row="2" Grid.Column="2" Width="30" Height="30" Style="{StaticResource SettingsToolButtonStyle}" HorizontalAlignment="Right" Command="{Binding CopyAppIdToClipboardCommand}" ToolTip="{Binding Path=(props:Resources.CopyToClipboardToolTip)}" Click="CopyToClipboardButton_Click">
+          <Path Style="{StaticResource IconPathStyle}" Width="18" Height="18" Data="{StaticResource Icon.CopyToClipboard}" />
+        </Button>
+        <TextBlock Grid.Row="4" Grid.ColumnSpan="3" HorizontalAlignment="Left">
+          <Hyperlink Command="{Binding OpenUrlCommand}" CommandParameter="{local:ResolvedProductUrl {x:Static props:ProductResources.Settings_About_SiteUrl}}">
+            <Run Text="{local:ResolvedProductUrl {x:Static props:ProductResources.Settings_About_SiteUrl}}" />
+          </Hyperlink>
+        </TextBlock>
+        <Button Grid.Row="4" Grid.ColumnSpan="3" HorizontalAlignment="Right" Content="{Binding Path=(props:Resources.Settings_About_ReportErrorButtonText)}" Command="{Binding ReportErrorCommand}" />
+      </Grid>
+    </GroupBox>
+  </Grid>
+</UserControl>

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<local:PanelWindow x:Class="SkrinshoterApp.ScrollingCaptureActionWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:SkrinshoterApp" Style="{StaticResource PanelWindowStyle}">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <Style x:Key="{x:Type Button}" TargetType="{x:Type Button}" BasedOn="{StaticResource PanelButtonStyle}" />
+      <Style x:Key="{x:Type Separator}" TargetType="{x:Type Separator}" BasedOn="{StaticResource VerticalPanelSeparatorStyle}" />
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <local:Panel Style="{StaticResource PanelStyle}">
+    <StackPanel Orientation="Horizontal">
+      <Button Command="{Binding UploadToCloudCommand}" ToolTip="{Binding UploadToCloudToolTip}">
+        <Image Source="{StaticResource ScreenshotEditingActionWindowUploadToCloudImage}" />
+      </Button>
+      <Button Command="{Binding UploadToAllCommand}" ToolTip="{Binding UploadToAllToolTip}">
+        <Grid>
+          <Image Source="{StaticResource ScreenshotEditingActionWindowUploadToCloudImage}" />
+          <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="2,0" CornerRadius="3" Background="#FF2684FF">
+            <TextBlock Text="ВСЕ" FontSize="7" FontWeight="Bold" Foreground="White" />
+          </Border>
+        </Grid>
+      </Button>
+      <Button Command="{Binding CopyToClipboardCommand}" ToolTip="{Binding CopyToClipboardToolTip}">
+        <Image Source="{StaticResource ScreenshotEditingActionWindowCopyToClipboardImage}" />
+      </Button>
+      <Button Command="{Binding SaveToFileCommand}" ToolTip="{Binding SaveToFileToolTip}">
+        <Image Source="{StaticResource ScreenshotEditingActionWindowSaveToFileImage}" />
+      </Button>
+      <Separator />
+      <Button Command="{Binding CloseCommand}" ToolTip="{Binding CloseToolTip}">
+        <Image Source="{StaticResource ScreenshotEditingActionWindowCloseImage}" />
+      </Button>
+    </StackPanel>
+  </local:Panel>
+</local:PanelWindow>

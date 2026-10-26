@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="SkrinshoterApp.SettingsWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors" xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding" xmlns:props="clr-namespace:SkrinshoterApp.Properties" xmlns:local="clr-namespace:SkrinshoterApp" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight" Title="{Binding WindowTitle}" Closing="Window_Closing">
+  <Behaviors:Interaction.Behaviors>
+    <local:AutoSaveOnInputBehavior />
+  </Behaviors:Interaction.Behaviors>
+  <TabControl Name="TabControl" Width="935" Height="620" Style="{StaticResource SettingsTabControlStyle}" SelectedIndex="{Binding SelectedTabIndex}" SelectionChanged="TabControl_SelectionChanged">
+    <TabItem Header="{Binding Path=(props:Resources.Settings_TabHeader_General)}">
+      <FrameworkElement.Tag>
+        <local:SettingsTabHeaderOptions IconGeometry="{StaticResource Icon.Settings}" IconBrush="{StaticResource SettingsTabItem.Icon.Static.Color}" IconWidth="21" TextBrush="{StaticResource SettingsTabItem.Text.Color}" TextFontWeight="SemiBold" />
+      </FrameworkElement.Tag>
+      <local:GeneralTabView />
+    </TabItem>
+    <TabItem Header="{Binding Path=(props:Resources.Settings_TabHeader_Hotkeys)}">
+      <FrameworkElement.Tag>
+        <local:SettingsTabHeaderOptions IconGeometry="{StaticResource Icon.Hotkey}" IconBrush="{StaticResource SettingsTabItem.Icon.Static.Color}" IconWidth="21" TextBrush="{StaticResource SettingsTabItem.Text.Color}" TextFontWeight="SemiBold" />
+      </FrameworkElement.Tag>
+      <local:HotkeysTabView />
+    </TabItem>
+    <TabItem Header="{Binding Path=(props:Resources.Settings_TabHeader_Screenshots)}">
+      <FrameworkElement.Tag>
+        <local:SettingsTabHeaderOptions IconGeometry="{StaticResource Icon.Screenshot}" IconBrush="{StaticResource SettingsTabItem.Icon.Static.Color}" IconWidth="20.31" TextBrush="{StaticResource SettingsTabItem.Text.Color}" TextFontWeight="SemiBold" />
+      </FrameworkElement.Tag>
+      <local:ScreenshotsTabView />
+    </TabItem>
+    <TabItem Header="{Binding Path=(props:Resources.Settings_TabHeader_Video)}">
+      <FrameworkElement.Tag>
+        <local:SettingsTabHeaderOptions IconGeometry="{StaticResource Icon.Video}" IconBrush="{StaticResource SettingsTabItem.Icon.Static.Color}" IconWidth="23.44" IconShiftX="2" TextBrush="{StaticResource SettingsTabItem.Text.Color}" TextFontWeight="SemiBold" />
+      </FrameworkElement.Tag>
+      <local:VideoTabView />
+    </TabItem>
+    <TabItem Header="{Binding Path=(props:Resources.Settings_TabHeader_About)}">
+      <FrameworkElement.Tag>
+        <local:SettingsTabHeaderOptions IconGeometry="{StaticResource Icon.About}" IconBrush="{StaticResource SettingsTabItem.Icon.Static.Color}" IconWidth="21" TextBrush="{StaticResource SettingsTabItem.Text.Color}" TextFontWeight="SemiBold" />
+      </FrameworkElement.Tag>
+      <local:AboutTabView />
+    </TabItem>
+    <FrameworkElement.Tag>
+      <DataTemplate>
+        <Border CornerRadius="9" BorderThickness="2" Margin="17,0,11,17" DataContext="{Binding CloudStorageVM}">
+          <UIElement.Visibility>
+            <c:Binding>
+              <c:Binding.Path>IsVisible</c:Binding.Path>
+            </c:Binding>
+          </UIElement.Visibility>
+          <StackPanel Margin="11,8,11,10">
+            <TextBlock FontFamily="{StaticResource App.FontFamily}" FontSize="{StaticResource App.FontSize}" FontWeight="SemiBold" Margin="0,0,0,10" Text="{Binding Path=(props:Resources.CloudStorage_Usage)}" />
+            <Grid>
+              <TextBlock FontSize="14" HorizontalAlignment="Left" Text="{Binding UsedSizeText}" />
+              <TextBlock FontSize="14" HorizontalAlignment="Right" Text="{Binding TotalSizeText}" />
+            </Grid>
+            <ProgressBar Style="{StaticResource CloudStorageProgressBarStyle}" Margin="0,7,0,4" Minimum="0" Maximum="100" Value="{Binding UsagePercent}" />
+          </StackPanel>
+          <FrameworkElement.Style>
+            <Style TargetType="{x:Type Border}">
+              <Setter Property="BorderBrush" Value="#4D1DA8E9" />
+              <Setter Property="Background" Value="#F6FCFE" />
+              <Style.Triggers>
+              </Style.Triggers>
+            </Style>
+          </FrameworkElement.Style>
+        </Border>
+      </DataTemplate>
+    </FrameworkElement.Tag>
+  </TabControl>
+</Window>

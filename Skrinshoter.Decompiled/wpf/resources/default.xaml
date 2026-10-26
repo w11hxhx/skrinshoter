@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+  <FontFamily x:Key="App.FontFamily">Segoe UI Variable Text, Segoe UI</FontFamily>
+  <FontFamily x:Key="App.FontFamily.Header">Segoe UI Variable Display, Segoe UI</FontFamily>
+  <FontFamily x:Key="App.FontFamily.Monospace">Consolas</FontFamily>
+  <system:Double x:Key="App.FontSize">17</system:Double>
+  <system:Double x:Key="App.FontSize.Header">23</system:Double>
+  <system:Double x:Key="App.FontSize.DialogWindowHeader">20</system:Double>
+  <system:Double x:Key="App.FontSize.PanelButton">14</system:Double>
+  <system:Double x:Key="App.FontSize.RealDeviceName">12</system:Double>
+</ResourceDictionary>

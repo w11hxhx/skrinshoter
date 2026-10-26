@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+<resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>1.3</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><data name="Settings_General_Tray_MakeRegionScreenshot" xml:space="preserve"><value>Скриншот области экрана</value></data>
+  <data name="Notify_FailedToCopyScreenshotToClipboard" xml:space="preserve"><value>Не удалось скопировать скриншот в буфер обмена.</value></data>
+  <data name="Settings_General_Tray_Action" xml:space="preserve"><value>Действие по клику в трее</value></data>
+  <data name="Settings_FileNameTemplate_Param_SequenceNumberToolTip" xml:space="preserve"><value>Количество букв n определяет минимальное
+количество цифр в номере. Недостающие
+цифры заполняются нулями.
+
+Примеры:
+{n}: 1, 2, 3, ...
+{nnn}: 001, 002, 003, ...
+{nnnnnnnnn}: 000000001, 000000002, 000000003, ...</value></data>
+  <data name="Settings_FileNameTemplate_Error_Empty" xml:space="preserve"><value>Пустой шаблон</value></data>
+  <data name="Settings_FileNameTemplate_Template" xml:space="preserve"><value>Шаблон имени файла</value></data>
+  <data name="Progress_LinkToFileAlreadyInClipboard" xml:space="preserve"><value>Ссылка на файл уже в буфере обмена</value></data>
+  <data name="VideoRecording_Cancel_ConfirmationText" xml:space="preserve"><value>Записанное видео будет удалено.</value></data>
+  <data name="Notify_ScreenshotPathNotAccessible" xml:space="preserve"><value>Папка на диске {0} недоступна. Проверьте путь сохранения скриншотов в настройках.</value></data>
+  <data name="Notify_FailedToUploadScreenshotAndStoredInUserFolder" xml:space="preserve"><value>К сожалению, не удалось загрузить скриншот в облако. Нажмите сюда, чтобы открыть папку.</value></data>
+  <data name="ScreenshotEditing_MarkerToolTip" xml:space="preserve"><value>Маркер (H). Удерживайте Shift для рисования по горизонтали или вертикали.</value></data>
+  <data name="Tray_ContextMenu_About" xml:space="preserve"><value>О программе</value></data>
+  <data name="ScreenshotEditing_UploadToCloudToolTip" xml:space="preserve"><value>Загрузить в облако</value></data>
+  <data name="Settings_General_UploadWindowTitleToCloud" xml:space="preserve"><value>Сохранять названия окон при загрузке в облако</value></data>
+  <data name="Notify_FailedToUploadImageToServer" xml:space="preserve"><value>К сожалению, не удалось загрузить изображение на сервер.</value></data>
+  <data name="Settings_Video_FileNameTemplate" xml:space="preserve"><value>Имя файла</value></data>
+  <data name="Settings_FileNameTemplate_WindowTitleForVideo" xml:space="preserve"><value>Редактирование шаблона имени файла для видео</value></data>
+  <data name="Settings_About_Version" xml:space="preserve"><value>Версия:</value></data>
+  <data name="Settings_Video_SaveType_File" xml:space="preserve"><value>На компьютер</value></data>
+  <data name="Tray_Popup_MakeScrollingCaptureToolTip" xml:space="preserve"><value>Сделать скриншот с прокруткой</value></data>
+  <data name="Settings_Video_GroupHeader_WhereToSave" xml:space="preserve"><value>Куда сохранять видео</value></data>
+  <data name="Notify_FailedToMakeVideo" xml:space="preserve"><value>Произошла ошибка записи видео. Обратитесь в нашу службу поддержки.</value></data>
+  <data name="Tray_ContextMenu_MakeScreenshot" xml:space="preserve"><value>Сделать скриншот</value></data>
+  <data name="VideoRecording_TurnOnCameraToolTip" xml:space="preserve"><value>Включить камеру</value></data>
+  <data name="Settings_TabHeader_Hotkeys" xml:space="preserve"><value>Горячие клавиши</value></data>
+  <data name="Settings_Video_Source_SystemSound" xml:space="preserve"><value>Системный звук</value></data>
+  <data name="VideoQuality_FullHD" xml:space="preserve"><value>Высокое (FullHD/1080p, 30fps)</value></data>
+  <data name="Settings_Screenshot_UseLastSelectionArea" xml:space="preserve"><value>Запоминать выделенную область</value></data>
+  <data name="ScreenshotEditing_SaveToFileToolTip" xml:space="preserve"><value>Сохранить на диск</value></data>
+  <data name="Notify_LowDiskSpace" xml:space="preserve"><value>На диске {0} закончилось место.</value></data>
+  <data name="Notify_UnknownError" xml:space="preserve"><value>Произошла неизвестная ошибка. Обратитесь в нашу службу поддержки.</value></data>
+  <data name="VideoQuality_UHD4K" xml:space="preserve"><value>Максимальное (4K/2160p, 30fps)</value></data>
+  <data name="VideoQuality_FullHD60fps" xml:space="preserve"><value>Высокое+ (FullHD/1080p, 60fps)</value></data>
+  <data name="Settings_Screenshot_EditorDefaultTool_Header" xml:space="preserve"><value>Элемент редактора по умолчанию:</value></data>
+  <data name="AppUpdate_LatestVersionInstalled" xml:space="preserve"><value>У вас установлена последняя версия {0}.</value></data>
+  <data name="Settings_Video_GroupHeader_Misc" xml:space="preserve"><value>Прочее</value></data>
+  <data name="Settings_Video_Quality" xml:space="preserve"><value>Качество записи</value></data>
+  <data name="ScreenshotEditing_PrintToolTip" xml:space="preserve"><value>Распечатать на принтере</value></data>
+  <data name="VideoRecording_SelectSystemSoundToolTip" xml:space="preserve"><value>Выбрать источник системного звука</value></data>
+  <data name="Unit_B" xml:space="preserve"><value>Б</value></data>
+  <data name="Settings_Screenshot_PlaySound" xml:space="preserve"><value>Проигрывать звук</value></data>
+  <data name="Settings_General_Tray_RecordVideo" xml:space="preserve"><value>Запись видео</value></data>
+  <data name="ScreenshotEditing_TextToolTip" xml:space="preserve"><value>Текст (T)</value></data>
+  <data name="Notify_FailedToUploadScreenshot" xml:space="preserve"><value>К сожалению, не удалось загрузить скриншот в облако.</value></data>
+  <data name="Settings_Video_ShowMutedMicrophoneWarning" xml:space="preserve"><value>Уведомлять, если я говорю с выключенным микрофоном</value></data>
+  <data name="Settings_Screenshot_GroupHeader_Editor" xml:space="preserve"><value>Редактор</value></data>
+  <data name="Settings_Hotkeys_DesktopScreenshot" xml:space="preserve"><value>Скриншот рабочего стола</value></data>
+  <data name="ProgressWindow_CancelButtonText" xml:space="preserve"><value>Отмена</value></data>
+  <data name="ScreenshotEditing_ColorToolTip" xml:space="preserve"><value>Выбрать цвет</value></data>
+  <data name="Notify_" xml:space="preserve"><value /></data>
+  <data name="Settings_Video_HighlightMousePointer" xml:space="preserve"><value>Показывать подсветку курсора мыши</value></data>
+  <data name="ScrollingCapture_Message_ReachedMaxHeight" xml:space="preserve"><value>Достигнута максимальная высота скриншота.
+Создание скриншота завершено.</value></data>
+  <data name="ScreenshotEditing_BlurToolTip" xml:space="preserve"><value>Размытие (B)</value></data>
+  <data name="ScreenshotEditing_RectangleToolTip" xml:space="preserve"><value>Прямоугольник (R). Удерживайте Shift для рисования квадрата.</value></data>
+  <data name="PrintJobName" xml:space="preserve"><value>Скриншот экрана</value></data>
+  <data name="ScrollingCapture_Message_AutoScrollHint" xml:space="preserve"><value>Для автопрокрутки держите
+курсор внутри области</value></data>
+  <data name="Settings_Screenshot_Format" xml:space="preserve"><value>Сохранять в формате</value></data>
+  <data name="VideoRecording_Cancel_NoButtonText" xml:space="preserve"><value>Продолжить запись</value></data>
+  <data name="Settings_Video_Source_MicrophoneNotConnected" xml:space="preserve"><value>Не подключен</value></data>
+  <data name="Settings_FileNameTemplate_Placeholders" xml:space="preserve"><value>Поддерживаемые параметры</value></data>
+  <data name="Settings_FileNameTemplate_Param_Minutes" xml:space="preserve"><value>минуты</value></data>
+  <data name="Settings_FileNameTemplate_Error_InvalidCharacter" xml:space="preserve"><value>Шаблон содержит недопустимый символ '{0}'</value></data>
+  <data name="Notify_FileSavedOnDiskAndToClipboard" xml:space="preserve"><value>Файл успешно сохранен на диск. Ссылка на него уже в буфере обмена. Нажмите сюда, чтобы открыть папку.</value></data>
+  <data name="VideoRecording_PauseToolTip" xml:space="preserve"><value>Пауза</value></data>
+  <data name="Settings_FileNameTemplate_Preview" xml:space="preserve"><value>Предварительный просмотр</value></data>
+  <data name="ScreenshotEditing_LineToolTip" xml:space="preserve"><value>Линия (L). Удерживайте Shift для рисования по горизонтали или вертикали.</value></data>
+  <data name="Unit_TB" xml:space="preserve"><value>ТБ</value></data>
+  <data name="Unit_MB" xml:space="preserve"><value>МБ</value></data>
+  <data name="Unit_KB" xml:space="preserve"><value>КБ</value></data>
+  <data name="Unit_GB" xml:space="preserve"><value>ГБ</value></data>
+  <data name="Notify_TextNotFoundInImage" xml:space="preserve"><value>Текст на изображении не найден.</value></data>
+  <data name="VideoRecording_CancelToolTip" xml:space="preserve"><value>Прервать запись</value></data>
+  <data name="Tray_ContextMenu_RecordVideo" xml:space="preserve"><value>Записать видео</value></data>
+  <data name="VideoRecording_StartButtonText" xml:space="preserve"><value>Старт</value></data>
+  <data name="HotkeyBox_InputHotkey" xml:space="preserve"><value>Введите сочетание клавиш</value></data>
+  <data name="ScrollingCapture_StartToolTip" xml:space="preserve"><value>Начать захват скриншота с прокруткой (Enter)</value></data>
+  <data name="Notify_FailedToUploadFile" xml:space="preserve"><value>К сожалению, не удалось загрузить файл в облако. Файл сохранен на рабочем столе. Нажмите сюда, чтобы открыть папку.</value></data>
+  <data name="Notify_FailedToUploadLogs" xml:space="preserve"><value>К сожалению, не удалось загрузить логи в облако.</value></data>
+  <data name="Settings_Video_SaveType_Cloud" xml:space="preserve"><value>В облако, копируя ссылку в буфер обмена</value></data>
+  <data name="Notify_FailedToUploadFileOfFileType" xml:space="preserve"><value>К сожалению, не удалось загрузить файл в облако.</value></data>
+  <data name="Settings_FileNameTemplate_WindowTitleForScreenshot" xml:space="preserve"><value>Редактирование шаблона имени файла для скриншотов</value></data>
+  <data name="Microphone_AccessDenied" xml:space="preserve"><value>Доступ к микрофону запрещен в настройках Windows</value></data>
+  <data name="Settings_Screenshot_EditorDefaultTool_None" xml:space="preserve"><value>Перемещение рамки</value></data>
+  <data name="Settings_FileNameTemplate_Param_Seconds" xml:space="preserve"><value>секунды</value></data>
+  <data name="Tray_ContextMenu_History" xml:space="preserve"><value>История</value></data>
+  <data name="Settings_Hotkeys_AreaScreenshot" xml:space="preserve"><value>Скриншот области экрана</value></data>
+  <data name="SelectFileForUpload_WindowTitle" xml:space="preserve"><value>Выберите файл для загрузки в облако</value></data>
+  <data name="Settings_Hotkeys_RecordVideo" xml:space="preserve"><value>Запись/Стоп видео</value></data>
+  <data name="Settings_Screenshot_GroupHeader_FormatAndQuality" xml:space="preserve"><value>Формат и качество</value></data>
+  <data name="Notify_FailedToChangeAutostartSettings" xml:space="preserve"><value>Не удалось изменить настройки автозапуска приложения. Обратитесь в нашу службу поддержки.</value></data>
+  <data name="Settings_About_AppIdCopiedToolTip" xml:space="preserve"><value>ID программы скопирован в буфер обмена</value></data>
+  <data name="Notify_CloudStorageQuotaExceeded_DeleteOnly" xml:space="preserve"><value>В облаке закончилось место. Удалите лишние файлы, чтобы освободить место.</value></data>
+  <data name="Settings_Screenshot_EditorDefaultTool_Arrow" xml:space="preserve"><value>Стрелка</value></data>
+  <data name="Tray_Popup_RecordVideoToolTip" xml:space="preserve"><value>Записать видео</value></data>
+  <data name="Settings_Hotkeys_UseMouseForScreenshot" xml:space="preserve"><value>Две кнопки мыши одновременно для скриншота</value></data>
+  <data name="Settings_Video_StartRecordingImmediatelyAfterSelection" xml:space="preserve"><value>Начинать запись сразу после выделения области</value></data>
+  <data name="ScreenshotEditing_UndoToolTip" xml:space="preserve"><value>Отменить действие (Ctrl+Z). Для повтора отмененного действия нажмите Ctrl+Y.</value></data>
+  <data name="VideoRecording_StartToolTip" xml:space="preserve"><value>Начать запись (Enter)</value></data>
+  <data name="Settings_Video_MaxDuration_Cloud_Free" xml:space="preserve"><value>(до 5 минут)</value></data>
+  <data name="VideoRecording_MutedMicrophone_CloseToolTip" xml:space="preserve"><value>Больше не показывать</value></data>
+  <data name="Notify_FailedToCopyToClipboardExplanation" xml:space="preserve"><value>Убедитесь, что антивирусное ПО не блокирует работу {0}. При необходимости добавьте {1} в исключения антивируса.</value></data>
+  <data name="VideoQuality_" xml:space="preserve"><value /></data>
+  <data name="Notify_VideoPathNotAccessible" xml:space="preserve"><value>Папка на диске {0} недоступна. Проверьте путь сохранения видео в настройках.</value></data>
+  <data name="Settings_Video_ShowCursor" xml:space="preserve"><value>Показывать курсор мыши</value></data>
+  <data name="Settings_General_Tray_MakeScrollingCapture" xml:space="preserve"><value>Скриншот с прокруткой</value></data>
+  <data name="Settings_About_GroupHeader" xml:space="preserve"><value>О программе</value></data>
+  <data name="VideoRecording_ResumeToolTip" xml:space="preserve"><value>Продолжить запись</value></data>
+  <data name="Notify_FailedToCopyVideoLinkToClipboard" xml:space="preserve"><value>Не удалось скопировать ссылку на видео в буфер обмена.</value></data>
+  <data name="Settings_Video_Source_Microphone" xml:space="preserve"><value>Микрофон</value></data>
+  <data name="Tray_ContextMenu_CheckForUpdates" xml:space="preserve"><value>Проверить обновления</value></data>
+  <data name="Notify_FailedToUploadVideoAndStoredOnDesktop" xml:space="preserve"><value>К сожалению, не удалось загрузить видео в облако. Видео сохранено на рабочем столе. Нажмите сюда, чтобы открыть папку.</value></data>
+  <data name="Settings_FileNameTemplate_Error" xml:space="preserve"><value>Ошибка</value></data>
+  <data name="ScreenshotEditing_NumberToolTip" xml:space="preserve"><value>Числовая метка (N)</value></data>
+  <data name="Settings_General_GroupHeader" xml:space="preserve"><value>Общие настройки</value></data>
+  <data name="Tray_ContextMenu_MakeScrollingCapture" xml:space="preserve"><value>Скриншот с прокруткой</value></data>
+  <data name="VideoRecording_SelectMicrophoneToolTip" xml:space="preserve"><value>Выбрать микрофон</value></data>
+  <data name="Settings_FileNameTemplate_Param_Year" xml:space="preserve"><value>год</value></data>
+  <data name="Settings_Screenshot_SavePath" xml:space="preserve"><value>Папка</value></data>
+  <data name="VideoRecording_Cancel_YesButtonText" xml:space="preserve"><value>Прервать</value></data>
+  <data name="Progress_UploadingFileToCloud" xml:space="preserve"><value>Загрузка файла в облако...</value></data>
+  <data name="Tray_Popup_MakeScreenshotToolTip" xml:space="preserve"><value>Сделать скриншот</value></data>
+  <data name="Settings_Screenshot_FileNameTemplateDefaultValue" xml:space="preserve"><value>Скриншот-{YYYY}{MM}{DD}-{hh}{mm}{ss}</value></data>
+  <data name="VideoRecording_SelectCameraToolTip" xml:space="preserve"><value>Выбрать камеру</value></data>
+  <data name="Progress_UploadingVideoToCloud" xml:space="preserve"><value>Загрузка видео в облако...</value></data>
+  <data name="AppUpdate_DownloadButtonText" xml:space="preserve"><value>Скачать</value></data>
+  <data name="VideoRecording_NoSystemSoundSourcesToolTip" xml:space="preserve"><value>Нет источников системного звука</value></data>
+  <data name="ReadyButtonText" xml:space="preserve"><value>Готово</value></data>
+  <data name="VideoRecording_PauseButtonText" xml:space="preserve"><value>Пауза</value></data>
+  <data name="Settings_Video_Source_SystemSoundNoSource" xml:space="preserve"><value>Нет источника звука</value></data>
+  <data name="Settings_Video_ShowControlPanel" xml:space="preserve"><value>Показывать панель управления во время записи</value></data>
+  <data name="Notify_FailedToCopyTextToClipboard" xml:space="preserve"><value>Не удалось скопировать текст в буфер обмена.</value></data>
+  <data name="SelectSaveFolder_WindowTitle" xml:space="preserve"><value>Выберите путь для сохранения</value></data>
+  <data name="ScreenshotEditing_CustomColorButtonText" xml:space="preserve"><value>Свой цвет</value></data>
+  <data name="Notify_FailedToStartVideoModuleProcess" xml:space="preserve"><value>Не удалось запустить видеомодуль. Обратитесь в нашу службу поддержки.</value></data>
+  <data name="Settings_General_CheckForUpdates" xml:space="preserve"><value>Проверять наличие обновлений</value></data>
+  <data name="Settings_Video_FileNameTemplateDefaultValue" xml:space="preserve"><value>Видео-{YYYY}{MM}{DD}-{hh}{mm}{ss}</value></data>
+  <data name="Settings_Video_SavePath" xml:space="preserve"><value>Папка</value></data>
+  <data name="Camera_UsedByAnotherApp" xml:space="preserve"><value>Камера используется другой программой</value></data>
+  <data name="Settings_Screenshot_SaveType_Cloud" xml:space="preserve"><value>В облако, копируя ссылку в буфер обмена</value></data>
+  <data name="Notify_VideoRecordingStoppedDueToLowDiskSpace" xml:space="preserve"><value>Запись видео была остановлена, т.к. на диске {0} закончилось место.</value></data>
+  <data name="VideoRecording_StopToolTip" xml:space="preserve"><value>Завершить запись</value></data>
+  <data name="Settings_Hotkeys_GroupHeader" xml:space="preserve"><value>Горячие клавиши</value></data>
+  <data name="Notify_FailedToCopyVideoToClipboard" xml:space="preserve"><value>Не удалось скопировать видео в буфер обмена.</value></data>
+  <data name="Settings_Screenshot_SaveType_File" xml:space="preserve"><value>Также сохранять скриншот на компьютер</value></data>
+  <data name="SystemSound_GeneralError" xml:space="preserve"><value>Ошибка записи системного звука</value></data>
+  <data name="OkButtonText" xml:space="preserve"><value>ОК</value></data>
+  <data name="VideoRecording_UnmuteMicrophoneToolTip" xml:space="preserve"><value>Включить микрофон</value></data>
+  <data name="HotkeyBox_HotkeyNotSet" xml:space="preserve"><value>Сочетание клавиш не задано</value></data>
+  <data name="Settings_FileNameTemplate_Error_General" xml:space="preserve"><value>Некорректный шаблон</value></data>
+  <data name="ScreenshotEditing_ArrowToolTip" xml:space="preserve"><value>Стрелка (A). Удерживайте Shift для рисования по горизонтали или вертикали.</value></data>
+  <data name="ScreenshotEditing_CloseToolTip" xml:space="preserve"><value>Закрыть</value></data>
+  <data name="Settings_FileNameTemplate_Param_Day" xml:space="preserve"><value>день</value></data>
+  <data name="ScreenshotEditing_OvalToolTip" xml:space="preserve"><value>Овал (O). Удерживайте Shift для рисования круга.</value></data>
+  <data name="AppUpdate_WindowTitle" xml:space="preserve"><value>Проверка обновлений</value></data>
+  <data name="VideoRecording_MuteSystemSoundToolTip" xml:space="preserve"><value>Выключить системный звук</value></data>
+  <data name="Settings_Screenshot_OpenInBrowser" xml:space="preserve"><value>Открывать ссылку в браузере</value></data>
+  <data name="VideoRecording_MuteMicrophoneToolTip" xml:space="preserve"><value>Выключить микрофон</value></data>
+  <data name="VideoRecording_StopButtonText" xml:space="preserve"><value>Стоп</value></data>
+  <data name="Settings_Screenshot_AlwaysShowEditor" xml:space="preserve"><value>Всегда активировать редактор</value></data>
+  <data name="Settings_FileNameTemplate_Param_WindowTitle_PreviewValue" xml:space="preserve"><value>Заголовок окна</value></data>
+  <data name="Settings_Video_GroupHeader_Sources" xml:space="preserve"><value>Источники видео и звука</value></data>
+  <data name="VideoRecording_CloseToolTip" xml:space="preserve"><value>Закрыть</value></data>
+  <data name="Microphone_GeneralError" xml:space="preserve"><value>Ошибка записи звука с микрофона</value></data>
+  <data name="Settings_FileNameTemplate_Param_SequenceNumber" xml:space="preserve"><value>порядковый номер</value></data>
+  <data name="ScrollingCapture_StartButtonText" xml:space="preserve"><value>Начать захват</value></data>
+  <data name="Notify_FailedToDownloadDataFromServer" xml:space="preserve"><value>Произошла ошибка при загрузке данных с сервера.</value></data>
+  <data name="Settings_TabHeader_General" xml:space="preserve"><value>Общие</value></data>
+  <data name="Settings_Video_Source_CameraNotConnected" xml:space="preserve"><value>Не подключена</value></data>
+  <data name="Settings_General_Language" xml:space="preserve"><value>Язык</value></data>
+  <data name="Settings_FileNameTemplate_Param_WindowTitle" xml:space="preserve"><value>заголовок окна</value></data>
+  <data name="Settings_Video_HighlightMouseClicks" xml:space="preserve"><value>Показывать подсветку кликов мыши</value></data>
+  <data name="Settings_TabHeader_About" xml:space="preserve"><value>О программе</value></data>
+  <data name="Settings_TabHeader_Video" xml:space="preserve"><value>Видео</value></data>
+  <data name="Settings_Screenshot_GroupHeader_WhereToSave" xml:space="preserve"><value>Куда сохранять скриншоты</value></data>
+  <data name="AudioDevice_Default" xml:space="preserve"><value>По умолчанию</value></data>
+  <data name="Settings_Video_OpenInBrowser" xml:space="preserve"><value>Открывать ссылку в браузере</value></data>
+  <data name="Notify_AppUpdateAvailable" xml:space="preserve"><value>Доступна новая версия {0}.
+Нажмите сюда, чтобы увидеть подробности.</value></data>
+  <data name="VideoRecording_ResumeButtonText" xml:space="preserve"><value>Продолжить</value></data>
+  <data name="VideoRecording_UnmuteSystemSoundToolTip" xml:space="preserve"><value>Включить системный звук</value></data>
+  <data name="Settings_Screenshot_FileNameTemplate" xml:space="preserve"><value>Имя файла</value></data>
+  <data name="ScreenshotEditing_PencilToolTip" xml:space="preserve"><value>Карандаш (P). Удерживайте Shift для рисования по горизонтали или вертикали.</value></data>
+  <data name="VideoQuality_HD" xml:space="preserve"><value>Среднее (HD/720p, 25fps)</value></data>
+  <data name="VideoQuality_SD" xml:space="preserve"><value>Низкое (SD/480p, 15fps)</value></data>
+  <data name="SelectArea" xml:space="preserve"><value>Выделите область</value></data>
+  <data name="Camera_GeneralError" xml:space="preserve"><value>Ошибка подключения к камере</value></data>
+  <data name="Settings_Screenshot_DrawObjectShadows" xml:space="preserve"><value>Рисовать тени объектов</value></data>
+  <data name="Notify_ScrollingCaptureLimitReached" xml:space="preserve"><value>Достигнут лимит скриншотов с прокруткой ({0}/{1}).</value></data>
+  <data name="ScreenshotEditing_LineThicknessToolTip" xml:space="preserve"><value>Выбрать толщину линии (колесико мыши)</value></data>
+  <data name="Settings_Video_Source_Camera" xml:space="preserve"><value>Камера</value></data>
+  <data name="Tray_ContextMenu_SilentMode" xml:space="preserve"><value>Тихий режим</value></data>
+  <data name="Settings_Hotkeys_ActiveWindowScreenshot" xml:space="preserve"><value>Скриншот активного окна</value></data>
+  <data name="ScreenshotEditing_CopyToClipboardToolTip" xml:space="preserve"><value>Копировать в буфер обмена</value></data>
+  <data name="Settings_Screenshot_JpegQuality" xml:space="preserve"><value>Качество JPEG</value></data>
+  <data name="Settings_Screenshot_EditorDefaultTool_LastUsed" xml:space="preserve"><value>Запоминать последний выбор</value></data>
+  <data name="CloudStorage_Usage" xml:space="preserve"><value>Место в облаке</value></data>
+  <data name="Settings_Hotkeys_UseMouseForVideo" xml:space="preserve"><value>Ctrl + Shift + Две кнопки мыши одновременно для видео</value></data>
+  <data name="Notify_FailedToUploadVideo" xml:space="preserve"><value>К сожалению, не удалось загрузить видео в облако.</value></data>
+  <data name="Settings_FileNameTemplate_Param_Month" xml:space="preserve"><value>месяц</value></data>
+  <data name="Settings_FileNameTemplate_Param_Hours" xml:space="preserve"><value>часы</value></data>
+  <data name="Notify_FailedToUploadScreenshotAndStoredOnDesktop" xml:space="preserve"><value>К сожалению, не удалось загрузить скриншот в облако. Скриншот сохранен на рабочем столе. Нажмите сюда, чтобы открыть папку.</value></data>
+  <data name="Settings_Hotkeys_PauseVideo" xml:space="preserve"><value>Пауза видео</value></data>
+  <data name="Settings_General_SilentModeToolTip" xml:space="preserve"><value>Полноэкранные игры и приложения не
+будут сворачиваться в момент снимка
+экрана.
+
+Режим отключает вызов двумя
+кнопками мыши, некоторые уведомления,
+эффекты и звуки.</value></data>
+  <data name="CopyToClipboardToolTip" xml:space="preserve"><value>Копировать в буфер обмена</value></data>
+  <data name="Settings_General_Tray_ShowPanel" xml:space="preserve"><value>Показать панель выбора</value></data>
+  <data name="Settings_General_Autostart" xml:space="preserve"><value>Запускать программу при старте Windows</value></data>
+  <data name="Settings_TabHeader_Screenshots" xml:space="preserve"><value>Скриншоты</value></data>
+  <data name="Settings_About_ReportErrorButtonText" xml:space="preserve"><value>Сообщить об ошибке</value></data>
+  <data name="Settings_Hotkeys_ActiveMonitorScreenshot" xml:space="preserve"><value>Скриншот активного монитора</value></data>
+  <data name="WarningWindowTitle" xml:space="preserve"><value>Внимание</value></data>
+  <data name="Progress_LinkToVideoAlreadyInClipboard" xml:space="preserve"><value>Ссылка на видео уже в буфере обмена</value></data>
+  <data name="Tray_ContextMenu_Exit" xml:space="preserve"><value>Выход</value></data>
+  <data name="Settings_About_AppId" xml:space="preserve"><value>ID программы:</value></data>
+  <data name="Settings_Screenshot_SaveType_Clipboard" xml:space="preserve"><value>В буфер обмена, без загрузки в облако</value></data>
+  <data name="Notify_FailedToCopyFileLinkToClipboard" xml:space="preserve"><value>Не удалось скопировать ссылку на файл в буфер обмена.</value></data>
+  <data name="Tray_ContextMenu_ShowSettings" xml:space="preserve"><value>Настройки</value></data>
+  <data name="VideoRecording_Cancel_WindowTitle" xml:space="preserve"><value>Прервать запись?</value></data>
+  <data name="Settings_Screenshot_ShowCursor" xml:space="preserve"><value>Показывать курсор мыши</value></data>
+  <data name="Settings_General_SilentMode" xml:space="preserve"><value>Тихий режим работы программы</value></data>
+  <data name="VideoRecording_NoCamerasToolTip" xml:space="preserve"><value>Нет подключенных камер</value></data>
+  <data name="Settings_FileNameTemplate_ApplyButtonText" xml:space="preserve"><value>Сохранить</value></data>
+  <data name="VideoRecording_MutedMicrophone_WarningText" xml:space="preserve"><value>Микрофон выключен. &lt;link&gt;Нажмите&lt;/link&gt;, чтобы включить.</value></data>
+  <data name="VideoRecording_LowDiskSpaceText" xml:space="preserve"><value>На диске {0} заканчивается место.
+Рекомендуется завершить запись видео.</value></data>
+  <data name="Settings_About_CheckForUpdatesButtonText" xml:space="preserve"><value>Проверить обновления</value></data>
+  <data name="Notify_FileSavedOnDisk" xml:space="preserve"><value>Файл успешно сохранен на диск. Нажмите сюда, чтобы открыть папку.</value></data>
+  <data name="Settings_Screenshot_GroupHeader_Misc" xml:space="preserve"><value>Прочее</value></data>
+  <data name="VideoRecording_NoMicrophonesToolTip" xml:space="preserve"><value>Нет подключенных микрофонов</value></data>
+  <data name="Settings_Video_GroupHeader_Quality" xml:space="preserve"><value>Качество</value></data>
+  <data name="VideoRecording_TurnOffCameraToolTip" xml:space="preserve"><value>Выключить камеру</value></data>
+  </root>

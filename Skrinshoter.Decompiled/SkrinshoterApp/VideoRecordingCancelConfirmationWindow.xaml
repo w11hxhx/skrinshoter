@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<local:FramelessWindow x:Class="SkrinshoterApp.VideoRecordingCancelConfirmationWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:props="clr-namespace:SkrinshoterApp.Properties" xmlns:local="clr-namespace:SkrinshoterApp" MouseLeftButtonDown="Window_MouseLeftButtonDown" Style="{StaticResource SystemShadowFramelessWindowStyle}" WindowStartupLocation="CenterOwner">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <Style x:Key="{x:Type TextBlock}" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource SettingsTextBlockStyle}" />
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <StackPanel MinWidth="420" Margin="20,14,20,20">
+    <Grid Name="HeaderRow">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <TextBlock Grid.Column="0" HorizontalAlignment="Left" FontFamily="{StaticResource App.FontFamily.Header}" FontSize="{StaticResource App.FontSize.DialogWindowHeader}" FontWeight="Bold" Text="{Binding Path=(props:Resources.VideoRecording_Cancel_WindowTitle)}" />
+      <Button Grid.Column="1" Style="{StaticResource DialogWindowCloseButtonStyle}" VerticalAlignment="Center" Margin="10,0,-4,0" Click="CloseButton_Click" />
+    </Grid>
+    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Margin="0,20,0,0" Text="{Binding Path=(props:Resources.VideoRecording_Cancel_ConfirmationText)}" MaxWidth="{Binding ActualWidth, ElementName=HeaderRow}" />
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
+      <Button Style="{StaticResource SettingsBlueButtonStyle}" IsDefault="True" Content="{Binding Path=(props:Resources.VideoRecording_Cancel_YesButtonText)}" Click="AbortButton_Click" />
+      <Button Style="{StaticResource SettingsButtonStyle}" Margin="10,0,0,0" IsCancel="True" Content="{Binding Path=(props:Resources.VideoRecording_Cancel_NoButtonText)}" />
+    </StackPanel>
+  </StackPanel>
+</local:FramelessWindow>

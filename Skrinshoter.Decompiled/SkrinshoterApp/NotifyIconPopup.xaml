@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Popup x:Class="SkrinshoterApp.NotifyIconPopup" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:SkrinshoterApp" AllowsTransparency="True" StaysOpen="True" Opened="Popup_Opened" KeyDown="Popup_KeyDown" LostKeyboardFocus="Popup_LostKeyboardFocus">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <Style x:Key="{x:Type Button}" TargetType="{x:Type Button}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="#00FFFFFF" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="FrameworkElement.UseLayoutRounding" Value="False" />
+        <Setter Property="Height" Value="48" />
+        <Setter Property="Width" Value="54" />
+      </Style>
+      <Style x:Key="{x:Type Path}" TargetType="{x:Type Path}" BasedOn="{StaticResource IconPathStyle}">
+        <Setter Property="local:IconBrush.Value" Value="#ff17334a" />
+      </Style>
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <StackPanel Orientation="Horizontal">
+    <Border BorderThickness="3" BorderBrush="#01000000" CornerRadius="7">
+      <UIElement.Effect>
+        <DropShadowEffect ShadowDepth="0" RenderingBias="Quality" Color="Gray" BlurRadius="3" />
+      </UIElement.Effect>
+      <Grid>
+        <Border Name="mask" BorderThickness="0" CornerRadius="6" Background="#EFEEEF" />
+        <StackPanel Orientation="Horizontal">
+          <UIElement.OpacityMask>
+            <VisualBrush Visual="{Binding ElementName=mask}" />
+          </UIElement.OpacityMask>
+          <Button Padding="6 0 0 0" Command="{Binding MakeScreenshotCommand}" ToolTip="{Binding MakeScreenshotToolTip}" Click="Button_Click">
+            <Path Height="20" Data="{StaticResource Icon.Screenshot}" />
+          </Button>
+          <Button Padding="0 0 0 0" Command="{Binding RecordVideoCommand}" ToolTip="{Binding RecordVideoToolTip}" Click="Button_Click">
+            <Path Height="16.5" Data="{StaticResource Icon.Video}" />
+          </Button>
+          <Button Padding="0 0 6 0" Command="{Binding MakeScrollingCaptureCommand}" ToolTip="{Binding MakeScrollingCaptureToolTip}" Click="Button_Click">
+            <Path Height="16.5" Data="{StaticResource Icon.ScrollingCapture}" />
+          </Button>
+        </StackPanel>
+      </Grid>
+    </Border>
+  </StackPanel>
+</Popup>

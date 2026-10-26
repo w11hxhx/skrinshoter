@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:SkrinshoterApp">
+  <DataTemplate x:Key="{DataTemplateKey {x:Type local:ArrowObjectVM}}" DataType="{x:Type local:ArrowObjectVM}">
+    <local:ArrowObject />
+  </DataTemplate>
+  <DataTemplate x:Key="{DataTemplateKey {x:Type local:LineObjectVM}}" DataType="{x:Type local:LineObjectVM}">
+    <local:LineObject />
+  </DataTemplate>
+  <DataTemplate x:Key="{DataTemplateKey {x:Type local:PencilObjectVM}}" DataType="{x:Type local:PencilObjectVM}">
+    <local:PencilObject />
+  </DataTemplate>
+  <DataTemplate x:Key="{DataTemplateKey {x:Type local:MarkerObjectVM}}" DataType="{x:Type local:MarkerObjectVM}">
+    <local:MarkerObject />
+  </DataTemplate>
+  <DataTemplate x:Key="{DataTemplateKey {x:Type local:RectangleObjectVM}}" DataType="{x:Type local:RectangleObjectVM}">
+    <local:RectangleObject />
+  </DataTemplate>
+  <DataTemplate x:Key="{DataTemplateKey {x:Type local:OvalObjectVM}}" DataType="{x:Type local:OvalObjectVM}">
+    <local:OvalObject />
+  </DataTemplate>
+  <DataTemplate x:Key="{DataTemplateKey {x:Type local:TextObjectVM}}" DataType="{x:Type local:TextObjectVM}">
+    <local:TextObject />
+  </DataTemplate>
+  <DataTemplate x:Key="{DataTemplateKey {x:Type local:NumberObjectVM}}" DataType="{x:Type local:NumberObjectVM}">
+    <local:NumberObject />
+  </DataTemplate>
+  <DataTemplate x:Key="{DataTemplateKey {x:Type local:BlurObjectVM}}" DataType="{x:Type local:BlurObjectVM}">
+    <local:BlurObject />
+  </DataTemplate>
+  <DrawingBrush x:Key="ScreenshotEditingVisualObjectsSelectionFrameBrush" TileMode="Tile" Viewport="0,0,4,4" ViewportUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <GeometryDrawing Brush="#FF000000" Geometry="M0,0 L2,0 L2,2 L0,2" />
+        <GeometryDrawing Brush="#FFFFFFFF" Geometry="M2,0 L4,0 L4,2 L2,2" />
+        <GeometryDrawing Brush="#FFFFFFFF" Geometry="M0,2 L2,2 L2,4 L0,4" />
+        <GeometryDrawing Brush="#FF000000" Geometry="M2,2 L4,2 L4,4 L2,4" />
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+  <DropShadowEffect x:Key="ScreenshotEditingVisualObjectsDropShadowEffectDefault" Color="Black" BlurRadius="10" ShadowDepth="2" Opacity="0.3" />
+  <DropShadowEffect x:Key="ScreenshotEditingTextDropShadowEffectDefault" Color="Black" BlurRadius="10" ShadowDepth="2" Opacity="0.15" />
+  <x:NullExtension x:Key="ScreenshotEditingVisualObjectsDropShadowEffect" />
+  <x:NullExtension x:Key="ScreenshotEditingTextDropShadowEffect" />
+</ResourceDictionary>

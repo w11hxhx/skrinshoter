@@ -1,0 +1,20 @@
+using System;
+using System.CodeDom.Compiler;
+
+namespace Windows.Win32.Security.Credentials;
+
+[Flags]
+[GeneratedCode("Microsoft.Windows.CsWin32", "0.3.217+533aa1bddf.RR")]
+internal enum CRED_FLAGS : uint
+{
+	CRED_FLAGS_PASSWORD_FOR_CERT = 1u,
+	CRED_FLAGS_PROMPT_NOW = 2u,
+	CRED_FLAGS_USERNAME_TARGET = 4u,
+	CRED_FLAGS_OWF_CRED_BLOB = 8u,
+	CRED_FLAGS_REQUIRE_CONFIRMATION = 0x10u,
+	CRED_FLAGS_WILDCARD_MATCH = 0x20u,
+	CRED_FLAGS_VSM_PROTECTED = 0x40u,
+	CRED_FLAGS_NGC_CERT = 0x80u,
+	CRED_FLAGS_VALID_FLAGS = 0xF0FFu,
+	CRED_FLAGS_VALID_INPUT_FLAGS = 0xF09Fu
+}

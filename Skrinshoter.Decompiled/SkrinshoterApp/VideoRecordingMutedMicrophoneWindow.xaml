@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<local:PanelWindow x:Class="SkrinshoterApp.VideoRecordingMutedMicrophoneWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:props="clr-namespace:SkrinshoterApp.Properties" xmlns:local="clr-namespace:SkrinshoterApp" Style="{StaticResource PanelWindowStyle}">
+  <FrameworkElement.Resources>
+    <ResourceDictionary>
+      <Style x:Key="{x:Type TextBlock}" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource SettingsTextBlockStyle}" />
+      <Style x:Key="{x:Type ToolTip}" TargetType="{x:Type ToolTip}" BasedOn="{StaticResource ToolTipStyle}">
+        <Setter Property="local:PopupHelper.ExcludeFromCapture" Value="True" />
+      </Style>
+    </ResourceDictionary>
+  </FrameworkElement.Resources>
+  <Border CornerRadius="12" BorderThickness="2" BorderBrush="#FFA800" Background="#D0000000" UseLayoutRounding="True">
+    <StackPanel Orientation="Horizontal" Margin="10 10 5 10">
+      <Path Data="{StaticResource VideoRecordingMicrophoneOffGeometry}" Width="24" Height="24" Stretch="None" Stroke="#FFFFFFFF" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" VerticalAlignment="Center" Margin="0 0 9 0" />
+      <TextBlock Foreground="#FFFFFFFF" VerticalAlignment="Center" FontSize="{StaticResource App.FontSize.PanelButton}" local:InlineLinkTextHelper.LinkStyle="{StaticResource HyperlinkStyle}" local:InlineLinkTextHelper.LinkCommand="{Binding SelectAudioDevicesVM.ToggleInputAudioDeviceMutedCommand}" local:InlineLinkTextHelper.Text="{Binding Path=(props:Resources.VideoRecording_MutedMicrophone_WarningText)}" />
+      <Button Style="{StaticResource MessageWindowCloseButtonStyle}" Margin="5 0 0 0" VerticalAlignment="Center" ToolTip="{Binding Path=(props:Resources.VideoRecording_MutedMicrophone_CloseToolTip)}" Command="{Binding CloseCommand}" />
+    </StackPanel>
+  </Border>
+</local:PanelWindow>

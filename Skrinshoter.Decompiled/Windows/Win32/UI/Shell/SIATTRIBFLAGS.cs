@@ -1,0 +1,15 @@
+using System;
+using System.CodeDom.Compiler;
+
+namespace Windows.Win32.UI.Shell;
+
+[Flags]
+[GeneratedCode("Microsoft.Windows.CsWin32", "0.3.217+533aa1bddf.RR")]
+internal enum SIATTRIBFLAGS
+{
+	SIATTRIBFLAGS_AND = 1,
+	SIATTRIBFLAGS_OR = 2,
+	SIATTRIBFLAGS_APPCOMPAT = SIATTRIBFLAGS_AND | SIATTRIBFLAGS_OR,
+	SIATTRIBFLAGS_MASK = SIATTRIBFLAGS_APPCOMPAT,
+	SIATTRIBFLAGS_ALLITEMS = 0x4000
+}
