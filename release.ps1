@@ -125,3 +125,4 @@ if (-not $SkipInstaller) {
 }
 Write-Host "Source package: $sourceZip"
 Write-Host "Checksums: $checksumPath"
+exit 0

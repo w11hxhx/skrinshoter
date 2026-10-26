@@ -46,3 +46,4 @@ jobs:
           artifacts/SHA256SUMS.txt
           --generate-notes
           --title "Skrinshoter ${{ github.ref_name }}"
+          --clobber
