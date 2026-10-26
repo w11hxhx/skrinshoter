@@ -33,17 +33,27 @@ jobs:
             artifacts/Skrinshoter-source.zip
             artifacts/SHA256SUMS.txt
 
-      - name: Create GitHub release
+      - name: Create or update GitHub release
         if: startsWith(github.ref, 'refs/tags/v')
         shell: powershell
         env:
           GH_TOKEN: ${{ github.token }}
-        run: >-
-          gh release create "${{ github.ref_name }}"
-          artifacts/Skrinshoter-portable-win-x64.zip
-          artifacts/Skrinshoter-setup-win-x64.exe
-          artifacts/Skrinshoter-source.zip
-          artifacts/SHA256SUMS.txt
-          --generate-notes
-          --title "Skrinshoter ${{ github.ref_name }}"
-          --clobber
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $files = @(
+            'artifacts/Skrinshoter-portable-win-x64.zip',
+            'artifacts/Skrinshoter-setup-win-x64.exe',
+            'artifacts/Skrinshoter-source.zip',
+            'artifacts/SHA256SUMS.txt'
+          )
+          cmd /c "gh release view $tag >nul 2>&1"
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host "Release $tag already exists. Uploading release assets with clobber..."
+            gh release upload $tag @files --clobber
+          } else {
+            Write-Host "Creating release $tag..."
+            gh release create $tag @files --generate-notes --title "Skrinshoter $tag"
+          }
+          if ($LASTEXITCODE -ne 0) {
+            throw "Failed to create or upload release assets (exit code $LASTEXITCODE)."
+          }

@@ -83,6 +83,7 @@ foreach ($tree in $sourceTrees) {
         throw "Failed to copy source tree: $tree (robocopy exit code $LASTEXITCODE)."
     }
 }
+$global:LASTEXITCODE = 0
 
 $rootFiles = @(
     '.gitattributes',
