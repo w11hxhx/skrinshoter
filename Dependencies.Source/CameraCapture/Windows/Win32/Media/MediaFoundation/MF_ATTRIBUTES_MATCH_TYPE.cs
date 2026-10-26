@@ -1,0 +1,13 @@
+using System.CodeDom.Compiler;
+
+namespace Windows.Win32.Media.MediaFoundation;
+
+[GeneratedCode("Microsoft.Windows.CsWin32", "0.3.217+533aa1bddf.RR")]
+internal enum MF_ATTRIBUTES_MATCH_TYPE
+{
+	MF_ATTRIBUTES_MATCH_OUR_ITEMS,
+	MF_ATTRIBUTES_MATCH_THEIR_ITEMS,
+	MF_ATTRIBUTES_MATCH_ALL_ITEMS,
+	MF_ATTRIBUTES_MATCH_INTERSECTION,
+	MF_ATTRIBUTES_MATCH_SMALLER
+}

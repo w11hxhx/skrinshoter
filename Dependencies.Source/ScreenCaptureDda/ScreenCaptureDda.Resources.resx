@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+<resheader name="resmimetype"><value>text/microsoft-resx</value></resheader><resheader name="version"><value>1.3</value></resheader><resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader><data name="rotate_ps_4_0" type="System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"><value>RFhCQ1G5CW+w1P0U47i7dFXTiWcBAAAAnAIAAAMAAAAsAAAAYAAAAJQAAABJU0dOLAAAAAEAAAAI
+AAAAIAAAAAAAAAABAAAAAwAAAAAAAAAPAwAAU1ZfUG9zaXRpb24AT1NHTiwAAAABAAAACAAAACAA
+AAAAAAAAAAAAAAMAAAAAAAAADwAAAFNWX1RhcmdldACrq1NIRFIAAgAAQAAAAIAAAABZAAAERo4g
+AAAAAAACAAAAWBgABABwEAAAAAAAVVUAAGQgAAQyEBAAAAAAAAEAAABlAAAD8iAQAAAAAABoAAAC
+AgAAABwAAAUyABAAAAAAAEYQEAAAAAAATAAABAqAIAAAAAAAAQAAAAYAAAMBQAAAAQAAAB4AAAgS
+ABAAAQAAADqAIAAAAAAAAAAAAAFAAAD/////HgAACIIAEAAAAAAACgAQgEEAAAAAAAAACgAQAAEA
+AAA2AAAFMgAQAAAAAADWBRAAAAAAAAIAAAEGAAADAUAAAAIAAAAeAAALMgAQAAEAAADmiiAAAAAA
+AAAAAAACQAAA//////////8AAAAAAAAAAB4AAAgyABAAAAAAAEYAEIBBAAAAAAAAAEYAEAABAAAA
+AgAAAQYAAAMBQAAAAwAAAB4AAAiCABAAAAAAACqAIAAAAAAAAAAAAAFAAAD/////HgAACEIAEAAA
+AAAAGgAQgEEAAAAAAAAAOgAQAAAAAAA2AAAFMgAQAAAAAAAmChAAAAAAAAIAAAEKAAABAgAAARcA
+AAEeAAAIMgAQAAAAAABGABAAAAAAAEaAIAAAAAAAAAAAADYAAAjCABAAAAAAAAJAAAAAAAAAAAAA
+AAAAAAAAAAAALQAAB/IgEAAAAAAARg4QAAAAAABGfhAAAAAAAD4AAAE=</value></data><data name="rotate_vs_4_0" type="System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"><value>RFhCQwrrlNm35o7nnmgWWgb6sN0BAAAAZAEAAAMAAAAsAAAAYAAAAJQAAABJU0dOLAAAAAEAAAAI
+AAAAIAAAAAAAAAAGAAAAAQAAAAAAAAABAQAAU1ZfVmVydGV4SUQAT1NHTiwAAAABAAAACAAAACAA
+AAAAAAAAAQAAAAMAAAAAAAAADwAAAFNWX1Bvc2l0aW9uAFNIRFLIAAAAQAABADIAAAA1GAAAEgAA
+AAAAgL8AAIC/AAAAAAAAAAAAAIC/AACAPwAAAAAAAAAAAACAPwAAgL8AAAAAAAAAAAAAgD8AAIA/
+AAAAAAAAAABgAAAEEhAQAAAAAAAGAAAAZwAABPIgEAAAAAAAAQAAAGgAAAIBAAAANgAABRIAEAAA
+AAAAChAQAAAAAAA2AAAGMiAQAAAAAABGkJAACgAQAAAAAAA2AAAIwiAQAAAAAAACQAAAAAAAAAAA
+AAAAAAAAAACAPz4AAAE=</value></data></root>

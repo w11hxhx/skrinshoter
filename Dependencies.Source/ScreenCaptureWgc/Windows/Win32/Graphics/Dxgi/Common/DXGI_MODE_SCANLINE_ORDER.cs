@@ -1,0 +1,12 @@
+using System.CodeDom.Compiler;
+
+namespace Windows.Win32.Graphics.Dxgi.Common;
+
+[GeneratedCode("Microsoft.Windows.CsWin32", "0.3.217+533aa1bddf.RR")]
+internal enum DXGI_MODE_SCANLINE_ORDER
+{
+	DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED,
+	DXGI_MODE_SCANLINE_ORDER_PROGRESSIVE,
+	DXGI_MODE_SCANLINE_ORDER_UPPER_FIELD_FIRST,
+	DXGI_MODE_SCANLINE_ORDER_LOWER_FIELD_FIRST
+}

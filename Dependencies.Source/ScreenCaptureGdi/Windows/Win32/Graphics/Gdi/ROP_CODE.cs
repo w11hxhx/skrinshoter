@@ -1,0 +1,27 @@
+using System;
+using System.CodeDom.Compiler;
+
+namespace Windows.Win32.Graphics.Gdi;
+
+[Flags]
+[GeneratedCode("Microsoft.Windows.CsWin32", "0.3.217+533aa1bddf.RR")]
+internal enum ROP_CODE : uint
+{
+	BLACKNESS = 0x42u,
+	NOTSRCERASE = 0x1100A6u,
+	NOTSRCCOPY = 0x330008u,
+	SRCERASE = 0x440328u,
+	DSTINVERT = 0x550009u,
+	PATINVERT = 0x5A0049u,
+	SRCINVERT = 0x660046u,
+	SRCAND = 0x8800C6u,
+	MERGEPAINT = 0xBB0226u,
+	MERGECOPY = 0xC000CAu,
+	SRCCOPY = 0xCC0020u,
+	SRCPAINT = 0xEE0086u,
+	PATCOPY = 0xF00021u,
+	PATPAINT = 0xFB0A09u,
+	WHITENESS = 0xFF0062u,
+	CAPTUREBLT = 0x40000000u,
+	NOMIRRORBITMAP = 0x80000000u
+}

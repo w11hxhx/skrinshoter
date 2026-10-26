@@ -1,0 +1,13 @@
+using System.CodeDom.Compiler;
+
+namespace Windows.Win32.Graphics.Dxgi.Common;
+
+[GeneratedCode("Microsoft.Windows.CsWin32", "0.3.217+533aa1bddf.RR")]
+internal enum DXGI_MODE_ROTATION
+{
+	DXGI_MODE_ROTATION_UNSPECIFIED,
+	DXGI_MODE_ROTATION_IDENTITY,
+	DXGI_MODE_ROTATION_ROTATE90,
+	DXGI_MODE_ROTATION_ROTATE180,
+	DXGI_MODE_ROTATION_ROTATE270
+}

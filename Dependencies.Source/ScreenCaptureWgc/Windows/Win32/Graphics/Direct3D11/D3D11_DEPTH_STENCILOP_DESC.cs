@@ -1,0 +1,15 @@
+using System.CodeDom.Compiler;
+
+namespace Windows.Win32.Graphics.Direct3D11;
+
+[GeneratedCode("Microsoft.Windows.CsWin32", "0.3.217+533aa1bddf.RR")]
+internal struct D3D11_DEPTH_STENCILOP_DESC
+{
+	internal D3D11_STENCIL_OP StencilFailOp;
+
+	internal D3D11_STENCIL_OP StencilDepthFailOp;
+
+	internal D3D11_STENCIL_OP StencilPassOp;
+
+	internal D3D11_COMPARISON_FUNC StencilFunc;
+}

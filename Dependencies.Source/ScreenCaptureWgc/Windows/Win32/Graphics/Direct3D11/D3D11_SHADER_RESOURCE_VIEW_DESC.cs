@@ -1,0 +1,54 @@
+using System.CodeDom.Compiler;
+using System.Runtime.InteropServices;
+using Windows.Win32.Graphics.Direct3D;
+using Windows.Win32.Graphics.Dxgi.Common;
+
+namespace Windows.Win32.Graphics.Direct3D11;
+
+[GeneratedCode("Microsoft.Windows.CsWin32", "0.3.217+533aa1bddf.RR")]
+internal struct D3D11_SHADER_RESOURCE_VIEW_DESC
+{
+	[StructLayout(LayoutKind.Explicit)]
+	[GeneratedCode("Microsoft.Windows.CsWin32", "0.3.217+533aa1bddf.RR")]
+	internal struct _Anonymous_e__Union
+	{
+		[FieldOffset(0)]
+		internal D3D11_BUFFER_SRV Buffer;
+
+		[FieldOffset(0)]
+		internal D3D11_TEX1D_SRV Texture1D;
+
+		[FieldOffset(0)]
+		internal D3D11_TEX1D_ARRAY_SRV Texture1DArray;
+
+		[FieldOffset(0)]
+		internal D3D11_TEX2D_SRV Texture2D;
+
+		[FieldOffset(0)]
+		internal D3D11_TEX2D_ARRAY_SRV Texture2DArray;
+
+		[FieldOffset(0)]
+		internal D3D11_TEX2DMS_SRV Texture2DMS;
+
+		[FieldOffset(0)]
+		internal D3D11_TEX2DMS_ARRAY_SRV Texture2DMSArray;
+
+		[FieldOffset(0)]
+		internal D3D11_TEX3D_SRV Texture3D;
+
+		[FieldOffset(0)]
+		internal D3D11_TEXCUBE_SRV TextureCube;
+
+		[FieldOffset(0)]
+		internal D3D11_TEXCUBE_ARRAY_SRV TextureCubeArray;
+
+		[FieldOffset(0)]
+		internal D3D11_BUFFEREX_SRV BufferEx;
+	}
+
+	internal DXGI_FORMAT Format;
+
+	internal D3D_SRV_DIMENSION ViewDimension;
+
+	internal _Anonymous_e__Union Anonymous;
+}

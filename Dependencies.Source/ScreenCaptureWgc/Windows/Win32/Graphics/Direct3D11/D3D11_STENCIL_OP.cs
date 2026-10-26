@@ -1,0 +1,16 @@
+using System.CodeDom.Compiler;
+
+namespace Windows.Win32.Graphics.Direct3D11;
+
+[GeneratedCode("Microsoft.Windows.CsWin32", "0.3.217+533aa1bddf.RR")]
+internal enum D3D11_STENCIL_OP
+{
+	D3D11_STENCIL_OP_KEEP = 1,
+	D3D11_STENCIL_OP_ZERO,
+	D3D11_STENCIL_OP_REPLACE,
+	D3D11_STENCIL_OP_INCR_SAT,
+	D3D11_STENCIL_OP_DECR_SAT,
+	D3D11_STENCIL_OP_INVERT,
+	D3D11_STENCIL_OP_INCR,
+	D3D11_STENCIL_OP_DECR
+}

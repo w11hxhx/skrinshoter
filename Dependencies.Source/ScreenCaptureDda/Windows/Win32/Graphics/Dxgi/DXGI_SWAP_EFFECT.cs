@@ -1,0 +1,12 @@
+using System.CodeDom.Compiler;
+
+namespace Windows.Win32.Graphics.Dxgi;
+
+[GeneratedCode("Microsoft.Windows.CsWin32", "0.3.217+533aa1bddf.RR")]
+internal enum DXGI_SWAP_EFFECT
+{
+	DXGI_SWAP_EFFECT_DISCARD = 0,
+	DXGI_SWAP_EFFECT_SEQUENTIAL = 1,
+	DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL = 3,
+	DXGI_SWAP_EFFECT_FLIP_DISCARD = 4
+}

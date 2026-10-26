@@ -1,0 +1,19 @@
+using System;
+using System.CodeDom.Compiler;
+
+namespace Windows.Win32.Graphics.Dxgi;
+
+[Flags]
+[GeneratedCode("Microsoft.Windows.CsWin32", "0.3.217+533aa1bddf.RR")]
+internal enum DXGI_PRESENT : uint
+{
+	DXGI_PRESENT_TEST = 1u,
+	DXGI_PRESENT_DO_NOT_SEQUENCE = 2u,
+	DXGI_PRESENT_RESTART = 4u,
+	DXGI_PRESENT_DO_NOT_WAIT = 8u,
+	DXGI_PRESENT_STEREO_PREFER_RIGHT = 0x10u,
+	DXGI_PRESENT_STEREO_TEMPORARY_MONO = 0x20u,
+	DXGI_PRESENT_RESTRICT_TO_OUTPUT = 0x40u,
+	DXGI_PRESENT_USE_DURATION = 0x100u,
+	DXGI_PRESENT_ALLOW_TEARING = 0x200u
+}
