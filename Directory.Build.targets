@@ -1,0 +1,177 @@
+<Project>
+  <PropertyGroup>
+    <RepositoryRoot>$(MSBuildThisFileDirectory)</RepositoryRoot>
+    <RestorePackagesPath>$(RepositoryRoot).packages</RestorePackagesPath>
+    <Deterministic>true</Deterministic>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <!-- ILSpy emitted file references to the vanished installation directory.
+       Replace every non-framework reference with source or NuGet below. -->
+  <ItemGroup>
+    <Reference Remove="AudioCapture;AudioDevices;AudioVideoCore;CalcBinding;CameraCapture;Common;CommunityToolkit.HighPerformance;CommunityToolkit.Mvvm;DynamicExpresso.Core;FFmpeg;FFmpeg.AutoGen;Hardcodet.NotifyIcon.Wpf;KeyboardHook;MediatR;MediatR.Contracts;MethodDecorator;Microsoft.Bcl.AsyncInterfaces;Microsoft.Extensions.DependencyInjection;Microsoft.Extensions.DependencyInjection.Abstractions;Microsoft.Extensions.Hosting;Microsoft.Extensions.Hosting.Abstractions;Microsoft.Extensions.Http;Microsoft.Extensions.Http.Polly;Microsoft.Extensions.Logging;Microsoft.Extensions.Logging.Abstractions;Microsoft.Extensions.Options;Microsoft.Xaml.Behaviors;MouseHook;MousePointer;Newtonsoft.Json;Nito.AsyncEx.Context;Nito.AsyncEx.Coordination;Nito.AsyncEx.Tasks;NLog;NLog.Extensions.Logging;Polly;Polly.Extensions.Http;PriorityQueue;ScreenCaptureDda;ScreenCaptureGdi;ScreenCaptureWgc;ScreenRecorderCommon;System.Memory;System.Runtime.CompilerServices.Unsafe;System.Threading.Channels;System.Threading.Tasks.Extensions;WriteableBitmapEx.Wpf" />
+  </ItemGroup>
+
+  <!-- Reference assemblies and low-level compatibility libraries are shared
+       by all reconstructed projects. -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.10" />
+    <PackageReference Include="System.Memory" Version="4.6.3" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
+    <PackageReference Include="System.Threading.Channels" Version="9.0.10" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'Common'">
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\PriorityQueue\PriorityQueue.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'AudioDevices'">
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\Common\Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'AudioVideoCore'">
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\Common\Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'AudioCapture'">
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\Common\Common.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\AudioDevices\AudioDevices.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\AudioVideoCore\AudioVideoCore.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\ScreenRecorderCommon\ScreenRecorderCommon.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'CameraCapture'">
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\Common\Common.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\AudioVideoCore\AudioVideoCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'KeyboardHook'">
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\Common\Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'MouseHook'">
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\Common\Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'MousePointer'">
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\AudioVideoCore\AudioVideoCore.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\Common\Common.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\MouseHook\MouseHook.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'ScreenCaptureDda'">
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\Common\Common.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\AudioVideoCore\AudioVideoCore.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\MouseHook\MouseHook.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\ScreenRecorderCommon\ScreenRecorderCommon.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'ScreenCaptureGdi'">
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\AudioVideoCore\AudioVideoCore.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\MousePointer\MousePointer.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\Common\Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'ScreenCaptureWgc'">
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\Common\Common.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\MousePointer\MousePointer.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\AudioVideoCore\AudioVideoCore.csproj" />
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.26100.9169" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'FFmpeg'">
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\Common\Common.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\AudioVideoCore\AudioVideoCore.csproj" />
+    <PackageReference Include="FFmpeg.AutoGen" Version="6.1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'CalcBinding'">
+    <PackageReference Include="DynamicExpresso.Core" Version="2.19.6" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'scrrec'">
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\AudioVideoCore\AudioVideoCore.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\ScreenRecorderCommon\ScreenRecorderCommon.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\ScreenCaptureDda\ScreenCaptureDda.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\ScreenCaptureWgc\ScreenCaptureWgc.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\AudioCapture\AudioCapture.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\AudioDevices\AudioDevices.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\Common\Common.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\FFmpeg\FFmpeg.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\MousePointer\MousePointer.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\ScreenCaptureGdi\ScreenCaptureGdi.csproj" />
+    <PackageReference Include="FFmpeg.Stable" Version="6.1.0" GeneratePathProperty="true" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.10" />
+    <PackageReference Include="Nito.AsyncEx.Tasks" Version="5.1.2" />
+    <PackageReference Include="NLog" Version="6.0.0" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="6.0.0" />
+    <None Update="NLog.config" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!-- WPF compiles markup through a temporary project with a randomized name.
+       Detect the main project by its directory contents so these references
+       are also available during that temporary compilation. -->
+  <ItemGroup Condition="Exists('$(MSBuildProjectDirectory)\SkrinshoterApp\App.xaml')">
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\Common\Common.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\AudioDevices\AudioDevices.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\AudioVideoCore\AudioVideoCore.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\ScreenRecorderCommon\ScreenRecorderCommon.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\MouseHook\MouseHook.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\CameraCapture\CameraCapture.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\KeyboardHook\KeyboardHook.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\CalcBinding\CalcBinding.csproj" />
+    <ProjectReference Include="$(RepositoryRoot)Dependencies.Source\scrrec\scrrec.csproj" ReferenceOutputAssembly="false" />
+    <PackageReference Include="CommunityToolkit.HighPerformance" Version="8.4.0" />
+    <!-- ILSpy already reconstructed all source-generator output into the C# files.
+         A direct assembly reference prevents WPF's temporary project from
+         re-enabling the package's generators. -->
+    <PackageDownload Include="CommunityToolkit.Mvvm" Version="[8.4.0]" />
+    <Reference Include="CommunityToolkit.Mvvm">
+      <HintPath>$(RestorePackagesPath)\communitytoolkit.mvvm\8.4.0\lib\netstandard2.0\CommunityToolkit.Mvvm.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="System.Resources.Extensions" Version="9.0.10" />
+    <PackageReference Include="Emoji.Wpf" Version="0.3.4" />
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
+    <PackageReference Include="MediatR" Version="12.5.0" />
+    <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.161" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="Nito.AsyncEx.Coordination" Version="5.1.2" />
+    <PackageReference Include="Nito.AsyncEx.Tasks" Version="5.1.2" />
+    <PackageReference Include="NLog" Version="6.0.0" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="6.0.0" />
+    <PackageReference Include="Polly" Version="7.2.4" />
+    <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
+    <PackageReference Include="WriteableBitmapEx" Version="1.6.8" />
+    <None Update="NLog.config" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <Target Name="CopyFfmpegNativeRuntime" AfterTargets="Build" Condition="'$(MSBuildProjectName)' == 'scrrec'">
+    <ItemGroup>
+      <FfmpegNativeRuntime Include="$(RestorePackagesPath)\ffmpeg.stable\6.1.0\build\native\bin\x64\*.dll" />
+      <FfmpegLicense Include="$(RestorePackagesPath)\ffmpeg.stable\6.1.0\build\native\share\doc\ffmpeg-windows-build-license.txt\LICENSE" />
+    </ItemGroup>
+    <Copy SourceFiles="@(FfmpegNativeRuntime)"
+          DestinationFolder="$(OutDir)"
+          SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(FfmpegLicense)"
+          DestinationFiles="@(FfmpegLicense->'$(OutDir)THIRD-PARTY-FFMPEG-LICENSE.txt')"
+          SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="CopyScreenRecorderRuntime" AfterTargets="Build" Condition="'$(MSBuildProjectName)' == 'Skrinshoter'">
+    <ItemGroup>
+      <ScreenRecorderRuntime Include="$(RepositoryRoot)Dependencies.Source\scrrec\bin\$(Configuration)\net48\**\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(ScreenRecorderRuntime)"
+          DestinationFiles="@(ScreenRecorderRuntime->'$(OutDir)scrrec\%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
+  </Target>
+</Project>
