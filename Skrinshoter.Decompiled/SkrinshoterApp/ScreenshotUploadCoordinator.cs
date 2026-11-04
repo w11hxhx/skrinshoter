@@ -88,9 +88,9 @@ public sealed class ScreenshotUploadCoordinator
 		return results;
 	}
 
-	public static string FormatLinks(IEnumerable<ScreenshotUploadResult> results)
+	public static string FormatLinks(IEnumerable<ScreenshotUploadResult> results, bool includeServiceNames = true)
 	{
-		return string.Join(Environment.NewLine, results.Select((ScreenshotUploadResult result) => result.ServiceName + ": " + result.Url));
+		return string.Join(Environment.NewLine, results.Select((ScreenshotUploadResult result) => (includeServiceNames ? result.ServiceName + ": " : "") + result.Url));
 	}
 
 }

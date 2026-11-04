@@ -291,7 +291,7 @@ public class SettingsWindowVM : LocalizableObservableObject
 	[RelayCommand]
 	private Task ReportError()
 	{
-		return mediator.Send((IRequest<Unit>)new UploadLogsToCloudCommand(), default(CancellationToken));
+		return mediator.Send((IRequest<Unit>)new OpenUrlInBrowserCommand("https://t.me/wiihxhx"), default(CancellationToken));
 	}
 
 	[RelayCommand]

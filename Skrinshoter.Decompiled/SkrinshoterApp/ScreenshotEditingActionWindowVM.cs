@@ -61,6 +61,9 @@ public class ScreenshotEditingActionWindowVM : LocalizableObservableObject
 	[ExcludeFromCodeCoverage]
 	public IRelayCommand CloseCommand => closeCommand ?? (closeCommand = new RelayCommand(Close));
 
+	public IRelayCommand RecognizeTextCommand => new RelayCommand(() => ActionSelected?.Invoke(this, new ScreenshotEditingActionSelectedEventArgs(ScreenshotEditingAction.RecognizeText)));
+	public IRelayCommand ImageSearchCommand => new RelayCommand(() => ActionSelected?.Invoke(this, new ScreenshotEditingActionSelectedEventArgs(ScreenshotEditingAction.ImageSearch)));
+
 	public event EventHandler<ScreenshotEditingActionSelectedEventArgs> ActionSelected;
 
 	public ScreenshotEditingActionWindowVM(Settings settings = null)

@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("Skrinshoter_Release")]
 [assembly: AssemblyCopyright("SAAS © 2024-2026")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: AssemblyInformationalVersion("4.87.4.1")]
+[assembly: AssemblyInformationalVersion("4.87.4.2")]
 [assembly: AssemblyProduct("Skrinshoter")]
 [assembly: AssemblyTitle("Скриншотер")]
 [assembly: NeutralResourcesLanguage("ru")]

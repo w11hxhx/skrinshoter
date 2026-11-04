@@ -13,7 +13,7 @@
   </FrameworkElement.Resources>
   <local:Panel Style="{StaticResource PanelStyle}">
     <StackPanel Orientation="Horizontal">
-      <ToggleButton CommandParameter="{x:Static local:DrawingTool.Arrow}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding ArrowToolTip}">
+      <ToggleButton local:EditorButton.Key="Arrow" CommandParameter="{x:Static local:DrawingTool.Arrow}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding ArrowToolTip}">
         <ToggleButton.IsChecked>
           <c:Binding>
             <c:Binding.Path>SelectedTool == local:DrawingTool.Arrow</c:Binding.Path>
@@ -24,7 +24,7 @@
           <Image Source="{StaticResource ScreenshotEditingDrawingWindowArrowCheckedImage}" />
         </FrameworkElement.Tag>
       </ToggleButton>
-      <ToggleButton CommandParameter="{x:Static local:DrawingTool.Line}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding LineToolTip}">
+      <ToggleButton local:EditorButton.Key="Line" CommandParameter="{x:Static local:DrawingTool.Line}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding LineToolTip}">
         <ToggleButton.IsChecked>
           <c:Binding>
             <c:Binding.Path>SelectedTool == local:DrawingTool.Line</c:Binding.Path>
@@ -35,7 +35,7 @@
           <Image Source="{StaticResource ScreenshotEditingDrawingWindowLineCheckedImage}" />
         </FrameworkElement.Tag>
       </ToggleButton>
-      <ToggleButton CommandParameter="{x:Static local:DrawingTool.Pencil}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding PencilToolTip}">
+      <ToggleButton local:EditorButton.Key="Pencil" CommandParameter="{x:Static local:DrawingTool.Pencil}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding PencilToolTip}">
         <ToggleButton.IsChecked>
           <c:Binding>
             <c:Binding.Path>SelectedTool == local:DrawingTool.Pencil</c:Binding.Path>
@@ -46,7 +46,7 @@
           <Image Source="{StaticResource ScreenshotEditingDrawingWindowPencilCheckedImage}" />
         </FrameworkElement.Tag>
       </ToggleButton>
-      <ToggleButton CommandParameter="{x:Static local:DrawingTool.Marker}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding MarkerToolTip}">
+      <ToggleButton local:EditorButton.Key="Marker" CommandParameter="{x:Static local:DrawingTool.Marker}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding MarkerToolTip}">
         <ToggleButton.IsChecked>
           <c:Binding>
             <c:Binding.Path>SelectedTool == local:DrawingTool.Marker</c:Binding.Path>
@@ -57,7 +57,7 @@
           <Image Source="{StaticResource ScreenshotEditingDrawingWindowMarkerCheckedImage}" />
         </FrameworkElement.Tag>
       </ToggleButton>
-      <ToggleButton CommandParameter="{x:Static local:DrawingTool.Rectangle}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding RectangleToolTip}">
+      <ToggleButton local:EditorButton.Key="Rectangle" CommandParameter="{x:Static local:DrawingTool.Rectangle}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding RectangleToolTip}">
         <ToggleButton.IsChecked>
           <c:Binding>
             <c:Binding.Path>SelectedTool == local:DrawingTool.Rectangle</c:Binding.Path>
@@ -68,7 +68,7 @@
           <Image Source="{StaticResource ScreenshotEditingDrawingWindowRectangleCheckedImage}" />
         </FrameworkElement.Tag>
       </ToggleButton>
-      <ToggleButton CommandParameter="{x:Static local:DrawingTool.Oval}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding OvalToolTip}">
+      <ToggleButton local:EditorButton.Key="Oval" CommandParameter="{x:Static local:DrawingTool.Oval}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding OvalToolTip}">
         <ToggleButton.IsChecked>
           <c:Binding>
             <c:Binding.Path>SelectedTool == local:DrawingTool.Oval</c:Binding.Path>
@@ -79,7 +79,7 @@
           <Image Source="{StaticResource ScreenshotEditingDrawingWindowOvalCheckedImage}" />
         </FrameworkElement.Tag>
       </ToggleButton>
-      <ToggleButton CommandParameter="{x:Static local:DrawingTool.Text}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding TextToolTip}">
+      <ToggleButton local:EditorButton.Key="Text" CommandParameter="{x:Static local:DrawingTool.Text}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding TextToolTip}">
         <ToggleButton.IsChecked>
           <c:Binding>
             <c:Binding.Path>SelectedTool == local:DrawingTool.Text</c:Binding.Path>
@@ -90,7 +90,7 @@
           <Image Source="{StaticResource ScreenshotEditingDrawingWindowTextCheckedImage}" />
         </FrameworkElement.Tag>
       </ToggleButton>
-      <ToggleButton CommandParameter="{x:Static local:DrawingTool.Number}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding NumberToolTip}">
+      <ToggleButton local:EditorButton.Key="Number" CommandParameter="{x:Static local:DrawingTool.Number}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding NumberToolTip}">
         <ToggleButton.IsChecked>
           <c:Binding>
             <c:Binding.Path>SelectedTool == local:DrawingTool.Number</c:Binding.Path>
@@ -101,7 +101,7 @@
           <Image Source="{StaticResource ScreenshotEditingDrawingWindowNumberCheckedImage}" />
         </FrameworkElement.Tag>
       </ToggleButton>
-      <ToggleButton CommandParameter="{x:Static local:DrawingTool.Blur}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding BlurToolTip}">
+      <ToggleButton local:EditorButton.Key="Blur" CommandParameter="{x:Static local:DrawingTool.Blur}" Command="{Binding SelectToolByMouseCommand}" ToolTip="{Binding BlurToolTip}">
         <ToggleButton.IsChecked>
           <c:Binding>
             <c:Binding.Path>SelectedTool == local:DrawingTool.Blur</c:Binding.Path>
@@ -113,10 +113,10 @@
         </FrameworkElement.Tag>
       </ToggleButton>
       <Separator />
-      <local:FocusablePopupComboBox Style="{StaticResource LineThicknessComboBoxStyle}" ToolTip="{Binding LineThicknessToolTip}" />
-      <ComboBox Style="{StaticResource ColorComboBoxStyle}" ItemsSource="{Binding AvailableColors}" SelectedValue="{Binding SelectedColor}" ToolTip="{Binding ColorToolTip}" />
+      <local:FocusablePopupComboBox local:EditorButton.Key="LineThickness" Style="{StaticResource LineThicknessComboBoxStyle}" ToolTip="{Binding LineThicknessToolTip}" />
+      <ComboBox local:EditorButton.Key="Color" Style="{StaticResource ColorComboBoxStyle}" ItemsSource="{Binding AvailableColors}" SelectedValue="{Binding SelectedColor}" ToolTip="{Binding ColorToolTip}" />
       <Separator />
-      <Button Command="{Binding UndoManager.UndoCommand}" ToolTip="{Binding UndoToolTip}">
+      <Button local:EditorButton.Key="Undo" Command="{Binding UndoManager.UndoCommand}" ToolTip="{Binding UndoToolTip}">
         <FrameworkElement.Style>
           <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
             <Setter Property="Content">

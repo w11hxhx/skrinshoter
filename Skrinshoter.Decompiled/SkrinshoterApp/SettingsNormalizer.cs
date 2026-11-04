@@ -31,6 +31,17 @@ public class SettingsNormalizer
 
 	public void Normalize(Settings settings)
 	{
+		// Keep existing accounts on upgrade, but never reuse a copied identity
+		// belonging to another Windows user or computer.
+		string identityOwner = Environment.MachineName + "|" + System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;
+		if (!string.IsNullOrEmpty(settings.CloudIdentityOwner) && settings.CloudIdentityOwner != identityOwner)
+		{
+			settings.AppId = Guid.NewGuid().ToString("B").ToUpperInvariant();
+			settings.FileUids = new List<string>();
+			trialStateManager.State.AppId = settings.AppId;
+			trialStateManager.SaveState();
+		}
+		settings.CloudIdentityOwner = identityOwner;
 		string appId = trialStateManager.State.AppId;
 		if (!string.IsNullOrEmpty(appId))
 		{

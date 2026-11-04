@@ -22,6 +22,10 @@ jobs:
         shell: powershell
         run: .\release.ps1
 
+      - name: Verify screenshot settings and cloud isolation
+        shell: powershell
+        run: .\tests\Verify-ScreenshotSettings.ps1
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -52,7 +56,7 @@ jobs:
             gh release upload $tag @files --clobber
           } else {
             Write-Host "Creating release $tag..."
-            gh release create $tag @files --generate-notes --title "Skrinshoter $tag"
+            gh release create $tag @files --notes-file RELEASE_NOTES.md --title "Скриншотер $tag"
           }
           if ($LASTEXITCODE -ne 0) {
             throw "Failed to create or upload release assets (exit code $LASTEXITCODE)."

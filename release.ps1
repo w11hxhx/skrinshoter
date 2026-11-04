@@ -10,7 +10,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $repoRoot = [IO.Path]::GetFullPath($PSScriptRoot)
 $artifactsDirectory = Join-Path $repoRoot 'artifacts'
-$appVersion = '4.87.4.1'
+$appVersion = '4.87.4.2'
 
 $buildParameters = @{
     Configuration = $Configuration
@@ -73,7 +73,7 @@ if (Test-Path -LiteralPath $sourceDirectory) {
 }
 New-Item -ItemType Directory -Path $sourceDirectory | Out-Null
 
-$sourceTrees = @('Dependencies.Source', 'Skrinshoter.Decompiled', '.github', 'installer')
+$sourceTrees = @('Dependencies.Source', 'Skrinshoter.Decompiled', '.github', 'installer', 'tests')
 foreach ($tree in $sourceTrees) {
     $source = Join-Path $repoRoot $tree
     $destination = Join-Path $sourceDirectory $tree
@@ -93,6 +93,7 @@ $rootFiles = @(
     'Directory.Build.targets',
     'global.json',
     'README.md',
+    'RELEASE_NOTES.md',
     'Skrinshoter.Reconstructed.sln'
 )
 foreach ($file in $rootFiles) {

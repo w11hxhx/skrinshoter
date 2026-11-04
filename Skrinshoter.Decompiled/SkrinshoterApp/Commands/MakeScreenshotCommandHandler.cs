@@ -70,6 +70,11 @@ public abstract class MakeScreenshotCommandHandler
 	{
 		using (result)
 		{
+			if (result.Action == ScreenshotEditingAction.RecognizeText || result.Action == ScreenshotEditingAction.ImageSearch)
+			{
+				await PerformImageToolAsync(result);
+				return;
+			}
 			string remoteBaseFileName = GetRemoteBaseFileName();
 			string localFileName = GetLocalFileName(windowTitle);
 			string extension = Path.GetExtension(localFileName);
@@ -175,6 +180,48 @@ public abstract class MakeScreenshotCommandHandler
 		}
 	}
 
+	private async Task PerformImageToolAsync(ScreenshotEditingResult result)
+	{
+		if (result.Action == ScreenshotEditingAction.ImageSearch && !settings.ImageSearchYandex && !settings.ImageSearchGoogle && !settings.ImageSearchBing && !settings.ImageSearchTinEye)
+		{
+			notificationService.ShowError("Выберите хотя бы один сервис поиска по фото в настройках.");
+			return;
+		}
+		string path = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N") + ".png");
+		try
+		{
+			SaveScreenshotToFile(result.Image, path);
+			if (result.Action == ScreenshotEditingAction.RecognizeText)
+			{
+				string text = await WindowsTextRecognition.RecognizeAsync(path);
+				if (string.IsNullOrWhiteSpace(text)) notificationService.ShowError("На скриншоте не найден текст.");
+				else
+				{
+					clipboardService.SetText(text);
+					notificationService.ShowMessage("Распознанный текст скопирован в буфер обмена.");
+				}
+				return;
+			}
+			var uploaded = await screenshotUploadCoordinator.UploadAsync(path, "image-search", "", false, ScreenshotUploadDestination.KappaLol);
+			string imageUrl = Uri.EscapeDataString(uploaded[0].Url);
+			var urls = new System.Collections.Generic.List<string>();
+			if (settings.ImageSearchYandex) urls.Add("https://yandex.ru/images/search?rpt=imageview&url=" + imageUrl);
+			if (settings.ImageSearchGoogle) urls.Add("https://lens.google.com/uploadbyurl?url=" + imageUrl);
+			if (settings.ImageSearchBing) urls.Add("https://www.bing.com/images/searchbyimage?cbir=sbi&imgurl=" + imageUrl);
+			if (settings.ImageSearchTinEye) urls.Add("https://tineye.com/search?url=" + imageUrl);
+			foreach (string url in urls) await mediator.Send(new OpenUrlInBrowserCommand(url));
+		}
+		catch (Exception exception)
+		{
+			logger.LogError(exception, "Screenshot image tool failed");
+			notificationService.ShowError("Не удалось " + (result.Action == ScreenshotEditingAction.RecognizeText ? "распознать текст" : "выполнить поиск по фото") + ": " + exception.Message);
+		}
+		finally
+		{
+			try { File.Delete(path); } catch (IOException) { } catch (UnauthorizedAccessException) { }
+		}
+	}
+
 	protected string GetLocalFileName(string windowTitle)
 	{
 		string fileExtension = screenshotFileFormatsProvider.GetFileExtension(settings.ScreenshotFileFormat);
@@ -230,7 +277,7 @@ public abstract class MakeScreenshotCommandHandler
 			windowTitle = "";
 		}
 		var results = await screenshotUploadCoordinator.UploadAsync(path, friendlyBaseFileName, windowTitle, isScrollingCapture, destinations);
-		string links = ScreenshotUploadCoordinator.FormatLinks(results);
+		string links = ScreenshotUploadCoordinator.FormatLinks(results, settings.IncludeServiceNames);
 		logger.LogInformation("Screenshot uploaded to {count} services [time={time}ms]", results.Count, StopwatchHelper.GetDurationInWholeMillisecondsSince(startTime));
 		if (settings.CopyScreenshotLinksToClipboard)
 		{

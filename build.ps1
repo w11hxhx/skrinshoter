@@ -88,7 +88,7 @@ if (-not $NoPackage) {
     New-Item -ItemType Directory -Path $runtimeDirectory | Out-Null
     Copy-Item -Path (Join-Path $buildOutput '*') -Destination $runtimeDirectory -Recurse -Force
     Get-ChildItem -LiteralPath $runtimeDirectory -Recurse -File |
-        Where-Object { $_.Extension -in @('.pdb', '.xml') } |
+        Where-Object { $_.Extension -in @('.pdb', '.xml', '.log') -or $_.Name -in @('settings.json', 'trial-state.json', 'trial.json') } |
         Remove-Item -Force
     if (-not (Test-Path -LiteralPath (Join-Path $runtimeDirectory 'Skrinshoter.exe'))) {
         throw 'Runtime packaging failed: Skrinshoter.exe is missing.'

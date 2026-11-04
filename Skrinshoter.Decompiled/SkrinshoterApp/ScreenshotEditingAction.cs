@@ -8,5 +8,7 @@ public enum ScreenshotEditingAction
 	CopyToClipboard,
 	Print,
 	SaveToFile,
-	Close
+	Close,
+	RecognizeText,
+	ImageSearch
 }

@@ -14,6 +14,61 @@ namespace SkrinshoterApp;
 [UIThread]
 public sealed class Settings
 {
+
+	[JsonProperty("include_service_names")]
+	public bool IncludeServiceNames { get; set; } = true;
+
+	[JsonProperty("cloud_identity_owner")]
+	public string CloudIdentityOwner { get; set; }
+
+	public bool ShowEditorUploadToCloud { get; set; } = true;
+
+	public bool ShowEditorUploadToAll { get; set; } = true;
+
+	public bool ShowEditorCopyToClipboard { get; set; } = true;
+
+	public bool ShowEditorPrint { get; set; } = true;
+
+	public bool ShowEditorSaveToFile { get; set; } = true;
+
+	public bool ShowEditorRecognizeText { get; set; } = true;
+
+	public bool ShowEditorImageSearch { get; set; } = true;
+
+	public bool ShowEditorClose { get; set; } = true;
+
+	public bool ShowEditorArrow { get; set; } = true;
+
+	public bool ShowEditorLine { get; set; } = true;
+
+	public bool ShowEditorPencil { get; set; } = true;
+
+	public bool ShowEditorMarker { get; set; } = true;
+
+	public bool ShowEditorRectangle { get; set; } = true;
+
+	public bool ShowEditorOval { get; set; } = true;
+
+	public bool ShowEditorText { get; set; } = true;
+
+	public bool ShowEditorNumber { get; set; } = true;
+
+	public bool ShowEditorBlur { get; set; } = true;
+
+	public bool ShowEditorLineThickness { get; set; } = true;
+
+	public bool ShowEditorColor { get; set; } = true;
+
+	public bool ShowEditorUndo { get; set; } = true;
+
+	public bool ImageSearchYandex { get; set; } = true;
+
+	public bool ImageSearchGoogle { get; set; } = true;
+
+	public bool ImageSearchBing { get; set; } = true;
+
+	public bool ImageSearchTinEye { get; set; } = true;
+
 	public const string DefaultDeviceId = "Default";
 
 	[JsonProperty("app_id")]
