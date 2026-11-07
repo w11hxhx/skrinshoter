@@ -39,7 +39,7 @@ jobs:
 
       - name: Create or update GitHub release
         if: startsWith(github.ref, 'refs/tags/v')
-        shell: powershell
+        shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
