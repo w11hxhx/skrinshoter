@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
@@ -56,6 +57,12 @@ public sealed class ExternalScreenshotUploadService
 		using MultipartFormDataContent form = new MultipartFormDataContent();
 		using FileStream stream = File.OpenRead(filePath);
 		using StreamContent file = new StreamContent(stream);
+		file.Headers.ContentType = new MediaTypeHeaderValue(Path.GetExtension(filePath).ToLowerInvariant() switch
+		{
+			".png" => "image/png",
+			".jpg" or ".jpeg" => "image/jpeg",
+			_ => "application/octet-stream"
+		});
 		form.Add(file, "file", Path.GetFileName(filePath));
 		using HttpResponseMessage response = await httpClient.PostAsync(provider.RequestUrl, form, cancellationToken);
 		string responseText = await response.Content.ReadAsStringAsync();
