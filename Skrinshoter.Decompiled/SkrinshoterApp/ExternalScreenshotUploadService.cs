@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -6,6 +6,9 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using System.Net;
+using System.Text.RegularExpressions;
+using SkrinshoterApp.Services.Progress;
 
 namespace SkrinshoterApp;
 
@@ -33,6 +36,7 @@ public sealed class ExternalScreenshotUploadService
 	private static readonly IReadOnlyDictionary<ScreenshotUploadDestination, Provider> Providers =
 		new Dictionary<ScreenshotUploadDestination, Provider>
 		{
+			{ ScreenshotUploadDestination.Nuuls, new Provider(ScreenshotUploadDestination.Nuuls, "i.nuuls.com", "https://i.nuuls.com/upload", "") },
 			{ ScreenshotUploadDestination.KappaLol, new Provider(ScreenshotUploadDestination.KappaLol, "kappa.lol", "https://kappa.lol/api/upload", "link") },
 			{ ScreenshotUploadDestination.Xyli, new Provider(ScreenshotUploadDestination.Xyli, "Xyli", "https://img.xyli.eu/upload", "link") },
 			{ ScreenshotUploadDestination.ZeroXl1r, new Provider(ScreenshotUploadDestination.ZeroXl1r, "0xl1r.cfd", "https://0xl1r.cfd/upload", "link") },
@@ -41,9 +45,12 @@ public sealed class ExternalScreenshotUploadService
 
 	private readonly IHttpClientFactory httpClientFactory;
 
-	public ExternalScreenshotUploadService(IHttpClientFactory httpClientFactory)
+	private readonly IProgressWindowService progressWindowService;
+
+	public ExternalScreenshotUploadService(IHttpClientFactory httpClientFactory, IProgressWindowService progressWindowService)
 	{
 		this.httpClientFactory = httpClientFactory;
+		this.progressWindowService = progressWindowService;
 	}
 
 	public async Task<ScreenshotUploadResult> UploadAsync(ScreenshotUploadDestination destination, string filePath, CancellationToken cancellationToken)
@@ -53,35 +60,87 @@ public sealed class ExternalScreenshotUploadService
 			throw new ArgumentOutOfRangeException(nameof(destination));
 		}
 
+		return await UploadAsync(new CustomUploadProvider { Name = provider.Name, Url = provider.RequestUrl, ImageLink = provider.ResponseProperty }, filePath, cancellationToken, destination);
+	}
+
+	public async Task<ScreenshotUploadResult> UploadAsync(CustomUploadProvider provider, string filePath, CancellationToken cancellationToken, ScreenshotUploadDestination destination = ScreenshotUploadDestination.Custom)
+	{
+		using IProgressSession session = progressWindowService.TryShow("Загрузка в " + provider.Name, true, externalToken: cancellationToken);
+		session.SetIndeterminate(false);
+		cancellationToken = session.Token;
 		using HttpClient httpClient = httpClientFactory.CreateClient(HttpClientConfig.Names.ExternalScreenshotUpload);
 		using MultipartFormDataContent form = new MultipartFormDataContent();
+		foreach (KeyValuePair<string, string> field in provider.FormFields)
+		{
+			form.Add(new StringContent(field.Value ?? ""), field.Key);
+		}
 		using FileStream stream = File.OpenRead(filePath);
-		using StreamContent file = new StreamContent(stream);
+		using ProgressFileContent file = new ProgressFileContent(stream, session.Progress, cancellationToken);
 		file.Headers.ContentType = new MediaTypeHeaderValue(Path.GetExtension(filePath).ToLowerInvariant() switch
 		{
+			".mp4" => "video/mp4",
 			".png" => "image/png",
 			".jpg" or ".jpeg" => "image/jpeg",
 			_ => "application/octet-stream"
 		});
-		form.Add(file, "file", Path.GetFileName(filePath));
-		using HttpResponseMessage response = await httpClient.PostAsync(provider.RequestUrl, form, cancellationToken);
+		form.Add(file, provider.FileField, Path.GetFileName(filePath));
+		using HttpRequestMessage request = new HttpRequestMessage(new HttpMethod(provider.Method), provider.Url) { Content = form };
+		foreach (KeyValuePair<string, string> header in provider.Headers)
+		{
+			if (!request.Headers.TryAddWithoutValidation(header.Key, header.Value))
+			{
+				throw new InvalidOperationException("Некорректный заголовок: " + header.Key);
+			}
+		}
+		using HttpResponseMessage response = await httpClient.SendAsync(request, cancellationToken);
 		string responseText = await response.Content.ReadAsStringAsync();
 		response.EnsureSuccessStatusCode();
 
-		JObject json = JObject.Parse(responseText);
-		string url = json.Value<string>(provider.ResponseProperty);
-		if (string.IsNullOrWhiteSpace(url))
+		string url = responseText.Trim().Trim('"');
+		if (!string.IsNullOrWhiteSpace(provider.ImageLink))
 		{
-			string error = json.Value<string>("error") ?? json.Value<string>("message") ?? "Сервис не вернул ссылку на файл.";
-			throw new InvalidOperationException(provider.Name + ": " + error);
+			url = ResolveResponseExpression(provider.ImageLink, responseText);
+		}
+		else if (url.StartsWith("{"))
+		{
+			JToken json = JToken.Parse(responseText);
+			url = (string)(json["link"] ?? json["url"]);
+		}
+		if (!Uri.TryCreate(url, UriKind.Absolute, out Uri parsed) || (parsed.Scheme != "https" && parsed.Scheme != "http"))
+		{
+			throw new InvalidOperationException(provider.Name + ": сервис не вернул HTTP-ссылку на файл.");
+		}
+		session.Progress.Report(100);
+
+		string deletionUrl = null;
+		if (!string.IsNullOrWhiteSpace(provider.DeletionLink))
+		{
+			string candidate = ResolveResponseExpression(provider.DeletionLink, responseText);
+			if (Uri.TryCreate(candidate, UriKind.Absolute, out Uri deletionUri) && (deletionUri.Scheme == "https" || deletionUri.Scheme == "http"))
+			{
+				deletionUrl = candidate;
+			}
+		}
+		return new ScreenshotUploadResult(destination, provider.Name, url, deletionUrl);
+	}
+
+	private static string ResolveResponseExpression(string expression, string responseText)
+	{
+		string trimmed = expression.Trim();
+		JToken json = null;
+		string JsonValue(string path)
+		{
+			json ??= JToken.Parse(responseText);
+			return (string)json.SelectToken(path.Trim());
 		}
 
-		if (!Uri.TryCreate(url, UriKind.Absolute, out Uri _))
+		if (!trimmed.Contains("{json:") && !trimmed.Contains("$json:"))
 		{
-			throw new InvalidOperationException(provider.Name + ": получена некорректная ссылка.");
+			return Uri.TryCreate(trimmed, UriKind.Absolute, out Uri _) ? trimmed : JsonValue(trimmed);
 		}
-
-		return new ScreenshotUploadResult(destination, provider.Name, url);
+		string result = Regex.Replace(trimmed, @"\{json:([^}]+)\}", match => JsonValue(match.Groups[1].Value) ?? "", RegexOptions.IgnoreCase);
+		result = Regex.Replace(result, @"\$json:([^$]+)\$", match => JsonValue(match.Groups[1].Value) ?? "", RegexOptions.IgnoreCase);
+		return result.Replace("{response}", responseText).Replace("$response$", responseText);
 	}
 }
 
@@ -93,10 +152,15 @@ public sealed class ScreenshotUploadResult
 
 	public string Url { get; }
 
-	public ScreenshotUploadResult(ScreenshotUploadDestination destination, string serviceName, string url)
+	public string DeletionUrl { get; }
+
+	public ScreenshotUploadResult(ScreenshotUploadDestination destination, string serviceName, string url) : this(destination, serviceName, url, null) { }
+
+	public ScreenshotUploadResult(ScreenshotUploadDestination destination, string serviceName, string url, string deletionUrl)
 	{
 		Destination = destination;
 		ServiceName = serviceName;
 		Url = url;
+		DeletionUrl = deletionUrl;
 	}
 }

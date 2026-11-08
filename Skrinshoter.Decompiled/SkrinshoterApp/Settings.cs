@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
@@ -1476,6 +1476,17 @@ public sealed class Settings
 	[JsonProperty("screenshot_upload_destinations")]
 	public ScreenshotUploadDestination ScreenshotUploadDestinations { get; set; }
 
+	public System.Collections.ObjectModel.ObservableCollection<CustomUploadProvider> CustomUploadProviders { get; set; } = new System.Collections.ObjectModel.ObservableCollection<CustomUploadProvider>();
+
+	[JsonProperty("video_resolution_height")]
+	public int VideoResolutionHeight { get; set; }
+
+	[JsonProperty("video_frame_rate")]
+	public int VideoFrameRate { get; set; }
+
+	[JsonProperty("video_bitrate_kbps")]
+	public int VideoBitrateKbps { get; set; }
+
 	[JsonProperty("copy_screenshot_links_to_clipboard")]
 	public bool CopyScreenshotLinksToClipboard { get; set; }
 
@@ -2605,6 +2616,9 @@ public sealed class Settings
 		ScreenshotSaveType = ScreenshotSaveType.Cloud;
 		UploadWindowTitle = AppInfoProvider.IsSkrinshoter;
 		VideoQualityLevel = VideoQualityLevel.HD;
+		VideoResolutionHeight = 1080;
+		VideoFrameRate = 60;
+		VideoBitrateKbps = 12000;
 		VideoSavePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 		VideoFileNameTemplate = new FileNameTemplate(Resources.Settings_Video_FileNameTemplateDefaultValue);
 		MethodBase methodFromHandle = MethodBase.GetCurrentMethod();

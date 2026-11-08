@@ -91,6 +91,12 @@ public class SettingsWindowVM : LocalizableObservableObject
 
 	public ObservableCollection<SelectionItem<VideoQualityLevel>> VideoQualityLevels { get; } = new ObservableCollection<SelectionItem<VideoQualityLevel>>();
 
+	public IReadOnlyList<int> VideoResolutionHeights { get; } = new[] { 480, 720, 1080, 1440, 2160 };
+
+	public IReadOnlyList<int> VideoFrameRates { get; } = new[] { 15, 24, 30, 60 };
+
+	public IReadOnlyList<int> VideoBitrates { get; } = new[] { 2500, 5000, 8000, 12000, 20000 };
+
 	public ObservableCollection<SelectionItem<TrayClickAction>> TrayClickActions { get; } = new ObservableCollection<SelectionItem<TrayClickAction>>();
 
 	public SelectAudioDevicesVM SelectAudioDevicesVM { get; }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace SkrinshoterApp;
 
@@ -11,5 +11,7 @@ public enum ScreenshotUploadDestination
 	Xyli = 4,
 	ZeroXl1r = 8,
 	NoikCloud = 16,
-	All = Skrinshoter | KappaLol | Xyli | ZeroXl1r | NoikCloud
+	Nuuls = 32,
+	Custom = 64,
+	All = Skrinshoter | KappaLol | Xyli | ZeroXl1r | NoikCloud | Nuuls | Custom
 }

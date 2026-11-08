@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<UserControl x:Class="SkrinshoterApp.VideoTabView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors" xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding" xmlns:props="clr-namespace:SkrinshoterApp.Properties" xmlns:local="clr-namespace:SkrinshoterApp" xmlns:CameraCapture="clr-namespace:CameraCapture;assembly=CameraCapture" UseLayoutRounding="True">
+<UserControl x:Class="SkrinshoterApp.VideoTabView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors" xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding" xmlns:props="clr-namespace:SkrinshoterApp.Properties" xmlns:local="clr-namespace:SkrinshoterApp" xmlns:CameraCapture="clr-namespace:CameraCapture;assembly=CameraCapture" UseLayoutRounding="True" Loaded="VideoTabView_Loaded">
   <FrameworkElement.Resources>
     <ResourceDictionary>
       <Style x:Key="{x:Type TextBlock}" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource SettingsTextBlockStyle}" />
@@ -59,15 +59,43 @@
         </Grid>
       </GroupBox>
       <GroupBox Header="{Binding Path=(props:Resources.Settings_Video_GroupHeader_Quality)}">
+        <StackPanel>
+        <Grid Margin="0,0,0,16">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <TextBlock Text="Пресет качества" />
+          <ComboBox Name="QualityPreset" Grid.Column="2" SelectionChanged="QualityPreset_SelectionChanged">
+            <ComboBoxItem Content="Экономный — 720p, 30 FPS, 5 Мбит/с" Tag="720,30,5000" />
+            <ComboBoxItem Content="Стандартный — 1080p, 30 FPS, 8 Мбит/с" Tag="1080,30,8000" />
+            <ComboBoxItem Content="Плавный — 1080p, 60 FPS, 12 Мбит/с" Tag="1080,60,12000" />
+            <ComboBoxItem Content="Высокое качество — 1440p, 60 FPS, 20 Мбит/с" Tag="1440,60,20000" />
+            <ComboBoxItem Content="4K — 2160p, 30 FPS, 20 Мбит/с" Tag="2160,30,20000" />
+          </ComboBox>
+        </Grid>
         <Grid>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="20" />
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
-          <TextBlock Text="{Binding Path=(props:Resources.Settings_Video_Quality)}" />
-          <ComboBox Grid.Column="2" DisplayMemberPath="Name" SelectedValuePath="Id" ItemsSource="{Binding VideoQualityLevels}" SelectedValue="{Binding Settings.VideoQualityLevel}" />
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <TextBlock Text="Разрешение по высоте" />
+          <ComboBox Grid.Column="2" ItemsSource="{Binding VideoResolutionHeights}" SelectedItem="{Binding Settings.VideoResolutionHeight}" />
+          <TextBlock Grid.Row="2" Text="Частота кадров" />
+          <ComboBox Grid.Row="2" Grid.Column="2" ItemsSource="{Binding VideoFrameRates}" SelectedItem="{Binding Settings.VideoFrameRate}" />
+          <TextBlock Grid.Row="4" Text="Битрейт, Кбит/с" />
+          <ComboBox Grid.Row="4" Grid.Column="2" ItemsSource="{Binding VideoBitrates}" SelectedItem="{Binding Settings.VideoBitrateKbps}" />
         </Grid>
+        </StackPanel>
       </GroupBox>
       <GroupBox Header="{Binding Path=(props:Resources.Settings_Video_GroupHeader_Misc)}">
         <StackPanel Orientation="Vertical">

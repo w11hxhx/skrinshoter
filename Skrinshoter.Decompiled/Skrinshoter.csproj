@@ -48,6 +48,7 @@
     <Page Remove="SkrinshoterApp\ScreenshotEditingActionWindow.xaml" />
     <Page Remove="SkrinshoterApp\ScreenshotEditingDrawingWindow.xaml" />
     <Page Remove="SkrinshoterApp\ScreenshotsTabView.xaml" />
+    <Page Remove="SkrinshoterApp\UploadServicesTabView.xaml" />
     <Page Remove="SkrinshoterApp\ScrollingCaptureActionWindow.xaml" />
     <Page Remove="SkrinshoterApp\ScrollingCaptureMessageWindow.xaml" />
     <Page Remove="SkrinshoterApp\ScrollingCapturePreviewWindow.xaml" />
@@ -127,6 +128,7 @@
     <Page Include="SkrinshoterApp\ScreenshotEditingActionWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/screenshotediting/screenshoteditingactionwindow.xaml" />
     <Page Include="SkrinshoterApp\ScreenshotEditingDrawingWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/screenshotediting/screenshoteditingdrawingwindow.xaml" />
     <Page Include="SkrinshoterApp\ScreenshotsTabView.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/settings/tabs/screenshotstabview.xaml" />
+    <Page Include="SkrinshoterApp\UploadServicesTabView.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/settings/tabs/uploadservicestabview.xaml" />
     <Page Include="SkrinshoterApp\ScrollingCaptureActionWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/scrollingcapture/scrollingcaptureactionwindow.xaml" />
     <Page Include="SkrinshoterApp\ScrollingCaptureMessageWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/scrollingcapture/scrollingcapturemessagewindow.xaml" />
     <Page Include="SkrinshoterApp\ScrollingCapturePreviewWindow.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="wpf/scrollingcapture/scrollingcapturepreviewwindow.xaml" />

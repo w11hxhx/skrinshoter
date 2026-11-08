@@ -33,6 +33,8 @@ internal class SkrApiFileUpload
 
 	private string appId;
 
+	private readonly HttpClient httpClient;
+
 	public string FileUidWithNoDate => uID.Split('/')[1];
 
 	public string FileSourcePath => path;
@@ -41,7 +43,7 @@ internal class SkrApiFileUpload
 
 	public event EventHandler<int> OnProgress;
 
-	public SkrApiFileUpload(string appId, string name, string path, string uID, int type, string url, string ext, string windowTitle, bool isScrollingCapture)
+	public SkrApiFileUpload(string appId, string name, string path, string uID, int type, string url, string ext, string windowTitle, bool isScrollingCapture, HttpClient httpClient = null)
 	{
 		this.appId = appId;
 		this.name = name;
@@ -51,6 +53,7 @@ internal class SkrApiFileUpload
 		this.ext = ext;
 		this.windowTitle = windowTitle;
 		this.isScrollingCapture = isScrollingCapture;
+		this.httpClient = httpClient ?? SkrApiHttpClient.HttpClient;
 	}
 
 	public async Task StartAsync(CancellationToken cancellationToken)
@@ -76,7 +79,7 @@ internal class SkrApiFileUpload
 				isScrollingCapture ? "1" : "0"
 			}
 		};
-		await new FilePostUploader(SkrApiHttpClient.HttpClient, "userfile", path, additionalFields, "/post_file2", cancellationToken, (int progress) =>
+		await new FilePostUploader(httpClient, "userfile", path, additionalFields, "/post_file2", cancellationToken, (int progress) =>
 		{
 			OnProgress?.Invoke(this, progress);
 		}, async (HttpResponseMessage repsponse) =>

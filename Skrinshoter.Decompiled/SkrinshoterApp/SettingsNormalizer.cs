@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,6 +31,19 @@ public class SettingsNormalizer
 
 	public void Normalize(Settings settings)
 	{
+  settings.CustomUploadProviders ??= new System.Collections.ObjectModel.ObservableCollection<CustomUploadProvider>();
+		if (!new[] { 480, 720, 1080, 1440, 2160 }.Contains(settings.VideoResolutionHeight))
+		{
+			settings.VideoResolutionHeight = 1080;
+		}
+		if (!new[] { 15, 24, 30, 60 }.Contains(settings.VideoFrameRate))
+		{
+			settings.VideoFrameRate = 60;
+		}
+		if (!new[] { 2500, 5000, 8000, 12000, 20000 }.Contains(settings.VideoBitrateKbps))
+		{
+			settings.VideoBitrateKbps = 12000;
+		}
 		// Keep existing accounts on upgrade, but never reuse a copied identity
 		// belonging to another Windows user or computer.
 		string identityOwner = Environment.MachineName + "|" + System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;

@@ -17,6 +17,8 @@ internal class StartCommand : Command
 
 	public int VideoFrameRate { get; }
 
+	public int VideoBitrateKbps { get; }
+
 	public string OutputFile { get; }
 
 	public string InputAudioDeviceId { get; }
@@ -38,7 +40,7 @@ internal class StartCommand : Command
 	public StartCommand(IReadOnlyCollection<string> args)
 		: base(VideoModuleCommand.start)
 	{
-		CommandArgumentReader commandArgumentReader = new CommandArgumentReader(args, 14);
+		CommandArgumentReader commandArgumentReader = new CommandArgumentReader(args, 15);
 		ScreenCaptureApi = commandArgumentReader.ReadEnum<ScreenCaptureApi>();
 		MonitorName = commandArgumentReader.ReadNonEmptyString("MonitorName");
 		RecordingArea = commandArgumentReader.ReadRectangle("RecordingArea");
@@ -56,6 +58,7 @@ internal class StartCommand : Command
 			throw new FormatException(string.Format("{0} must be divisible by 2: {1}.", "MaxOutputVideoHeight", MaxOutputVideoHeight));
 		}
 		VideoFrameRate = commandArgumentReader.ReadInt32("VideoFrameRate", 1, 1000);
+		VideoBitrateKbps = commandArgumentReader.ReadInt32("VideoBitrateKbps", 100, 100000);
 		OutputFile = commandArgumentReader.ReadNonEmptyString("OutputFile");
 		string text = commandArgumentReader.ReadString();
 		InputAudioDeviceId = ((text == "") ? null : text);

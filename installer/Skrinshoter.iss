@@ -1,10 +1,12 @@
 #ifndef AppVersion
-  #define AppVersion "4.87.4.3"
+  #define AppVersion "4.87.4.4"
 #endif
 
 #define AppName "Skrinshoter"
 #define AppExeName "Skrinshoter.exe"
-#define RuntimeDir "..\artifacts\Skrinshoter-win-x64"
+#ifndef RuntimeDir
+  #define RuntimeDir "..\artifacts\Skrinshoter-win-x64"
+#endif
 
 [Setup]
 AppId={{7E133262-6DE0-4D2E-9157-AC1CD74B4C02}

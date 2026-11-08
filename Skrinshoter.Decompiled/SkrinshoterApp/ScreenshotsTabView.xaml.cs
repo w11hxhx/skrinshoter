@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.CodeDom.Compiler;
 using System.Diagnostics;
 using System.Windows.Controls;
@@ -12,5 +12,4 @@ public partial class ScreenshotsTabView : UserControl
 	{
 		InitializeComponent();
 	}
-
 }

@@ -1,5 +1,7 @@
 using System;
 using System.Globalization;
+using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using SkrinshoterApp.BackgroundServices;
@@ -15,8 +17,6 @@ public class CloudFileUploadService
 
 	private readonly Settings settings;
 
-	private readonly AppInfoProvider appInfoProvider;
-
 	private readonly NotificationService notificationService;
 
 	private readonly ClipboardService clipboardService;
@@ -27,24 +27,29 @@ public class CloudFileUploadService
 
 	private readonly ILogger logger;
 
-	public CloudFileUploadService(SettingsManager settingsManager, AppInfoProvider appInfoProvider, NotificationService notificationService, ClipboardService clipboardService, IProgressWindowService progressWindowService, UserQuotaService userQuotaService, ILogger<CloudFileUploadService> logger)
+	private readonly IHttpClientFactory httpClientFactory;
+
+	public CloudFileUploadService(SettingsManager settingsManager, NotificationService notificationService, ClipboardService clipboardService, IProgressWindowService progressWindowService, UserQuotaService userQuotaService, IHttpClientFactory httpClientFactory, ILogger<CloudFileUploadService> logger)
 	{
 		this.settingsManager = settingsManager;
 		settings = settingsManager.Settings;
-		this.appInfoProvider = appInfoProvider;
 		this.notificationService = notificationService;
 		this.clipboardService = clipboardService;
 		this.progressWindowService = progressWindowService;
 		this.userQuotaService = userQuotaService;
 		this.logger = logger;
+		this.httpClientFactory = httpClientFactory;
 	}
 
 	public async Task<string> UploadFile(string filePath, CloudFileUploadType fileType, string baseFileName, string fileExtension, string windowTitle, bool isScrollingCapture = false, bool respectSilentMode = true, bool copyLinkToClipboard = true)
 	{
-		string text = await GetFileUID();
+		string uploadId = Guid.NewGuid().ToString("B").ToUpperInvariant();
+		using HttpClient uploadClient = httpClientFactory.CreateClient(HttpClientConfig.Names.FileChunkUploader);
+		uploadClient.DefaultRequestHeaders.Add("X-Skr-Auth", Convert.ToBase64String(new SkrAes128(uploadId).Encode()));
+		string text = await GetFileUID(uploadClient);
 		string fileUid = GetDatedUID(text);
 		string url = GetFileSaveShortUrl(text, fileType);
-		SkrApiFileUpload fileUpload = new SkrApiFileUpload(appInfoProvider.AppId, baseFileName, filePath, fileUid, (int)fileType, url, fileExtension, windowTitle, isScrollingCapture);
+		SkrApiFileUpload fileUpload = new SkrApiFileUpload(uploadId, baseFileName, filePath, fileUid, (int)fileType, url, fileExtension, windowTitle, isScrollingCapture, uploadClient);
 		IProgressSession session = progressWindowService.TryShow(Resources.Progress_UploadingFileToCloud, !respectSilentMode || !settings.SilentMode);
 		try
 		{
@@ -73,12 +78,10 @@ public class CloudFileUploadService
 					}
 				}
 				await fileUpload.StartAsync(session.Token);
-				if (!(await new SkrApiCheckCloudFileUploadedOk(fileUid).StartAsync()))
+				if (!(await new SkrApiCheckCloudFileUploadedOk(fileUid, uploadClient).StartAsync()))
 				{
 					throw new Exception("Upload verification for id " + fileUid + " has been failed.");
 				}
-				await new SkrFileUids(settings).Drop(fileUpload.FileUidWithNoDate);
-				settingsManager.SaveSettings();
 				if (clipboardError)
 				{
 					notificationService.ShowError(Resources.Notify_FailedToCopyFileLinkToClipboard + " " + string.Format(Resources.Notify_FailedToCopyToClipboardExplanation, ProductResources.AppNameGenitive, ProductResources.AppName));
@@ -112,11 +115,9 @@ public class CloudFileUploadService
 		}
 	}
 
-	private async Task<string> GetFileUID()
+	private async Task<string> GetFileUID(HttpClient uploadClient)
 	{
-		string result = await new SkrFileUids(settings).PopNext();
-		settingsManager.SaveSettings();
-		return result;
+		return (await new SkrApiFileUids(uploadClient).GetFileUids()).First();
 	}
 
 	private string GetDatedUID(string fileUID)

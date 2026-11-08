@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,7 +15,8 @@ public sealed class ScreenshotUploadCoordinator
 		ScreenshotUploadDestination.KappaLol,
 		ScreenshotUploadDestination.Xyli,
 		ScreenshotUploadDestination.ZeroXl1r,
-		ScreenshotUploadDestination.NoikCloud
+		ScreenshotUploadDestination.NoikCloud,
+		ScreenshotUploadDestination.Nuuls
 	};
 
 	private readonly CloudFileUploadService cloudFileUploadService;
@@ -25,13 +26,15 @@ public sealed class ScreenshotUploadCoordinator
 	private readonly NotificationService notificationService;
 
 	private readonly ILogger logger;
+ private readonly SettingsManager settingsManager;
 
-	public ScreenshotUploadCoordinator(CloudFileUploadService cloudFileUploadService, ExternalScreenshotUploadService externalUploadService, NotificationService notificationService, ILogger<ScreenshotUploadCoordinator> logger)
+	public ScreenshotUploadCoordinator(CloudFileUploadService cloudFileUploadService, ExternalScreenshotUploadService externalUploadService, NotificationService notificationService, ILogger<ScreenshotUploadCoordinator> logger, SettingsManager settingsManager)
 	{
 		this.cloudFileUploadService = cloudFileUploadService;
 		this.externalUploadService = externalUploadService;
 		this.notificationService = notificationService;
 		this.logger = logger;
+ this.settingsManager = settingsManager;
 	}
 
 	public async Task<IReadOnlyList<ScreenshotUploadResult>> UploadAsync(string filePath, string friendlyBaseFileName, string windowTitle, bool isScrollingCapture, ScreenshotUploadDestination destinations, CancellationToken cancellationToken = default)
@@ -62,7 +65,15 @@ public sealed class ScreenshotUploadCoordinator
 			}
 		}
 
-		if (destinations.HasFlag(ScreenshotUploadDestination.Skrinshoter))
+		if (destinations.HasFlag(ScreenshotUploadDestination.Custom))
+  {
+   foreach (var provider in settingsManager.Settings.CustomUploadProviders.Where(x => x.Enabled).ToArray())
+   {
+    try { results.Add(await externalUploadService.UploadAsync(provider, filePath, cancellationToken)); }
+    catch (Exception exception) when (!(exception is OperationCanceledException)) { logger.LogError(exception, "Custom upload failed"); failures.Add(provider.Name); }
+   }
+  }
+  if (destinations.HasFlag(ScreenshotUploadDestination.Skrinshoter))
 		{
 			try
 			{

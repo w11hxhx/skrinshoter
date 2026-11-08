@@ -20,6 +20,8 @@ internal class PipelineConfiguration
 
 	public int VideoFrameRate { get; }
 
+	public int VideoBitrateKbps { get; }
+
 	public string OutputFile { get; }
 
 	public string InputAudioDeviceId { get; }
@@ -55,6 +57,7 @@ internal class PipelineConfiguration
 		RecordingArea = startCommand.RecordingArea;
 		MaxOutputVideoHeight = startCommand.MaxOutputVideoHeight;
 		VideoFrameRate = startCommand.VideoFrameRate;
+		VideoBitrateKbps = startCommand.VideoBitrateKbps;
 		OutputFile = startCommand.OutputFile;
 		InputAudioDeviceId = startCommand.InputAudioDeviceId;
 		IsInputAudioDeviceMuted = startCommand.IsInputAudioDeviceMuted;

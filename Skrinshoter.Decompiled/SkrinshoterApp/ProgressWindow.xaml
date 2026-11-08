@@ -8,7 +8,8 @@
           <ColumnDefinition Width="*" />
           <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <ProgressBar MinWidth="272" Height="24" Value="{Binding Progress}" IsIndeterminate="{Binding IsIndeterminate}" />
+        <ProgressBar x:Name="UploadBar" MinWidth="272" Height="24" Value="{Binding Progress}" IsIndeterminate="{Binding IsIndeterminate}" />
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Progress, StringFormat={}{0}%}" IsHitTestVisible="False"><TextBlock.Style><Style TargetType="TextBlock"><Setter Property="Visibility" Value="Visible" /><Style.Triggers><DataTrigger Binding="{Binding IsIndeterminate}" Value="True"><Setter Property="Visibility" Value="Collapsed" /></DataTrigger></Style.Triggers></Style></TextBlock.Style></TextBlock>
         <Button Grid.Column="1" Style="{StaticResource Button}" Width="80" Height="28" FontFamily="Calibri" FontSize="16" Margin="7,0,0,0" Content="{Binding CancelButtonText}" Command="{Binding CancelCommand}" />
       </Grid>
     </StackPanel>

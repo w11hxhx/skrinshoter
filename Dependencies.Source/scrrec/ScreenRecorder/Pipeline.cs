@@ -117,7 +117,7 @@ internal class Pipeline
 				videoCapturer = new VideoCapturerWgc(configuration.MonitorName, configuration.RecordingArea, configuration.VideoFrameRate, showMousePointer, mousePipeline, stopwatch, loggerFactory);
 			}
 			videoFilter = new VideoFilter(videoCapturer.ImageFormat, new ImageFormat(configuration.OutputVideoResolution, PixelFormat.YUV420P), configuration.VideoScaleAlgorithm, loggerFactory.CreateLogger<VideoFilter>());
-			videoEncoder = new VideoEncoder(new ImageFormat(configuration.OutputVideoResolution, PixelFormat.YUV420P), configuration.VideoFrameRate, loggerFactory.CreateLogger<VideoEncoder>());
+			videoEncoder = new VideoEncoder(new ImageFormat(configuration.OutputVideoResolution, PixelFormat.YUV420P), configuration.VideoFrameRate, configuration.VideoBitrateKbps, loggerFactory.CreateLogger<VideoEncoder>());
 			AudioFormat audioFormat = null;
 			if (!configuration.CaptureTest)
 			{

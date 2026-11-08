@@ -157,7 +157,8 @@ public class RecordVideoCommandHandler : IRequestHandler<RecordVideoCommand, Uni
 				if (settings.VideoSaveType != VideoSaveType.File)
 				{
 					string windowTitle2 = (settings.UploadWindowTitle ? windowTitle : "");
-					videoFileUploader = new RealTimeVideoFileUploader(loggerFactory, httpClientFactory, savePath, remoteFileName, windowTitle2, appInfoProvider.AppId, new SynchronousProgress<long>(ProgressHandler));
+					string uploadId = Guid.NewGuid().ToString("B").ToUpperInvariant();
+					videoFileUploader = new RealTimeVideoFileUploader(loggerFactory, httpClientFactory, savePath, remoteFileName, windowTitle2, uploadId, new SynchronousProgress<long>(ProgressHandler));
 					videoFileUploaderTask = videoFileUploader.UploadAsync(cts.Token);
 				}
 				Rectangle recordingArea = videoRecordingAreaSelection.RecordingArea;
@@ -379,13 +380,14 @@ public class RecordVideoCommandHandler : IRequestHandler<RecordVideoCommand, Uni
 			{
 				await VideoModuleAppProxy.RestartVideoModuleAsync(videoModule, retriesCounter);
 			}
-			await videoModule.SendCommand(VideoModuleCommand.start, new List<string>(14)
+			await videoModule.SendCommand(VideoModuleCommand.start, new List<string>(15)
 			{
 				screenCaptureApi.ToString(),
 				monitorId,
 				string.Join(",", new _003C_003Ez__ReadOnlyArray<int>(new int[4] { recordingArea.Left, recordingArea.Top, recordingArea.Width, recordingArea.Height })),
-				GetMaxResolution(),
-				GetMaxFps().ToString(),
+				settings.VideoResolutionHeight.ToString(),
+				settings.VideoFrameRate.ToString(),
+				settings.VideoBitrateKbps.ToString(),
 				savePath,
 				audioCaptureSession.InputDeviceId,
 				audioCaptureSession.IsInputMuted ? "1" : "0",
@@ -471,7 +473,7 @@ public class RecordVideoCommandHandler : IRequestHandler<RecordVideoCommand, Uni
 
 	private int GetMaxRecordTimeInMinutes()
 	{
-		return 5;
+		return int.MaxValue;
 	}
 
 	private string GetVideoFileSavePath(string localFileName)
@@ -495,27 +497,7 @@ public class RecordVideoCommandHandler : IRequestHandler<RecordVideoCommand, Uni
 
 	private int GetMaxFps()
 	{
-		VideoQualityLevel videoQualityLevel = settings.VideoQualityLevel;
-		return videoQualityLevel switch
-		{
-			VideoQualityLevel.SD => 15, 
-			VideoQualityLevel.HD => 25, 
-			_ => 25, 
-		};
-	}
-
-	private string GetMaxResolution()
-	{
-		VideoQualityLevel videoQualityLevel = settings.VideoQualityLevel;
-		switch (videoQualityLevel)
-		{
-		case VideoQualityLevel.SD:
-			return "480";
-		case VideoQualityLevel.HD:
-			return "720";
-		default:
-			return "720";
-		}
+		return settings.VideoFrameRate;
 	}
 
 	private void CopyVideoToClipboard(string path)

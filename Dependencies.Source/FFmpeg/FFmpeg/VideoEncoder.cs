@@ -23,7 +23,7 @@ public class VideoEncoder : BaseDisposable
 
 	internal unsafe AVCodecContext* Encoder => encoder;
 
-	public unsafe VideoEncoder(ImageFormat imageFormat, int frameRate, ILogger<VideoEncoder> logger = null)
+	public unsafe VideoEncoder(ImageFormat imageFormat, int frameRate, int bitrateKbps, ILogger<VideoEncoder> logger = null)
 	{
 		this.logger = (ILogger)(((object)logger) ?? ((object)NullLogger.Instance));
 		this.imageFormat = imageFormat ?? throw new ArgumentNullException("imageFormat");
@@ -31,9 +31,13 @@ public class VideoEncoder : BaseDisposable
 		{
 			throw new ArgumentOutOfRangeException("frameRate");
 		}
+		if (bitrateKbps <= 0)
+		{
+			throw new ArgumentOutOfRangeException("bitrateKbps");
+		}
 		try
 		{
-			CreateEncoder(frameRate);
+			CreateEncoder(frameRate, bitrateKbps);
 			inputFrame = ffmpeg.av_frame_alloc();
 			if (inputFrame == null)
 			{
@@ -64,7 +68,7 @@ public class VideoEncoder : BaseDisposable
 		return list;
 	}
 
-	private unsafe void CreateEncoder(int frameRate)
+	private unsafe void CreateEncoder(int frameRate, int bitrateKbps)
 	{
 		AVCodec* ptr = ffmpeg.avcodec_find_encoder(AVCodecID.AV_CODEC_ID_H264);
 		if (ptr == null)
@@ -85,7 +89,15 @@ public class VideoEncoder : BaseDisposable
 			num = 1,
 			den = frameRate
 		};
+		encoder->framerate = new AVRational
+		{
+			num = frameRate,
+			den = 1
+		};
 		encoder->profile = 66;
+		encoder->bit_rate = (long)bitrateKbps * 1000L;
+		encoder->rc_max_rate = encoder->bit_rate;
+		encoder->rc_buffer_size = checked(bitrateKbps * 2000);
 		int num = ffmpeg.av_opt_set(encoder->priv_data, "tune", "zerolatency", 0);
 		if (num < 0)
 		{
