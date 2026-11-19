@@ -129,6 +129,8 @@ public abstract class MakeScreenshotCommandHandler
 						ScreenshotEditingAction.UploadToAll => settings.ScreenshotUploadDestinations,
 						_ => settings.ScreenshotUploadDestinations
 					};
+					// The image is now on disk; capture/editor state is no longer needed.
+					operationStateService.StopOperation();
 					await UploadScreenshotAsync(path, remoteBaseFileName, windowTitle, isScrollingCapture, destinations);
 				}
 				catch (OperationCanceledException)

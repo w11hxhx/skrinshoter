@@ -26,6 +26,14 @@ jobs:
         shell: powershell
         run: .\tests\Verify-ScreenshotSettings.ps1
 
+      - name: Verify asynchronous uploads and Windows OCR
+        shell: powershell
+        run: |
+          & .\.dotnet\dotnet.exe build tests/UploadAndOcr/UploadAndOcr.csproj -c Release
+          if ($LASTEXITCODE -ne 0) { throw 'Regression test build failed.' }
+          & .\tests\UploadAndOcr\bin\Release\net48\UploadAndOcr.exe
+          if ($LASTEXITCODE -ne 0) { throw 'Upload/OCR regression tests failed.' }
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:

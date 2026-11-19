@@ -24,13 +24,14 @@ public class MakeRegionScreenshotCommandHandler : MakeScreenshotCommandHandler, 
 	{
 		if (operationStateService.TryStartOperation(OperationType.Screenshot))
 		{
+			long operationId = operationStateService.OperationId;
 			try
 			{
 				await Execute(request.CommandInvokeType);
 			}
 			finally
 			{
-				operationStateService.StopOperation();
+				operationStateService.StopOperation(operationId);
 			}
 		}
 		return Unit.Value;
@@ -38,7 +39,7 @@ public class MakeRegionScreenshotCommandHandler : MakeScreenshotCommandHandler, 
 
 	private async Task Execute(CommandInvokeType commandInvokeType)
 	{
-		_ = 1;
+		long operationId = operationStateService.OperationId;
 		try
 		{
 			string windowTitle = foregroundWindowInfoProvider.Title;
@@ -58,7 +59,8 @@ public class MakeRegionScreenshotCommandHandler : MakeScreenshotCommandHandler, 
 		}
 		finally
 		{
-			screenshotEditingWindowManager.Hide();
+			if (operationStateService.OperationId == operationId)
+				screenshotEditingWindowManager.Hide();
 		}
 	}
 }

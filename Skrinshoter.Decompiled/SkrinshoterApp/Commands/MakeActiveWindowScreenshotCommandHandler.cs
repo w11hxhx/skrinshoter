@@ -31,13 +31,14 @@ public class MakeActiveWindowScreenshotCommandHandler : MakeScreenshotCommandHan
 	{
 		if (operationStateService.TryStartOperation(OperationType.Screenshot))
 		{
+			long operationId = operationStateService.OperationId;
 			try
 			{
 				await Execute();
 			}
 			finally
 			{
-				operationStateService.StopOperation();
+				operationStateService.StopOperation(operationId);
 			}
 		}
 		return Unit.Value;

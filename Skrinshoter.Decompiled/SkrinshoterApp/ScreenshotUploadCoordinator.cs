@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,7 +26,7 @@ public sealed class ScreenshotUploadCoordinator
 	private readonly NotificationService notificationService;
 
 	private readonly ILogger logger;
- private readonly SettingsManager settingsManager;
+	private readonly SettingsManager settingsManager;
 
 	public ScreenshotUploadCoordinator(CloudFileUploadService cloudFileUploadService, ExternalScreenshotUploadService externalUploadService, NotificationService notificationService, ILogger<ScreenshotUploadCoordinator> logger, SettingsManager settingsManager)
 	{
@@ -34,7 +34,7 @@ public sealed class ScreenshotUploadCoordinator
 		this.externalUploadService = externalUploadService;
 		this.notificationService = notificationService;
 		this.logger = logger;
- this.settingsManager = settingsManager;
+		this.settingsManager = settingsManager;
 	}
 
 	public async Task<IReadOnlyList<ScreenshotUploadResult>> UploadAsync(string filePath, string friendlyBaseFileName, string windowTitle, bool isScrollingCapture, ScreenshotUploadDestination destinations, CancellationToken cancellationToken = default)
@@ -44,42 +44,62 @@ public sealed class ScreenshotUploadCoordinator
 		{
 			destinations = ScreenshotUploadDestination.Skrinshoter;
 		}
-		List<ScreenshotUploadResult> results = new List<ScreenshotUploadResult>();
-		List<string> failures = new List<string>();
+		cancellationToken.ThrowIfCancellationRequested();
+		var pending = new List<Task<(ScreenshotUploadResult Result, string Failure)>>();
 
-		foreach (ScreenshotUploadDestination destination in ExternalDestinations)
+		async Task<(ScreenshotUploadResult, string)> UploadOneAsync(string name, Func<Task<ScreenshotUploadResult>> upload)
 		{
-			if (!destinations.HasFlag(destination))
-			{
-				continue;
-			}
-
 			try
 			{
-				results.Add(await externalUploadService.UploadAsync(destination, filePath, cancellationToken));
+				return (await upload(), null);
+			}
+			catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
+			{
+				// Cancelling one provider must not discard links from the others.
+				return (null, name);
 			}
 			catch (Exception exception) when (!(exception is OperationCanceledException))
 			{
-				logger.LogError(exception, "Failed to upload screenshot to {destination}", destination);
-				failures.Add(destination.ToString());
+				logger.LogError(exception, "Failed to upload screenshot to {destination}", name);
+				return (null, name);
 			}
 		}
 
+		foreach (ScreenshotUploadDestination destination in ExternalDestinations)
+		{
+			if (destinations.HasFlag(destination))
+			{
+				pending.Add(UploadOneAsync(destination.ToString(),
+					() => externalUploadService.UploadAsync(destination, filePath, cancellationToken)));
+			}
+		}
 		if (destinations.HasFlag(ScreenshotUploadDestination.Custom))
-  {
-   foreach (var provider in settingsManager.Settings.CustomUploadProviders.Where(x => x.Enabled).ToArray())
-   {
-    try { results.Add(await externalUploadService.UploadAsync(provider, filePath, cancellationToken)); }
-    catch (Exception exception) when (!(exception is OperationCanceledException)) { logger.LogError(exception, "Custom upload failed"); failures.Add(provider.Name); }
-   }
-  }
-  if (destinations.HasFlag(ScreenshotUploadDestination.Skrinshoter))
+		{
+			foreach (var provider in settingsManager.Settings.CustomUploadProviders.Where(x => x.Enabled).ToArray())
+			{
+				pending.Add(UploadOneAsync(provider.Name,
+					() => externalUploadService.UploadAsync(provider, filePath, cancellationToken)));
+			}
+		}
+
+		// WhenAll waits for every reader before the caller can delete the temporary screenshot.
+		// Its result order follows the provider list, regardless of completion order.
+		var completed = await Task.WhenAll(pending);
+		cancellationToken.ThrowIfCancellationRequested();
+		var results = completed.Where(x => x.Result != null).Select(x => x.Result).ToList();
+		var failures = completed.Where(x => x.Failure != null).Select(x => x.Failure).ToList();
+
+		if (destinations.HasFlag(ScreenshotUploadDestination.Skrinshoter))
 		{
 			try
 			{
 				string titleWithLinks = FormatLinks(results.Where((ScreenshotUploadResult result) => result.Destination != ScreenshotUploadDestination.Skrinshoter));
 				string url = await cloudFileUploadService.UploadFile(filePath, CloudFileUploadType.Screenshot, friendlyBaseFileName, Path.GetExtension(filePath), titleWithLinks, isScrollingCapture, copyLinkToClipboard: false);
 				results.Add(new ScreenshotUploadResult(ScreenshotUploadDestination.Skrinshoter, "Скриншотер", url));
+			}
+			catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
+			{
+				failures.Add("Скриншотер");
 			}
 			catch (Exception exception) when (!(exception is OperationCanceledException))
 			{

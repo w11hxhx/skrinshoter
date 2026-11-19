@@ -1,5 +1,5 @@
 #ifndef AppVersion
-  #define AppVersion "4.87.4.4"
+  #define AppVersion "4.87.4.5"
 #endif
 
 #define AppName "Skrinshoter"

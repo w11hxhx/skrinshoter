@@ -3,6 +3,7 @@ using System.CodeDom.Compiler;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Markup;
@@ -51,6 +52,8 @@ public partial class ProgressWindow : Window
 	{
 		forceClose = true;
 		Close();
+		foreach (var window in Application.Current.Windows.OfType<ProgressWindow>().Where(w => w.IsVisible))
+			window.PlaceBottomRightOnPrimary();
 	}
 
 	private void Window_Closing(object sender, CancelEventArgs e)
@@ -64,7 +67,10 @@ public partial class ProgressWindow : Window
 		{
 			Rectangle workingArea = new MonitorInfo().GetWorkingArea();
 			System.Windows.Size screenPixelSize = this.GetScreenPixelSize();
-			System.Windows.Point position = new System.Windows.Point((double)workingArea.Right - ActualWidth / screenPixelSize.Width, (double)workingArea.Bottom - ActualHeight / screenPixelSize.Height);
+			// Use creation order so each concurrently uploading provider remains visible.
+			double offset = Application.Current.Windows.OfType<ProgressWindow>().TakeWhile(w => w != this)
+				.Where(w => w.IsVisible).Sum(w => w.ActualHeight + 8);
+			System.Windows.Point position = new System.Windows.Point((double)workingArea.Right - ActualWidth / screenPixelSize.Width, (double)workingArea.Bottom - (ActualHeight + offset) / screenPixelSize.Height);
 			this.SetPosition(position);
 		}
 	}

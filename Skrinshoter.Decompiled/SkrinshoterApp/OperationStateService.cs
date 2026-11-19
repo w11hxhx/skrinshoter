@@ -6,6 +6,9 @@ public class OperationStateService : IOperationStateProvider
 
 	public bool IsRecording { get; private set; }
 
+	// A finished background action must not release a newer capture's lock.
+	public long OperationId { get; private set; }
+
 	public bool TryStartOperation(OperationType type)
 	{
 		if (CurrentOperation != OperationType.None || type == OperationType.None)
@@ -13,7 +16,13 @@ public class OperationStateService : IOperationStateProvider
 			return false;
 		}
 		CurrentOperation = type;
+		OperationId++;
 		return true;
+	}
+
+	public void StopOperation(long operationId)
+	{
+		if (OperationId == operationId) StopOperation();
 	}
 
 	public void StopOperation()

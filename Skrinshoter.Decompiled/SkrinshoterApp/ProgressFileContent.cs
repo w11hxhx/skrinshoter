@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -15,9 +15,9 @@ internal sealed class ProgressFileContent : HttpContent
  protected override async Task SerializeToStreamAsync(Stream target, TransportContext context)
  {
   byte[] buffer = new byte[81920]; long sent = 0; int count;
-  while ((count = await source.ReadAsync(buffer, 0, buffer.Length, token)) > 0)
+  while ((count = await source.ReadAsync(buffer, 0, buffer.Length, token).ConfigureAwait(false)) > 0)
   {
-   await target.WriteAsync(buffer, 0, count, token); sent += count;
+   await target.WriteAsync(buffer, 0, count, token).ConfigureAwait(false); sent += count;
    progress.Report((int)(sent * 99 / Math.Max(1, source.Length)));
   }
  }

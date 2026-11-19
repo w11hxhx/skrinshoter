@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -74,7 +74,7 @@ public sealed class ExternalScreenshotUploadService
 		{
 			form.Add(new StringContent(field.Value ?? ""), field.Key);
 		}
-		using FileStream stream = File.OpenRead(filePath);
+		using FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, 81920, useAsync: true);
 		using ProgressFileContent file = new ProgressFileContent(stream, session.Progress, cancellationToken);
 		file.Headers.ContentType = new MediaTypeHeaderValue(Path.GetExtension(filePath).ToLowerInvariant() switch
 		{
