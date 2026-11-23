@@ -1,5 +1,5 @@
-#ifndef AppVersion
-  #define AppVersion "4.87.4.7"
+﻿#ifndef AppVersion
+  #define AppVersion "4.87.4.8"
 #endif
 
 #define AppName "Skrinshoter"
@@ -9,7 +9,12 @@
 #endif
 
 [Setup]
+#ifdef MigrationTest
+AppId=SkrinshoterMigrationTest
+CreateUninstallRegKey=no
+#else
 AppId={{7E133262-6DE0-4D2E-9157-AC1CD74B4C02}
+#endif
 AppName={#AppName}
 AppVersion={#AppVersion}
 AppPublisher=Skrinshoter
@@ -20,7 +25,11 @@ PrivilegesRequired=lowest
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 OutputDir=..\artifacts
+#ifdef MigrationTest
+OutputBaseFilename=Skrinshoter-migration-test
+#else
 OutputBaseFilename=Skrinshoter-setup-win-x64
+#endif
 SetupIconFile=..\Skrinshoter.Decompiled\app.ico
 UninstallDisplayIcon={app}\{#AppExeName}
 Compression=lzma2/ultra64
@@ -40,6 +49,7 @@ Name: "desktopicon"; Description: "Создать ярлык на рабочем
 [Files]
 Source: "{#RuntimeDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
+#ifndef MigrationTest
 [Icons]
 Name: "{group}\{#AppName}"; Filename: "{app}\{#AppExeName}"
 Name: "{autodesktop}\{#AppName}"; Filename: "{app}\{#AppExeName}"; Tasks: desktopicon
@@ -49,3 +59,8 @@ Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: 
 
 [Run]
 Filename: "{app}\{#AppExeName}"; Description: "Запустить {#AppName}"; Flags: nowait postinstall skipifsilent
+
+#endif
+
+[Code]
+#include "OfficialMigration.iss"

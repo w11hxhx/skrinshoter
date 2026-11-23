@@ -35,6 +35,21 @@ try {
     if ($first.AppId -eq $originalId -or $first.FileUids.Count -ne 0) { throw 'Copied profile retained another users cloud data.' }
     if ($manager.State.AppId -ne $first.AppId) { throw 'Cloud identity stores disagree.' }
 
+    # Use the official JSON field names and non-default bindings. No real profile is loaded.
+    $settingsLogger = [Microsoft.Extensions.Logging.Abstractions.NullLogger[SkrinshoterApp.SettingsStorage]]::Instance
+    $settingsStore = New-Object SkrinshoterApp.SettingsStorage $normalizer, $settingsLogger
+    $legacyJson = '{"hotkey_region_screenshot":"17,16,65","hotkey_active_window_screenshot":"17,16,87","hotkey_full_screenshot":"17,16,77","hotkey_desktop_screenshot":"17,16,68","hotkey_video_recoding_activation":"17,16,82","hotkey_video_recoding_pause":"17,16,80"}'
+    $legacy = $settingsStore.Deserialize($legacyJson)
+    $normalizer.Normalize($legacy)
+    $expected = @{ AreaScreenshotHotkey = 'A'; ActiveWindowScreenshotHotkey = 'W'; ActiveMonitorScreenshotHotkey = 'M'; DesktopScreenshotHotkey = 'D'; RecordVideoHotkey = 'R'; PauseVideoHotkey = 'P' }
+    foreach ($name in $expected.Keys) {
+        if ($legacy.$name.Key.ToString() -ne $expected[$name] -or
+            $legacy.$name.Modifiers -ne ([Windows.Input.ModifierKeys]::Control -bor [Windows.Input.ModifierKeys]::Shift)) {
+            throw "Official binding $name was reset during migration."
+        }
+    }
+    Write-Host 'PASS: all six non-default official screenshot/recording bindings survive deserialization and normalization.'
+
     $results = [SkrinshoterApp.ScreenshotUploadResult[]]@(
         (New-Object SkrinshoterApp.ScreenshotUploadResult ([SkrinshoterApp.ScreenshotUploadDestination]::Skrinshoter), 'Service', 'https://example.com/image.png')
     )

@@ -1,5 +1,7 @@
 # Скриншотер
 
+**Skrinshoter — A Windows screenshot and screen recording fork with parallel uploads, local OCR, custom upload services, and optional GitHub updates.**
+
 Скриншоты, запись экрана и редактор изображений для Windows.
 
 [![Последний релиз](https://img.shields.io/github/v/release/w11hxhx/skrinshoter?label=версия)](https://github.com/w11hxhx/skrinshoter/releases/latest)
@@ -29,6 +31,8 @@
 | --- | --- |
 | [Установщик](https://github.com/w11hxhx/skrinshoter/releases/latest/download/Skrinshoter-setup-win-x64.exe) | Запустите EXE и следуйте шагам установки. |
 | [Portable](https://github.com/w11hxhx/skrinshoter/releases/latest/download/Skrinshoter-portable-win-x64.zip) | Распакуйте ZIP в отдельную папку и запустите `Skrinshoter.exe`. |
+
+При установке поверх официального Скриншотера установщик сначала сохраняет `settings.json`, удаляет официальную версию через её деинсталлятор и восстанавливает настройки, включая горячие клавиши. Резервная копия остаётся в `%LOCALAPPDATA%\Skrinshoter-fork-migration`. При отмене или ошибке удаления установка форка останавливается. Если официальная версия установлена для всех пользователей, Windows может запросить права администратора для её удаления. Обновления самого форка не удаляют его повторно.
 
 В [каждом релизе](https://github.com/w11hxhx/skrinshoter/releases) также доступны исходники и файл `SHA256SUMS.txt` с контрольными суммами.
 

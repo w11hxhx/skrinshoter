@@ -22,6 +22,10 @@ jobs:
         shell: powershell
         run: .\release.ps1
 
+      - name: Verify official installation replacement and retained settings
+        shell: powershell
+        run: .\tests\Verify-InstallerMigration.ps1
+
       - name: Verify screenshot settings and cloud isolation
         shell: powershell
         run: .\tests\Verify-ScreenshotSettings.ps1
