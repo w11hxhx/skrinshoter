@@ -69,6 +69,8 @@ foreach ($relativePath in $requiredFiles) {
     }
 }
 
+& (Join-Path $repoRoot 'tests\Verify-LaunchManifest.ps1') -BuildDirectory $buildOutput
+
 if (-not $NoPackage) {
     $artifactsDirectory = Join-Path $repoRoot 'artifacts'
     $runtimeDirectory = Join-Path $artifactsDirectory 'Skrinshoter-win-x64'

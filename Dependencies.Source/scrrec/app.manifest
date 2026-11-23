@@ -17,9 +17,9 @@
             compatibility.
         -->
 
-        <!-- uiAccess="true" is necessary for the correct operation of SetWindowsHookEx(WH_MOUSE_LL) in release builds,
-             where the application is launched without admin privileges. -->
-        <requestedExecutionLevel level="asInvoker" uiAccess="true" />
+        <!-- Per-user and portable builds run with the caller's privileges.
+             UIAccess requires signing and a protected installation directory. -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
       </requestedPrivileges>
     </security>
   </trustInfo>
