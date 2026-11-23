@@ -21,9 +21,12 @@ public class ShowAppUpdateCheckWindowCommandHandler : IRequestHandler<ShowAppUpd
 		Window window = ShowAppUpdateCheckWindowCommandHandler.window;
 		if (window != null && window.IsLoaded)
 		{
-			window.Close();
+			appUpdateCheckWindowVM.Dispose();
+			window.Activate();
+			return Unit.Task;
 		}
 		(ShowAppUpdateCheckWindowCommandHandler.window = new AppUpdateCheckWindow(appUpdateCheckWindowVM)).Show();
+		appUpdateCheckWindowVM.Initialize(request.Release);
 		return Unit.Task;
 	}
 }

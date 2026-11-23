@@ -8,6 +8,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+    <Compile Include="ForkUpdateTests.cs" />
+    <Compile Include="../../Skrinshoter.Decompiled/SkrinshoterApp/AppUpdateCheckWindowVM.cs" />
+    <Compile Include="../../Skrinshoter.Decompiled/SkrinshoterApp/ForkUpdateInstaller.cs" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <Compile Include="../../Skrinshoter.Decompiled/SkrinshoterApp/ForkUpdateService.cs" />
     <Compile Include="../../Skrinshoter.Decompiled/SkrinshoterApp/OperationStateService.cs" />
     <Compile Include="../../Skrinshoter.Decompiled/SkrinshoterApp/IOperationStateProvider.cs" />
     <Compile Include="../../Skrinshoter.Decompiled/SkrinshoterApp/OperationType.cs" />

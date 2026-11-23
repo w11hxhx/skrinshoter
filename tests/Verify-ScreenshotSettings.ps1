@@ -50,12 +50,15 @@ try {
     $first.CustomUploadProviders.Add($provider)
     $first.ShowEditorPrint = $false
     $first.IncludeServiceNames = $false
+    $first.CheckForUpdates = $false
+    $first.SkippedForkUpdateVersion = '9.8.7.6'
     $first.ImageSearchGoogle = $false
 	$first.VideoResolutionHeight = 1080
 	$first.VideoFrameRate = 60
 	$first.VideoBitrateKbps = 12000
     $json = [Newtonsoft.Json.JsonConvert]::SerializeObject($first)
     $restored = [Newtonsoft.Json.JsonConvert]::DeserializeObject($json, [SkrinshoterApp.Settings])
+    if ($restored.CheckForUpdates -or $restored.SkippedForkUpdateVersion -ne '9.8.7.6') { throw 'Fork update preferences did not survive serialization.' }
     if ($restored.ShowEditorPrint -or $restored.IncludeServiceNames -or $restored.ImageSearchGoogle) { throw 'New settings did not survive serialization.' }
     if ($restored.CustomUploadProviders.Count -ne 1 -or $restored.CustomUploadProviders[0].Headers['Authorization'] -ne 'Bearer test') { throw 'Custom services did not survive serialization.' }
 	if ($restored.CustomUploadProviders[0].FormFields['album'] -ne 'screenshots') { throw 'Custom form fields did not survive serialization.' }

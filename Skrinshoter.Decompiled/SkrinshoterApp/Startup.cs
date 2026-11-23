@@ -53,6 +53,8 @@ public class Startup
 		services.AddSingleton<CameraDeviceMonitor>();
 		services.AddSingleton<UserQuotaService>();
 		services.AddSingleton<AppUpdateChecker>();
+		services.AddSingleton<ForkUpdateService>();
+		services.AddSingleton<IForkUpdateInstaller, ForkUpdateInstaller>();
 		services.AddSingleton<AudioPlayer>();
 		services.AddSingleton<LocalizationManager>();
 		services.AddSingleton<LanguagesProvider>();

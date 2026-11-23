@@ -25,6 +25,8 @@ public static class HttpClientConfig
 
 		public const string AppUpdateChecker = "AppUpdateChecker";
 
+		public const string ForkUpdateDownload = "ForkUpdateDownload";
+
 		public const string ExternalScreenshotUpload = "ExternalScreenshotUpload";
 	}
 
@@ -50,11 +52,19 @@ public static class HttpClientConfig
 			ConfigureHttpClient(sp, client);
 			client.BaseAddress = new Uri(ProductUrl.Resolve(ProductResources.BaseUrl_MainApi));
 		}).ConfigurePrimaryHttpMessageHandler(CreateHttpClientHandler).AddPolicyHandler((IServiceProvider sp, HttpRequestMessage request) => CreateRetryPolicy(sp, request, Timeout.InfiniteTimeSpan));
-		services.AddHttpClient("AppUpdateChecker", (IServiceProvider sp, HttpClient client) =>
-		{
-			ConfigureHttpClient(sp, client);
-			client.BaseAddress = new Uri(ProductUrl.Resolve(ProductResources.BaseUrl_Cdn));
-		}).ConfigurePrimaryHttpMessageHandler(CreateHttpClientHandler).AddPolicyHandler((IServiceProvider sp, HttpRequestMessage request) => CreateRetryPolicy(sp, request, TimeSpan.FromSeconds(30.0)));
+        services.AddHttpClient(Names.AppUpdateChecker, (IServiceProvider sp, HttpClient client) =>
+        {
+            client.BaseAddress = new Uri("https://api.github.com/");
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("SkrinshoterFork/" + sp.GetRequiredService<AppInfoProvider>().Version);
+            client.DefaultRequestHeaders.Accept.ParseAdd("application/vnd.github+json");
+            client.DefaultRequestHeaders.Add("X-GitHub-Api-Version", "2022-11-28");
+            client.Timeout = TimeSpan.FromSeconds(30);
+        }).ConfigurePrimaryHttpMessageHandler(CreateHttpClientHandler);
+        services.AddHttpClient(Names.ForkUpdateDownload, (IServiceProvider sp, HttpClient client) =>
+        {
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("SkrinshoterFork/" + sp.GetRequiredService<AppInfoProvider>().Version);
+            client.Timeout = TimeSpan.FromMinutes(10);
+        }).ConfigurePrimaryHttpMessageHandler(CreateHttpClientHandler);
 		services.AddHttpClient("ExternalScreenshotUpload", (IServiceProvider sp, HttpClient client) =>
 		{
 			ConfigureHttpClient(sp, client);

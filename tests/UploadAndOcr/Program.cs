@@ -38,6 +38,7 @@ internal static class Program
             Check(operations.CurrentOperation == OperationType.Screenshot, "Old upload released a newer capture lock.");
             operations.StopOperation(operations.OperationId);
             Check(operations.CurrentOperation == OperationType.None, "Current capture lock was not released.");
+            await ForkUpdateTests.RunAsync();
             await CheckUploads(file);
             await CheckOcr(folder);
             Console.WriteLine("PASS: concurrent uploads, stable links, partial failures, cancellation, OCR and invalid images.");
@@ -241,9 +242,12 @@ internal static class Program
 // Infrastructure doubles: the coordinator, HTTP multipart uploader, stream and OCR are production sources.
 namespace SkrinshoterApp
 {
-    public sealed class SettingsManager { public Settings Settings { get; } = new Settings(); }
-    public sealed class Settings { public List<CustomUploadProvider> CustomUploadProviders { get; } = new List<CustomUploadProvider>(); }
+    public sealed class SettingsManager { public Settings Settings { get; } = new Settings(); public void SaveSettings() { } }
+    public sealed class Settings { public bool CheckForUpdates { get; set; } = true; public string SkippedForkUpdateVersion { get; set; } = ""; public List<CustomUploadProvider> CustomUploadProviders { get; } = new List<CustomUploadProvider>(); }
     public sealed class NotificationService { public int Errors; public void ShowError(string text) { Errors++; } }
+    public class LocalizableObservableObject : CommunityToolkit.Mvvm.ComponentModel.ObservableObject { }
+    public sealed class AppInfoProvider { public Version Version => new Version("4.87.4.7"); }
+    public sealed class AppShutdownService { public int Calls; public Task ShutdownAsync() { Calls++; return Task.CompletedTask; } }
     public enum CloudFileUploadType { Screenshot }
     public sealed class CloudFileUploadService
     {
@@ -251,7 +255,7 @@ namespace SkrinshoterApp
         public Task<string> UploadFile(string path, CloudFileUploadType type, string name, string extension, string title,
             bool scrolling, bool copyLinkToClipboard) { Links = title; return Task.FromResult("https://test.invalid/cloud.png"); }
     }
-    public static class HttpClientConfig { public static class Names { public const string ExternalScreenshotUpload = "test"; } }
+    public static class HttpClientConfig { public static class Names { public const string ExternalScreenshotUpload = "test"; public const string AppUpdateChecker = "updates"; public const string ForkUpdateDownload = "download"; } }
 }
 namespace System.Net.Http
 {

@@ -1,172 +1,101 @@
 using System;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using MediatR;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
-using Newtonsoft.Json;
 using SkrinshoterApp.Commands;
-using SkrinshoterApp.Properties;
 
 namespace SkrinshoterApp.BackgroundServices;
 
-public class AppUpdateChecker : IHostedService
+public sealed class AppUpdateChecker : IHostedService, IDisposable
 {
-	private class VersionResponseDto
-	{
-		[JsonRequired]
-		public string Version { get; set; }
-	}
+    private readonly AppInfoProvider info;
+    private readonly SettingsManager settings;
+    private readonly ForkUpdateService updates;
+    private readonly NotificationService notifications;
+    private readonly IMediator mediator;
+    private readonly Dispatcher dispatcher;
+    private readonly IOperationStateProvider operations;
+    private readonly ILogger logger;
+    private CancellationTokenSource cancellation;
+    private Task loop = Task.CompletedTask;
+    private string offeredVersion;
 
-	private readonly ILogger logger;
+    public AppUpdateChecker(AppInfoProvider info, SettingsManager settings, ForkUpdateService updates,
+        NotificationService notifications, IMediator mediator, Dispatcher dispatcher,
+        IOperationStateProvider operations, ILogger<AppUpdateChecker> logger)
+    {
+        this.info = info; this.settings = settings; this.updates = updates;
+        this.notifications = notifications; this.mediator = mediator; this.dispatcher = dispatcher;
+        this.operations = operations; this.logger = logger;
+        settings.SettingsChanged += SettingsChanged;
+    }
 
-	private readonly AppInfoProvider appInfoProvider;
+    private async void SettingsChanged(object sender, SettingsChangedEventArgs e)
+    {
+        if (e.Old.CheckForUpdates == e.New.CheckForUpdates) return;
+        if (e.New.CheckForUpdates) await StartAsync(CancellationToken.None);
+        else await StopAsync(CancellationToken.None);
+    }
 
-	private readonly Settings settings;
+    public Task StartAsync(CancellationToken token)
+    {
+        if (cancellation != null || !dispatcher.InvokeIfRequired(() => settings.Settings.CheckForUpdates)) return Task.CompletedTask;
+        cancellation = new CancellationTokenSource();
+        loop = RunAsync(cancellation.Token);
+        return Task.CompletedTask;
+    }
 
-	private readonly NotificationService notificationService;
+    public async Task StopAsync(CancellationToken token)
+    {
+        var old = cancellation;
+        if (old == null) return;
+        cancellation = null;
+        var pending = loop;
+        old.Cancel();
+        try { await pending.ConfigureAwait(false); } finally { old.Dispose(); }
+    }
 
-	private readonly IHttpClientFactory httpClientFactory;
+    private async Task RunAsync(CancellationToken token)
+    {
+        try
+        {
+            await Task.Delay(TimeSpan.FromSeconds(15), token).ConfigureAwait(false);
+            while (!token.IsCancellationRequested)
+            {
+                try
+                {
+                    var release = await updates.GetLatestAsync(token).ConfigureAwait(false);
+                    // All Settings access stays on the UI thread. No download or installer
+                    // is started by this background checker, only a dismissible offer.
+                    await dispatcher.InvokeAsync(async () => {
+                        token.ThrowIfCancellationRequested();
+                        var current = settings.Settings;
+                        if (!current.CheckForUpdates || !release.ShouldOffer(info.Version, current.SkippedForkUpdateVersion) ||
+                            offeredVersion == release.Version.ToString()) return;
+                        offeredVersion = release.Version.ToString();
+                        var command = new ShowAppUpdateCheckWindowCommand { Release = release };
+                        if (!current.SilentMode && operations.CurrentOperation == OperationType.None)
+                            await mediator.Send(command, token);
+                        else
+                            notifications.ShowMessage("Доступно обновление форка " + release.Version + ". Нажмите, чтобы посмотреть изменения.",
+                                options => options.WithCommand(command).WithRespectSilentMode(true));
+                    }).Task.Unwrap().ConfigureAwait(false);
+                }
+                catch (OperationCanceledException) when (token.IsCancellationRequested) { throw; }
+                catch (Exception exception) { logger.LogWarning(exception, "Failed to check fork releases on GitHub"); }
+                await Task.Delay(TimeSpan.FromHours(6), token).ConfigureAwait(false);
+            }
+        }
+        catch (OperationCanceledException) when (token.IsCancellationRequested) { }
+    }
 
-	private readonly Dispatcher dispatcher;
-
-	private readonly object lockObject = new object();
-
-	private Timer timer;
-
-	private bool isStarted;
-
-	private Task checkForUpdatesTask;
-
-	private CancellationTokenSource cts;
-
-	public AppUpdateChecker(AppInfoProvider appInfoProvider, SettingsManager settingsManager, NotificationService notificationService, IHttpClientFactory httpClientFactory, Dispatcher dispatcher, ILogger<AppUpdateChecker> logger)
-	{
-		this.logger = (ILogger)(((object)logger) ?? ((object)NullLogger.Instance));
-		this.appInfoProvider = appInfoProvider;
-		settings = settingsManager.Settings;
-		this.notificationService = notificationService;
-		this.httpClientFactory = httpClientFactory;
-		this.dispatcher = dispatcher;
-		settingsManager.SettingsChanged += SettingsManager_SettingsChanged;
-	}
-
-	private async void SettingsManager_SettingsChanged(object sender, SettingsChangedEventArgs e)
-	{
-		if (e.Old.CheckForUpdates != e.New.CheckForUpdates)
-		{
-			if (e.New.CheckForUpdates)
-			{
-				await StartAsync(CancellationToken.None);
-			}
-			else
-			{
-				await StopAsync(CancellationToken.None);
-			}
-		}
-	}
-
-	public Task StartAsync(CancellationToken cancellationToken)
-	{
-		lock (lockObject)
-		{
-			if (isStarted || !dispatcher.InvokeIfRequired(() => settings.CheckForUpdates))
-			{
-				return Task.CompletedTask;
-			}
-			isStarted = true;
-			timer = new Timer(TimerCallback, null, TimeSpan.FromSeconds(10.0), Timeout.InfiniteTimeSpan);
-			cts = new CancellationTokenSource();
-			logger.LogInformation("App update checker started");
-			return Task.CompletedTask;
-		}
-	}
-
-	public Task StopAsync(CancellationToken cancellationToken)
-	{
-		lock (lockObject)
-		{
-			if (!isStarted)
-			{
-				return Task.CompletedTask;
-			}
-			isStarted = false;
-			timer.Dispose();
-			cts.Cancel();
-			if (checkForUpdatesTask != null)
-			{
-				CancellationTokenSource oldCts = cts;
-				checkForUpdatesTask.ContinueWith((Task _) =>
-				{
-					oldCts.Dispose();
-				});
-				checkForUpdatesTask = null;
-			}
-			else
-			{
-				cts.Dispose();
-			}
-			logger.LogInformation("App update checker stopped");
-			return Task.CompletedTask;
-		}
-	}
-
-	private void TimerCallback(object state)
-	{
-		lock (lockObject)
-		{
-			try
-			{
-				if (isStarted)
-				{
-					checkForUpdatesTask = CheckForUpdatesAsync(cts.Token);
-					TimeSpan dueTime = TimeSpan.FromDays(1.0) + TimeSpan.FromSeconds(new Random().Next((int)TimeSpan.FromDays(1.0).TotalSeconds));
-					timer.Change(dueTime, Timeout.InfiniteTimeSpan);
-				}
-			}
-			catch (Exception exception)
-			{
-				logger.LogError(exception, "Error in timer callback");
-			}
-		}
-	}
-
-	private async Task CheckForUpdatesAsync(CancellationToken cancellationToken)
-	{
-		try
-		{
-			Version version = await GetLatestVersionAsync(cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
-			if (appInfoProvider.Version < version)
-			{
-				logger.LogInformation("New app version is available: {latestVersion}", version);
-				notificationService.ShowMessage(string.Format(Resources.Notify_AppUpdateAvailable, ProductResources.AppNameGenitive), (NotificationOptions x) =>
-				{
-					x.WithCommand(new ShowAppUpdateCheckWindowCommand()).WithRespectSilentMode(value: true);
-				});
-			}
-			else
-			{
-				logger.LogInformation("No new app versions are available");
-			}
-		}
-		catch (OperationCanceledException)
-		{
-		}
-		catch (Exception exception)
-		{
-			logger.LogError(exception, "Failed to check for updates");
-		}
-	}
-
-	private async Task<Version> GetLatestVersionAsync(CancellationToken cancellationToken)
-	{
-		string text = DateTime.UtcNow.Ticks.ToString();
-		using HttpClient httpClient = httpClientFactory.CreateClient("AppUpdateChecker");
-		using HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "windows/latest_version.json?rnd=" + text);
-		using HttpResponseMessage response = await httpClient.SendAsync(request, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
-		response.EnsureSuccessStatusCode();
-		return Version.Parse(JsonConvert.DeserializeObject<VersionResponseDto>(await response.Content.ReadAsStringAsync().ConfigureAwait(continueOnCapturedContext: false)).Version);
-	}
+    public void Dispose()
+    {
+        settings.SettingsChanged -= SettingsChanged;
+        cancellation?.Cancel();
+        cancellation?.Dispose();
+    }
 }

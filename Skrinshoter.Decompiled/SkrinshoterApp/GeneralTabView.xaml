@@ -21,7 +21,7 @@
           </UIElement.Visibility>
         </CheckBox>
         <CheckBox Margin="0,12,0,0" Content="{Binding Path=(props:Resources.Settings_General_Autostart)}" IsChecked="{Binding Settings.Autostart}" />
-        <CheckBox Margin="0,12,0,0" Content="{Binding Path=(props:Resources.Settings_General_CheckForUpdates)}" IsChecked="{Binding Settings.CheckForUpdates}" />
+        <CheckBox Margin="0,12,0,0" Content="Предлагать обновления форка из GitHub" IsChecked="{Binding Settings.CheckForUpdates}" />
         <Grid Margin="0,19,0,0">
           <Grid.RowDefinitions>
             <RowDefinition />

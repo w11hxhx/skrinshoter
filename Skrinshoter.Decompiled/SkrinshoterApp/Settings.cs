@@ -658,6 +658,9 @@ public sealed class Settings
 		}
 	}
 
+	[JsonProperty("skipped_fork_update_version")]
+    public string SkippedForkUpdateVersion { get; set; } = "";
+
 	[JsonProperty("check_for_updates")]
 	public bool CheckForUpdates
 	{
