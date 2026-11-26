@@ -34,11 +34,9 @@
         <CheckBox Margin="0,6,8,6" Content="Отменить" IsChecked="{Binding Settings.ShowEditorUndo}" />
       </UniformGrid></GroupBox>
       <GroupBox Header="Поиск по фото" Margin="0,16,0,0"><StackPanel>
-        <TextBlock TextWrapping="Wrap" Text="Скриншот загружается на kappa.lol, затем открывается в выбранных поисковиках." />
+        <TextBlock TextWrapping="Wrap" Text="Снимок отправляется напрямую выбранным поисковикам. Результаты открываются в браузере." />
         <CheckBox Margin="0,8,0,0" Content="Яндекс Картинки" IsChecked="{Binding Settings.ImageSearchYandex}" />
         <CheckBox Margin="0,8,0,0" Content="Google Lens" IsChecked="{Binding Settings.ImageSearchGoogle}" />
-        <CheckBox Margin="0,8,0,0" Content="Bing Visual Search" IsChecked="{Binding Settings.ImageSearchBing}" />
-        <CheckBox Margin="0,8,0,0" Content="TinEye" IsChecked="{Binding Settings.ImageSearchTinEye}" />
       </StackPanel></GroupBox>
       <GroupBox Header="{Binding Path=(props:Resources.Settings_Screenshot_GroupHeader_WhereToSave)}">
         <StackPanel Orientation="Vertical">

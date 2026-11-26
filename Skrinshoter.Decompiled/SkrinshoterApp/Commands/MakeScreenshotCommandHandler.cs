@@ -184,7 +184,7 @@ public abstract class MakeScreenshotCommandHandler
 
 	private async Task PerformImageToolAsync(ScreenshotEditingResult result)
 	{
-		if (result.Action == ScreenshotEditingAction.ImageSearch && !settings.ImageSearchYandex && !settings.ImageSearchGoogle && !settings.ImageSearchBing && !settings.ImageSearchTinEye)
+		if (result.Action == ScreenshotEditingAction.ImageSearch && !settings.ImageSearchYandex && !settings.ImageSearchGoogle)
 		{
 			notificationService.ShowError("Выберите хотя бы один сервис поиска по фото в настройках.");
 			return;
@@ -204,14 +204,24 @@ public abstract class MakeScreenshotCommandHandler
 				}
 				return;
 			}
-			var uploaded = await screenshotUploadCoordinator.UploadAsync(path, "image-search", "", false, ScreenshotUploadDestination.KappaLol);
-			string imageUrl = Uri.EscapeDataString(uploaded[0].Url);
-			var urls = new System.Collections.Generic.List<string>();
-			if (settings.ImageSearchYandex) urls.Add("https://yandex.ru/images/search?rpt=imageview&url=" + imageUrl);
-			if (settings.ImageSearchGoogle) urls.Add("https://lens.google.com/uploadbyurl?url=" + imageUrl);
-			if (settings.ImageSearchBing) urls.Add("https://www.bing.com/images/searchbyimage?cbir=sbi&imgurl=" + imageUrl);
-			if (settings.ImageSearchTinEye) urls.Add("https://tineye.com/search?url=" + imageUrl);
-			foreach (string url in urls) await mediator.Send(new OpenUrlInBrowserCommand(url));
+            var searches = new System.Collections.Generic.List<Task>();
+            if (settings.ImageSearchGoogle) searches.Add(SearchAsync(true, "Google Lens"));
+            if (settings.ImageSearchYandex) searches.Add(SearchAsync(false, "Яндекс Картинки"));
+            await Task.WhenAll(searches);
+
+            async Task SearchAsync(bool google, string name)
+            {
+                try
+                {
+                    Uri url = await DirectImageSearch.UploadAsync(path, google);
+                    await mediator.Send(new OpenUrlInBrowserCommand(url));
+                }
+                catch (Exception exception)
+                {
+                    logger.LogWarning(exception, "Direct image search failed for {provider}", name);
+                    notificationService.ShowError("Не удалось выполнить поиск по фото в " + name + ".");
+                }
+            }
 		}
 		catch (Exception exception)
 		{
