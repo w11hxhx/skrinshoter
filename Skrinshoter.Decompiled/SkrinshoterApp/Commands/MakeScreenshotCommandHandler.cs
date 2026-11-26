@@ -204,22 +204,24 @@ public abstract class MakeScreenshotCommandHandler
 				}
 				return;
 			}
-            var searches = new System.Collections.Generic.List<Task>();
-            if (settings.ImageSearchGoogle) searches.Add(SearchAsync(true, "Google Lens"));
-            if (settings.ImageSearchYandex) searches.Add(SearchAsync(false, "Яндекс Картинки"));
-            await Task.WhenAll(searches);
+            var googleSearch = settings.ImageSearchGoogle ? SearchAsync(true, "Google Lens") : Task.FromResult<Uri>(null);
+            var yandexSearch = settings.ImageSearchYandex ? SearchAsync(false, "Яндекс Картинки") : Task.FromResult<Uri>(null);
+            await Task.WhenAll(googleSearch, yandexSearch);
+            // Open Lens last so the browser does not immediately switch away from it.
+            foreach (var url in new[] { await yandexSearch, await googleSearch })
+                if (url != null) await mediator.Send(new OpenUrlInBrowserCommand(url));
 
-            async Task SearchAsync(bool google, string name)
+            async Task<Uri> SearchAsync(bool google, string name)
             {
                 try
                 {
-                    Uri url = await DirectImageSearch.UploadAsync(path, google);
-                    await mediator.Send(new OpenUrlInBrowserCommand(url));
+                    return await DirectImageSearch.UploadAsync(path, google);
                 }
                 catch (Exception exception)
                 {
                     logger.LogWarning(exception, "Direct image search failed for {provider}", name);
                     notificationService.ShowError("Не удалось выполнить поиск по фото в " + name + ".");
+                    return null;
                 }
             }
 		}

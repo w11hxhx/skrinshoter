@@ -33,7 +33,7 @@ internal static class DirectImageSearch
                 location != null && location.IsAbsoluteUri && location.Scheme == Uri.UriSchemeHttps &&
                 location.Host == "www.google.com" && location.AbsolutePath == "/search" &&
                 Regex.IsMatch(location.Query, @"(?:[?&])vsrid=[^&]+"))
-                return location;
+                return WithVisualMatches(location);
             throw new InvalidDataException("Google Lens не вернул ссылку на результаты поиска (HTTP " + (int)response.StatusCode + ").");
         }
         response.EnsureSuccessStatusCode();
@@ -42,5 +42,12 @@ internal static class DirectImageSearch
         if (cbirId == null || !Regex.IsMatch(cbirId, @"\A[0-9]+/[A-Za-z0-9_-]+\z"))
             throw new InvalidDataException("Яндекс Картинки не вернули идентификатор поиска.");
         return new Uri("https://yandex.ru/images/search?rpt=imageview&cbir_id=" + Uri.EscapeDataString(cbirId));
+    }
+
+    private static Uri WithVisualMatches(Uri results)
+    {
+        // Preserve Google's image and session tokens verbatim while selecting Visual matches.
+        string query = Regex.Replace(results.Query.TrimStart('?'), @"(?:^|&)udm=[^&]*", "");
+        return new UriBuilder(results) { Query = query.TrimStart('&') + "&udm=44" }.Uri;
     }
 }
