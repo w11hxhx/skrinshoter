@@ -10,7 +10,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $repoRoot = [IO.Path]::GetFullPath($PSScriptRoot)
 $artifactsDirectory = Join-Path $repoRoot 'artifacts'
-$appVersion = '4.87.4.11'
+$appVersion = '4.87.4.12'
 
 $buildParameters = @{
     Configuration = $Configuration
